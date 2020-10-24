@@ -4,6 +4,14 @@ import {Row,
     Container} from "react-bootstrap";
 import Navbar from "../components/navbar/Navbar";
 
+
+/**
+ *  Base layout that contains common elements such as navbar, foobar etc.
+ *  @param children     Content of the page
+ *
+ *  @created    10/25/2020
+ *  @author Umut Emre Bayramoglu
+ */
 const BaseLayout = ({ children }) => (
 
     <Container fluid>
