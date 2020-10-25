@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Header from "../components/home_page/Header";
+import Events from "../components/home_page/Events";
 
 /**
  *  Home page of the application.
@@ -13,6 +14,7 @@ class HomeView extends Component {
         return (
             <div>
                 <Header />
+                <Events />
             </div>
         );
     }
