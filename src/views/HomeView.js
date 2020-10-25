@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Header from "../components/home_page/Header";
 
 /**
  *  Home page of the application.
@@ -11,7 +12,7 @@ class HomeView extends Component {
     render() {
         return (
             <div>
-                Check HomeView
+                <Header />
             </div>
         );
     }
