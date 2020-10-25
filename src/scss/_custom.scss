@@ -1,0 +1,17 @@
+// Here you can add other styles
+
+.custom-header{
+  background-color: #3266d0;
+}
+
+.custom-header-text:hover{
+  color: coral;
+  text-decoration: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .custom-header{
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+}
