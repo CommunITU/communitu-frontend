@@ -9,6 +9,13 @@
   text-decoration: none;
 }
 
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+
 .header-img {
   animation: fadeIn ease 1s;
   width: 100%;
@@ -38,6 +45,22 @@
   color: #fff;
 }
 
+h3.title-big {
+  font-family: "Arial Black", sans-serif;
+  font-weight: 750;
+  line-height: 1.00;
+  letter-spacing: -0.5px;
+  font-size: 2.5em;
+}
+
+.event-title {
+  font-family: Georgia, serif;
+  margin-bottom: 7.5px;
+  margin-top: 7.5px;
+  font-size: 1.625rem;
+  font-weight: 475;
+  line-height: 1.5;
+}
 
 @media only screen and (max-width: 992px) {
   .carousel-title {
