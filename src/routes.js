@@ -1,5 +1,7 @@
 import BaseLayout from "./layouts/BaseLayout";
 import HomeView from "./views/HomeView";
+import {LoginView} from "./views/LoginView";
+import NoLayout from "./layouts/NoLayout";
 
 /**
  *  Route list for the application. Returns all routes as an array.
@@ -24,6 +26,14 @@ const routes = [
         path        :   "/",
         layout      :   BaseLayout,
         component   :   HomeView,
+        exact       :   true,
+        needAuth    :   false,
+    },
+    {
+        name        :   "Login Page",
+        path        :   "/login",
+        layout      :   NoLayout,
+        component   :   LoginView,
         exact       :   true,
         needAuth    :   false,
     },

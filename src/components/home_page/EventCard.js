@@ -14,7 +14,7 @@ export default class EventCard extends Component {
         const { title, img} = this.props;
         return (
             <Col lg="4" md="6" sm="12" >
-                <div className="card">
+                <div className="card selection-effect">
                     <img alt="event" className="card-img-top fade-in" src={require('../../assets/images/'+img).default} />
                     <div class="card-body pt-0 mt-0">
                         <h3 className="event-title">{title}</h3>
