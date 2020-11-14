@@ -33,7 +33,6 @@ class LoginForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         const {email,pass} = this.state;
-        console.log(email, pass)
         this.props.login({email,pass},this.props.history);
 
     }
@@ -115,14 +114,9 @@ class LoginForm extends Component {
     }
 }
 
-// LoginForm.propTypes = {
-//     login: PropTypes.func.isRequired
-// }
-//
-
 const mapStatetoProps = (state) => {
-    console.log(state)
     return {
+        auth: state.auth
     }
 }
 

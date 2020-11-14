@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {PureComponent} from 'react'
 import { Row } from "reactstrap";
 import LoginForm from "../components/login/LoginForm"
 import { LoginSidebar } from "../components/login/LoginSidebar";
@@ -11,7 +11,7 @@ import Container from "react-bootstrap/Container";
  *  @author Umut Emre Bayramoglu
  */
 
-export class LoginView extends Component {
+export class LoginView extends PureComponent {
 
     constructor(props) {
         super(props);

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Header from "../components/home_page/Header";
 import Events from "../components/home_page/Events";
 
@@ -9,7 +9,7 @@ import Events from "../components/home_page/Events";
  *  @author Umut Emre Bayramoglu
  */
 
-class HomeView extends Component {
+class HomeView extends PureComponent {
     render() {
         return (
             <div>

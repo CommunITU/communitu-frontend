@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom"
 import routes from "../routes";
 
@@ -8,7 +8,7 @@ import routes from "../routes";
  *  @created    10/25/2020
  *  @author Umut Emre Bayramoglu
  */
-class MyRouter extends Component {
+class MyRouter extends PureComponent {
     render() {
         return (
             <BrowserRouter>
