@@ -17,6 +17,7 @@ import {
     InputGroupText
 } from "shards-react";
 import {Lock, Person} from "@material-ui/icons";
+import {login} from "../../redux/auth/action";
 
 class LoginForm extends Component {
 
@@ -32,7 +33,8 @@ class LoginForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         const {email,pass} = this.state;
-       // this.props.login({email,pass},this.props.history);
+        console.log(email, pass)
+        this.props.login({email,pass},this.props.history);
 
     }
 
@@ -117,12 +119,11 @@ class LoginForm extends Component {
 //     login: PropTypes.func.isRequired
 // }
 //
-// const mapStatetoProps = (state) => {
-//     return {
-//         user : state.auth.user,
-//         isLoggedIn : state.auth.isLoggedIn
-//     }
-// }
-//
-// export default withRouter(connect(mapStatetoProps,{login}) (LoginForm));
-export default LoginForm;
+
+const mapStatetoProps = (state) => {
+    console.log(state)
+    return {
+    }
+}
+
+export default withRouter(connect(mapStatetoProps,{login}) (LoginForm));

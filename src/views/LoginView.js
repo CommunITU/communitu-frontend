@@ -4,6 +4,13 @@ import LoginForm from "../components/login/LoginForm"
 import { LoginSidebar } from "../components/login/LoginSidebar";
 import Container from "react-bootstrap/Container";
 
+/**
+ *  Login page of the application.
+ *
+ *  @created    12/14/2020
+ *  @author Umut Emre Bayramoglu
+ */
+
 export class LoginView extends Component {
 
     constructor(props) {
