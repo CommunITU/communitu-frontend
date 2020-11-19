@@ -20,11 +20,11 @@ class MyRouter extends PureComponent {
                     {
                         routes.map((route,
                                     index) => {
-                            {
-                                if(route.autoLogin){
-                                    this.props.loginWithToken()
-                                }
+
+                            if (route.autoLogin) {
+                                this.props.loginWithToken()
                             }
+
 
                             return (
                                 <Route

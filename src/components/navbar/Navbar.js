@@ -4,6 +4,8 @@ import NavbarMessages from "./NavbarMessages";
 import {Navbar, Nav, NavItem, NavLink, Col, Row} from "react-bootstrap";
 import {FaSignInAlt, FaRegUser} from "react-icons/fa"
 import Container from "react-bootstrap/Container";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
 
 class _Navbar extends Component {
 
@@ -69,4 +71,10 @@ class _Navbar extends Component {
     }
 }
 
-export default _Navbar;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default withRouter(connect(mapStateToProps, null)(_Navbar));

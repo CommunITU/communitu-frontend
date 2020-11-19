@@ -14,7 +14,7 @@ const login = (email, pass) => {
 }
 
 const loginWithToken = (token) => {
-    return axios.post(BASE_URL + LOGIN_WITH_TOKEN, {token: token})
+    return axios.post(BASE_URL + LOGIN_WITH_TOKEN, {login_token: token})
 }
 
 const saveJwtToken = (token) => {
@@ -22,7 +22,7 @@ const saveJwtToken = (token) => {
 }
 
 const getJwtToken = () => {
-    return localStorage.getItem('token');
+    return localStorage.getItem('login_token');
 }
 
 

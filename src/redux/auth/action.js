@@ -16,7 +16,10 @@ export const login = (user_info) => dispatch => {
             }
         })
         .catch(error => {
-            dispatch(loginFailed(error.response.data.message))
+            if (error.response && error.response.data && error.response.data.message)
+                dispatch(loginFailed(error.response.data.message))
+            else
+                dispatch(loginFailed(error))
         });
 }
 
@@ -34,6 +37,9 @@ export const loginWithToken = () => dispatch => {
             }
         })
         .catch(error => {
-            dispatch(loginFailed(error.response.data.message))
+            if (error.response && error.response.data && error.response.data.message)
+                dispatch(loginFailed(error.response.data.message))
+            else
+                dispatch(loginFailed(error))
         });
 }

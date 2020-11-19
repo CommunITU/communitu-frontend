@@ -112,10 +112,10 @@ class LoginForm extends Component {
     }
 }
 
-const mapStatetoProps = (state) => {
+const mapStateToProps = (state) => {
     return {
         auth: state.auth
     }
 }
 
-export default withRouter(connect(mapStatetoProps, {login})(LoginForm));
+export default withRouter(connect(mapStateToProps, {login})(LoginForm));
