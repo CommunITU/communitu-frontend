@@ -106,6 +106,10 @@ h3.title-big {
   box-shadow: 0 0 0 0.2rem rgba(81, 65, 224, 0.5);
 }
 
+.navbar .user-avatar {
+  max-width: 1.8rem;
+}
+
 @media only screen and (max-width: 992px) {
   .carousel-title {
     font-size: 40px;

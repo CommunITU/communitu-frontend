@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import NavbarNotif from "./NavbarNotif";
-import NavbarMessages from "./NavbarMessages";
+import NavbarUserActions from "./NavbarUserActions";
+import NavbarNotifications from "./NavbarNotifications";
 import {Navbar, Nav, NavItem, NavLink, Col, Row} from "react-bootstrap";
 import {FaSignInAlt, FaRegUser} from "react-icons/fa"
 import Container from "react-bootstrap/Container";
@@ -10,7 +10,7 @@ import {withRouter} from "react-router";
 class _Navbar extends Component {
 
     render() {
-        const {isLoggedIn} = this.props;
+        const {isLoggedIn,user} = this.props;
 
         return (
             <Navbar expand="sm" collapseOnSelect variant="dark" className="custom-header align-items-stretch p-0">
@@ -36,11 +36,12 @@ class _Navbar extends Component {
                             ? <Nav className="float-right mx-2">
                                 <Col class="col-12">
                                     <Row>
+
                                         <NavItem className="py-2">
-                                            <NavbarNotif/>
+                                            <NavbarUserActions user={user}/>
                                         </NavItem>
                                         <NavItem className="py-2">
-                                            <NavbarMessages/>
+                                            <NavbarNotifications/>
                                         </NavItem>
                                     </Row>
                                 </Col>
@@ -73,8 +74,8 @@ class _Navbar extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth,
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        user: state.auth.user
     }
 }
 

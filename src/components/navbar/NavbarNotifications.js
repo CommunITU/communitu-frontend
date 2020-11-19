@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {CBadge, CDropdown, CDropdownItem, CDropdownMenu, CDropdownToggle, CImg} from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { freeSet } from '@coreui/icons'
+import {freeSet} from '@coreui/icons'
 
-class NavbarMessages extends Component {
+class NavbarNotifications extends Component {
     render() {
         const itemsCount = 4
         return (
@@ -12,8 +12,9 @@ class NavbarMessages extends Component {
                 className="c-header-nav-item mx-2"
                 direction="down"
             >
-                <CDropdownToggle className="c-header-nav-link" caret={false}>
-                    <CIcon className="text-white" content={freeSet.cilEnvelopeLetter} /><CBadge shape="pill" color="info">{itemsCount}</CBadge>
+                <CDropdownToggle className="c-header-nav-link text-white " caret={false}>
+                    <CIcon size="lg" content={freeSet.cilBell}/><CBadge shape="pill"
+                                                                                     color="danger">{itemsCount}</CBadge>
                 </CDropdownToggle>
                 <CDropdownMenu className="pt-0" placement="bottom-end">
                     <CDropdownItem
@@ -43,7 +44,8 @@ class NavbarMessages extends Component {
                                 <span className="fa fa-exclamation text-danger"/> Important message
                             </div>
                             <div className="small text-muted text-truncate">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt...
                             </div>
                         </div>
                     </CDropdownItem>
@@ -65,7 +67,8 @@ class NavbarMessages extends Component {
                                 <small className="text-muted float-right mt-1">5 minutes ago</small>
                             </div>
                             <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit, sed do eiusmod tempor incididunt...
                             </div>
                         </div>
                     </CDropdownItem>
@@ -87,7 +90,8 @@ class NavbarMessages extends Component {
                                 <small className="text-muted float-right mt-1">1:52 PM</small>
                             </div>
                             <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit, sed do eiusmod tempor incididunt...
                             </div>
                         </div>
                     </CDropdownItem>
@@ -109,15 +113,17 @@ class NavbarMessages extends Component {
                                 <small className="text-muted float-right mt-1">4:03 AM</small>
                             </div>
                             <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit, sed do eiusmod tempor incididunt...
                             </div>
                         </div>
                     </CDropdownItem>
-                    <CDropdownItem href="#" className="text-center border-top"><strong>View all messages</strong></CDropdownItem>
+                    <CDropdownItem href="#" className="text-center border-top"><strong>View all
+                        messages</strong></CDropdownItem>
                 </CDropdownMenu>
             </CDropdown>
         )
     }
 }
 
-export default NavbarMessages;
+export default NavbarNotifications;
