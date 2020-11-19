@@ -14,6 +14,7 @@ import NoLayout from "./layouts/NoLayout";
  *                  by many pages. So these components are located in the {@link BaseLayout}.
  *      component:  The content of the routed page.
  *      exact:      When true; it will only route if the path matches exactly.
+ *      autoLogin:  When a Jwt token is saved on local storage,  make user logged-in operation automatically.
  *      needAuth:   When true; it will only route if the user is authenticated.
  *
  *  @created    10/25/2020
@@ -27,6 +28,7 @@ const routes = [
         layout      :   BaseLayout,
         component   :   HomeView,
         exact       :   true,
+        autoLogin   :   true,
         needAuth    :   false,
     },
     {
@@ -35,6 +37,7 @@ const routes = [
         layout      :   NoLayout,
         component   :   LoginView,
         exact       :   true,
+        autoLogin   :   true,
         needAuth    :   false,
     },
 

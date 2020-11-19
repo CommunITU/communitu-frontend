@@ -1,8 +1,6 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {connect} from "react-redux";
-// import {login} from "../../redux/actions/UserActions/LoginActions"
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
 
 import {
     Row,
@@ -21,39 +19,39 @@ import {login} from "../../redux/auth/action";
 
 class LoginForm extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            isCompleted:false,
-            checked:false
+            isCompleted: false,
+            checked: false
         }
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        const {email,pass} = this.state;
-        this.props.login({email,pass},this.props.history);
+        const {email, pass} = this.state;
+        this.props.login({email, pass}, this.props.history);
 
     }
 
     onChange = (e) => {
-        this.setState({[e.target.name] : e.target.value});
+        this.setState({[e.target.name]: e.target.value});
     }
 
     handleCheckbox = (e) => {
-        this.setState({checked : !this.state.checked})
+        this.setState({checked: !this.state.checked})
     }
 
     render() {
-        const {email,pass,checked} = this.state;
+        const {email, pass, checked} = this.state;
         return (
             <div className="col-sm-10 col-md-9 col-xl-5 col-lg-7 mx-auto">
                 <div className="card py-lg-2 py-md-2 ">
                     <div className="card-body">
                         <h3 className="text-center">Login</h3>
-                        <hr />
-                        <Form onSubmit = {this.onSubmit}>
+                        <hr/>
+                        <Form onSubmit={this.onSubmit}>
                             {/* EMAIL FIELD */}
                             <FormGroup>
                                 <InputGroup>
@@ -65,7 +63,7 @@ class LoginForm extends Component {
                                         name="email"
                                         type=""
                                         placeholder="Email"
-                                        onChange = {this.onChange}
+                                        onChange={this.onChange}
                                     />
                                 </InputGroup>
                             </FormGroup>
@@ -74,14 +72,14 @@ class LoginForm extends Component {
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupAddon type="prepend">
-                                        <InputGroupText><Lock /></InputGroupText>
+                                        <InputGroupText><Lock/></InputGroupText>
                                     </InputGroupAddon>
                                     <FormInput
                                         id="fePassword"
-                                        name = "pass"
+                                        name="pass"
                                         type="password"
                                         placeholder="Password"
-                                        onChange = {this.onChange}
+                                        onChange={this.onChange}
                                     />
                                 </InputGroup>
 
@@ -91,7 +89,7 @@ class LoginForm extends Component {
                             <Row className="justify-content-center">
                                 <Col md="12" className="form-group">
                                     <FormCheckbox
-                                        onChange = {this.handleCheckbox}
+                                        onChange={this.handleCheckbox}
                                         checked={checked}
 
                                     >
@@ -120,4 +118,4 @@ const mapStatetoProps = (state) => {
     }
 }
 
-export default withRouter(connect(mapStatetoProps,{login}) (LoginForm));
+export default withRouter(connect(mapStatetoProps, {login})(LoginForm));

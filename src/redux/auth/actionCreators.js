@@ -20,4 +20,3 @@ export const loginPending = () => {
         type: LOGIN_PENDING,
     }
 }
-

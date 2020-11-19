@@ -1,6 +1,10 @@
 import React, {PureComponent} from 'react';
 import {BrowserRouter, Switch, Route} from "react-router-dom"
 import routes from "../routes";
+import {withRouter} from "react-router";
+import {connect} from "react-redux";
+import {loginWithToken} from "../redux/auth/action";
+
 
 /**
  *  Handle routing for the routes specified in {@link routes}
@@ -16,6 +20,12 @@ class MyRouter extends PureComponent {
                     {
                         routes.map((route,
                                     index) => {
+                            {
+                                if(route.autoLogin){
+                                    this.props.loginWithToken()
+                                }
+                            }
+
                             return (
                                 <Route
                                     key={index}
@@ -40,4 +50,9 @@ class MyRouter extends PureComponent {
     }
 }
 
-export default MyRouter;
+const actionCreators = {
+    loginWithToken: loginWithToken
+}
+
+
+export default withRouter(connect(null, actionCreators)(MyRouter));
