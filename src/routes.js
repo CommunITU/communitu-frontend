@@ -1,7 +1,7 @@
 import BaseLayout from "./layouts/BaseLayout";
 import HomeView from "./views/HomeView";
-import {LoginView} from "./views/LoginView";
 import NoLayout from "./layouts/NoLayout";
+import LoginView from "./views/LoginView";
 
 /**
  *  Route list for the application. Returns all routes as an array.

@@ -1,8 +1,10 @@
 import React, {PureComponent} from 'react'
-import { Row } from "reactstrap";
+import {Row} from "reactstrap";
 import LoginForm from "../components/login/LoginForm"
-import { LoginSidebar } from "../components/login/LoginSidebar";
+import {LoginSidebar} from "../components/login/LoginSidebar";
 import Container from "react-bootstrap/Container";
+import {connect} from "react-redux";
+import {withRouter} from 'react-router';
 
 /**
  *  Login page of the application.
@@ -11,7 +13,7 @@ import Container from "react-bootstrap/Container";
  *  @author Umut Emre Bayramoglu
  */
 
-export class LoginView extends PureComponent {
+class LoginView extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -20,21 +22,21 @@ export class LoginView extends PureComponent {
         }
     }
 
-    componentDidMount() {
-        const {isLoggedIn,history} = this.props;
-        if(isLoggedIn)
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {isLoggedIn, history} = this.props;
+        if(isLoggedIn){
             history.push("/");
-
+        }
     }
 
     render() {
         return (
             <Container fluid>
-                <Row className="h-100" >
-                    <LoginSidebar />
+                <Row className="h-100">
+                    <LoginSidebar/>
                     <div className="col-lg col-md offset-lg-4 offset-md-4 login-right-container">
                         <h3 className="text-center font-weight-bold text-in-logo-color mb-4">CommunITU </h3>
-                        <LoginForm />
+                        <LoginForm/>
                     </div>
                 </Row>
             </Container>
@@ -42,3 +44,11 @@ export class LoginView extends PureComponent {
     }
 }
 
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        isLoggedIn: state.auth.isLoggedIn
+    }
+}
+
+export default withRouter(connect(mapStateToProps, null)(LoginView))

@@ -4,6 +4,7 @@ const initialState = {
     pending: false,
     user: null,
     error: null,
+    isLoggedIn: false
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 pending: false,
                 error: action.error,
+                isLoggedIn: false
             }
 
         case LOGIN_SUCCESS:
@@ -20,12 +22,14 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 pending: false,
                 user: action.user,
+                isLoggedIn: true,
             }
 
         case LOGIN_PENDING:
             return {
                 ...state,
-                pending: false,
+                pending: true,
+                isLoggedIn: false
             }
         default:
             return state;
