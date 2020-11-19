@@ -10,7 +10,7 @@ import {withRouter} from "react-router";
 class _Navbar extends Component {
 
     render() {
-        const isLoggedIn = false;
+        const {isLoggedIn} = this.props;
 
         return (
             <Navbar expand="sm" collapseOnSelect variant="dark" className="custom-header align-items-stretch p-0">
@@ -73,7 +73,8 @@ class _Navbar extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 
