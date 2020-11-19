@@ -2,4 +2,4 @@
 
 export const BASE_URL = "http://localhost:5000";
 export const LOGIN = "/auth/login";
-export const LOGIN_WITH_TOKEN = "/auth/login_token";
+export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
