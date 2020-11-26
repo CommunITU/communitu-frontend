@@ -6,6 +6,7 @@ import {FaSignInAlt, FaRegUser} from "react-icons/fa"
 import Container from "react-bootstrap/Container";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
+import NavbarCreateActions from "./NavbarCreateActions";
 
 class _Navbar extends Component {
 
@@ -36,12 +37,14 @@ class _Navbar extends Component {
                             ? <Nav className="float-right mx-2">
                                 <Col class="col-12">
                                     <Row>
-
                                         <NavItem className="py-2">
-                                            <NavbarUserActions user={user}/>
+                                            <NavbarCreateActions/>
                                         </NavItem>
                                         <NavItem className="py-2">
                                             <NavbarNotifications/>
+                                        </NavItem>
+                                        <NavItem className="py-2">
+                                            <NavbarUserActions user={user}/>
                                         </NavItem>
                                     </Row>
                                 </Col>

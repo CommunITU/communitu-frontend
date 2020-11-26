@@ -12,7 +12,7 @@ class NavbarUserActions extends Component {
                 inNav
                 className="c-header-nav-item mx-2"
             >
-                <CDropdownToggle className="c-header-nav-link" caret={true}>
+                <CDropdownToggle className="c-header-nav-link text-white" caret={true}>
                     {/*<CIcon className="text-white" content={freeSet.cilBell}/>*/}
                     {/*<CBadge shape="pill" color="danger">{itemsCount}</CBadge>*/}
                     <img
