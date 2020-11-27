@@ -1,7 +1,9 @@
 import BaseLayout from "./layouts/BaseLayout";
-import HomeView from "./views/HomeView";
+import HomeView from "./views/home/HomeView";
 import NoLayout from "./layouts/NoLayout";
-import LoginView from "./views/LoginView";
+import LoginView from "./views/login/LoginView";
+import CreateNewClubView from "./views/club/CreateNewClubView";
+import CreateNewEventView from "./views/event/CreateNewEventView";
 
 /**
  *  Route list for the application. Returns all routes as an array.
@@ -39,6 +41,24 @@ const routes = [
         exact       :   true,
         autoLogin   :   true,
         needAuth    :   false,
+    },
+    {
+        name        :   "Create New Event Page",
+        path        :   "/events/create",
+        layout      :   BaseLayout,
+        component   :   CreateNewEventView,
+        exact       :   true,
+        autoLogin   :   true,
+        needAuth    :   true,
+    },
+    {
+        name        :   "Create New Club Page",
+        path        :   "/clubs/create",
+        layout      :   BaseLayout,
+        component   :   CreateNewClubView,
+        exact       :   true,
+        autoLogin   :   true,
+        needAuth    :   true,
     },
 
 ]

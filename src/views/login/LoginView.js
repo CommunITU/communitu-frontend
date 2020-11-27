@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {Row} from "reactstrap";
-import LoginForm from "../components/login/LoginForm"
-import {LoginSidebar} from "../components/login/LoginSidebar";
+import LoginForm from "../../components/login/LoginForm"
+import {LoginSidebar} from "../../components/login/LoginSidebar";
 import Container from "react-bootstrap/Container";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router';

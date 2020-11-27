@@ -55,6 +55,16 @@
   filter: blur(3px);
 }
 
+.header-v2 {
+  animation: fadeIn ease 1s;
+  width: 100%;
+  height: 300px;
+  background: url("../images/header_city.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 100% 0%;
+}
+
 .carousel-title {
   line-height: 1.2;
   font-size: 40px;
@@ -81,6 +91,15 @@ h3.title-big {
   color: #00437a;
 }
 
+h4.header-title {
+  font-family: "Arial Black", sans-serif;
+  font-weight: 750;
+  line-height: 1.00;
+  letter-spacing: -0.5px;
+  font-size: 2.5em;
+  color: #f1f1f1;
+}
+
 .event-title {
   font-family: Georgia, serif;
   margin-bottom: 7.5px;
@@ -97,6 +116,7 @@ h3.title-big {
   margin-bottom: 30px;
   box-shadow: 0 0.1rem 0.1rem rgba(90, 97, 105, 0.12), 0 0.1rem 0.1rem rgba(90, 97, 105, 0.1);
 }
+
 
 .selection-effect:hover {
   box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
@@ -118,7 +138,6 @@ h3.title-big {
   .carousel-title {
     font-size: 40px;
   }
-
 }
 
 @media only screen and (max-width: 768px) {
@@ -142,7 +161,6 @@ h3.title-big {
     position: relative;
     height: 25vh;
   }
-
 }
 
 @media only screen and (max-width: 576px) {
@@ -154,4 +172,5 @@ h3.title-big {
     font-size: 35px;
     line-height: 1.0;
   }
+
 }

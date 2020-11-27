@@ -10,6 +10,7 @@ class NavbarCreateActions extends Component {
     }
 
     render() {
+        const {user} = this.props
         return (
             <CDropdown
                 inNav
