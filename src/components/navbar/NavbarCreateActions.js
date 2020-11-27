@@ -5,12 +5,11 @@ import {freeSet} from "@coreui/icons";
 import {withRouter} from "react-router";
 
 class NavbarCreateActions extends Component {
-    handleNavAction = (uri) =>  {
+    handleNavAction = (uri) => {
         this.props.history.push(uri)
     }
 
     render() {
-        const {user} = this.props
         return (
             <CDropdown
                 inNav
@@ -21,11 +20,13 @@ class NavbarCreateActions extends Component {
                 </CDropdownToggle>
 
                 <CDropdownMenu placement="bottom-end" className="pt-0">
-                    <CDropdownItem className="mt-2" onClick={() => this.handleNavAction("/events/create")}><CIcon content={freeSet.cilPlaylistAdd}
-                                                           className="mr-2 text-success"/> Create new
+                    <CDropdownItem className="mt-2" onClick={() => this.handleNavAction("/events/create")}><CIcon
+                        content={freeSet.cilPlaylistAdd}
+                        className="mr-2 text-success"/> Create new
                         event</CDropdownItem>
-                    <CDropdownItem className="my-0" onClick={() => this.handleNavAction("/clubs/create")}><CIcon content={freeSet.cilPeople}
-                                                           className="mr-2 text-danger"/> Create new
+                    <CDropdownItem className="my-0" onClick={() => this.handleNavAction("/clubs/create")}><CIcon
+                        content={freeSet.cilPeople}
+                        className="mr-2 text-danger"/> Create new
                         club</CDropdownItem>
                 </CDropdownMenu>
             </CDropdown>

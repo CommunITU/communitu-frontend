@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormSelect, FormTextarea, Row} from "shards-react";
+import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormTextarea, Row} from "shards-react";
 import classNames from "classnames";
 
 class CreateClubForm extends PureComponent {
@@ -14,7 +14,7 @@ class CreateClubForm extends PureComponent {
 
     handleTabChange = (type) => {
         this.setState(prevState => {
-            return {currentTab: type == 'next' ? prevState.currentTab + 1 : prevState.currentTab - 1}
+            return {currentTab: type === 'next' ? prevState.currentTab + 1 : prevState.currentTab - 1}
         })
     }
 
@@ -263,11 +263,11 @@ class CreateClubForm extends PureComponent {
                         </Alert>}
 
                         {/** FORM PANELS */}
-                        {currentTab == 1 && formPanelPage1}
+                        {currentTab === 1 && formPanelPage1}
 
-                        {currentTab == 2 && formPanelPage2}
+                        {currentTab === 2 && formPanelPage2}
 
-                        {currentTab == 3 && formPanelPage3}
+                        {currentTab === 3 && formPanelPage3}
 
                         {/** BUTTONS */}
                         {currentTab > 1 && <div className="float-left">

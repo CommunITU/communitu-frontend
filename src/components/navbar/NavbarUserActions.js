@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { CDropdown, CDropdownItem, CDropdownMenu, CDropdownToggle, CProgress} from "@coreui/react";
+import {CDropdown, CDropdownItem, CDropdownMenu, CDropdownToggle, CProgress} from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 

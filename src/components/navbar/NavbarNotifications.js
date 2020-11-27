@@ -14,7 +14,7 @@ class NavbarNotifications extends Component {
             >
                 <CDropdownToggle className="c-header-nav-link text-white " caret={false}>
                     <CIcon size="lg" content={freeSet.cilBell}/><CBadge shape="pill"
-                                                                                     color="danger">{itemsCount}</CBadge>
+                                                                        color="danger">{itemsCount}</CBadge>
                 </CDropdownToggle>
                 <CDropdownMenu className="pt-0" placement="bottom-end">
                     <CDropdownItem

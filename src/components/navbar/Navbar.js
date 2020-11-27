@@ -11,7 +11,7 @@ import NavbarCreateActions from "./NavbarCreateActions";
 class _Navbar extends Component {
 
     render() {
-        const {isLoggedIn,user} = this.props;
+        const {isLoggedIn, user} = this.props;
 
         return (
             <Navbar expand="sm" collapseOnSelect variant="dark" className="custom-header align-items-stretch p-0">

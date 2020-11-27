@@ -1,4 +1,4 @@
-import {AuthService, saveJwtToken} from "../../services/AuthService";
+import {AuthService} from "../../services/AuthService";
 import {loginFailed, loginPending, loginSuccess} from "./actionCreators";
 
 

@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react'
 import Container from "react-bootstrap/Container";
-import classNames from "classnames";
-import {Col, Card, CardBody, Form, FormInput, Button, FormTextarea, Row, FormSelect} from "shards-react";
+import {Col, Row} from "shards-react";
 import CreateClubForm from "../../components/club/CreateClubForm";
 
 /**

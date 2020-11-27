@@ -1,5 +1,4 @@
 import React from 'react';
-import routes from "../routes";
 
 /**
  *  No layout, means does not contain common elements with other pages such as navbar, footer.
