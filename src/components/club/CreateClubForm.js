@@ -8,14 +8,15 @@ class CreateClubForm extends PureComponent {
         super(props);
         this.state = {
             currentTab: 1,
-            formAnimation:"slide-from-left",
+            formAnimation: "slide-from-left",
         }
     }
 
     handleTabChange = (type) => {
         this.setState(prevState => {
-            return {currentTab: type === 'next' ? prevState.currentTab + 1 : prevState.currentTab - 1,
-                formAnimation:  type === 'next' ? "slide-from-right" : "slide-from-left"
+            return {
+                currentTab: type === 'next' ? prevState.currentTab + 1 : prevState.currentTab - 1,
+                formAnimation: type === 'next' ? "slide-from-right" : "slide-from-left"
             }
         })
     }
@@ -43,8 +44,8 @@ class CreateClubForm extends PureComponent {
 
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
-                    <h3 className="mr-auto text-center"><strong>General Information</strong></h3>
-                    <h4 className="ml-auto">1/3</h4>
+                    <h3 className={panelClasses + " mr-auto text-center"}><strong>General Information</strong></h3>
+                    <h4 className={panelClasses + " ml-auto"}>1/3</h4>
                 </div>
 
                 <hr/>
@@ -74,8 +75,9 @@ class CreateClubForm extends PureComponent {
         return (
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
-                    <h3 className="mr-auto text-center"><strong>Profile and Header Photos</strong></h3>
-                    <h4 className="ml-auto">2/3</h4>
+                    <h3 className={panelClasses + " mr-auto text-center"}><strong>Profile and Header Photos</strong>
+                    </h3>
+                    <h4 className={panelClasses + " ml-auto"}>2/3</h4>
                 </div>
                 <hr/>
 
@@ -137,8 +139,9 @@ class CreateClubForm extends PureComponent {
         return (
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
-                    <h3 className="mr-auto text-center"><strong>Contact & Social Media Information</strong></h3>
-                    <h4 className="ml-auto">3/3</h4>
+                    <h3 className={panelClasses + " mr-auto text-center"}><strong>Contact & Social Media
+                        Information</strong></h3>
+                    <h4 className={panelClasses + " ml-auto"}>3/3</h4>
                 </div>
 
                 <hr/>
