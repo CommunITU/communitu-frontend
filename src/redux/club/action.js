@@ -1,10 +1,10 @@
-import {AuthService} from "../../services/AuthService";
 import {clubCreatedFailed, clubCreatedPending, clubCreatedSuccess} from "./actionCreators";
+import {ClubService} from "../../services/ClubService";
 
-export const createNewClub = () => dispatch => {
+export const createNewClub = (clubData) => dispatch => {
     dispatch(clubCreatedPending())
-    const token = AuthService.getJwtToken();
-    AuthService.loginWithToken(token)
+    console.log(clubData)
+    ClubService.createNewClubReq(clubData)
         .then(resp => {
             if (resp.data) {
                 dispatch(clubCreatedSuccess())

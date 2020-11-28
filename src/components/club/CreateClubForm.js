@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormTextarea, Row} from "shards-react";
 import classNames from "classnames";
+import {connect} from "react-redux";
+import {createNewClub} from "../../redux/club/action";
 
 class CreateClubForm extends PureComponent {
 
@@ -9,6 +11,18 @@ class CreateClubForm extends PureComponent {
         this.state = {
             currentTab: 1,
             formAnimation: "slide-from-left",
+
+            name: null,
+            description: null,
+            email: null,
+            facebook_url: null,
+            header_photo_url: null,
+            profile_photo_url: "",
+            telegram_url: null,
+            instagram_url: null,
+            website_url: null,
+            discord_url: null,
+            twitter_url: null,
         }
     }
 
@@ -217,7 +231,6 @@ class CreateClubForm extends PureComponent {
 
         const {name, description} = this.state
         const validation = name && description
-        console.log(name, description)
         if (!validation) {
             let formErrors = []
             if (!name) formErrors.push("Club name is required.")
@@ -238,13 +251,13 @@ class CreateClubForm extends PureComponent {
         } = this.state
 
         // Create club object
-        const club_info = {
+        const club_data = {
             name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
             facebook_url, discord_url, telegram_url
         }
 
         // Send club data to backend server
-        // TODO: IMPLEMENT REDUX FUNCTIONS
+        this.props.createNewClub(club_data)
     }
 
     render() {
@@ -304,4 +317,5 @@ class CreateClubForm extends PureComponent {
 
 }
 
-export default CreateClubForm;
+
+export default connect(null, {createNewClub})(CreateClubForm);
