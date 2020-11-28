@@ -14,7 +14,17 @@ const login = (email, pass) => {
 }
 
 const loginWithToken = (token) => {
-    return axios.post(BASE_URL + LOGIN_WITH_TOKEN, {login_token: token})
+    return axios.post(BASE_URL + LOGIN_WITH_TOKEN, {}, headersWithToken(token))
+}
+
+const headersWithToken = (token) => {
+    return {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
 }
 
 const saveJwtToken = (token) => {
@@ -24,6 +34,5 @@ const saveJwtToken = (token) => {
 const getJwtToken = () => {
     return localStorage.getItem('login_token');
 }
-
 
 export const AuthService = {login, loginWithToken, saveJwtToken, getJwtToken};
