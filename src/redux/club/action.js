@@ -3,19 +3,17 @@ import {ClubService} from "../../services/ClubService";
 
 export const createNewClub = (clubData) => dispatch => {
     dispatch(clubCreatedPending())
-    console.log(clubData)
     ClubService.createNewClubReq(clubData)
         .then(resp => {
             if (resp.data) {
-                dispatch(clubCreatedSuccess())
-            } else {
-                dispatch(clubCreatedFailed())
+                const successMessage = resp.data.message
+                dispatch(clubCreatedSuccess(successMessage))
             }
         })
         .catch(error => {
-            if (error.response && error.response.data && error.response.data.message)
-                dispatch(clubCreatedFailed(error.response.data.message))
+            if (error.response && error.response.data && error.response.data.errors)
+                dispatch(clubCreatedFailed(error.response.data.errors))
             else
-                dispatch(clubCreatedFailed(error))
+                dispatch(clubCreatedFailed([error]))
         });
 }

@@ -1,35 +1,32 @@
-import {LOGIN_FAILED, LOGIN_PENDING, LOGIN_SUCCESS} from "./actionTypes";
+import {CLUB_CREATED_FAILED, CLUB_CREATED_SUCCESS, CLUB_CREATED_PENDING} from "./actionTypes";
 
 const initialState = {
     pending: false,
-    user: null,
-    error: null,
-    isLoggedIn: false
+    errors: [],
+    success:null,
 }
 
-export const authReducer = (state = initialState, action) => {
+export const clubCreateReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOGIN_FAILED:
+        case CLUB_CREATED_FAILED:
             return {
-                ...state,
                 pending: false,
-                error: action.error,
-                isLoggedIn: false
+                errors: action.errors,
+                successMessage: null,
             }
 
-        case LOGIN_SUCCESS:
+        case CLUB_CREATED_SUCCESS:
             return {
-                ...state,
                 pending: false,
-                user: action.user,
-                isLoggedIn: true,
+                success: action.success,
+                errors: []
             }
 
-        case LOGIN_PENDING:
+        case CLUB_CREATED_PENDING:
             return {
-                ...state,
-                pending: true,
-                isLoggedIn: false
+                errors: [],
+                successMessage: null,
+                pending: true
             }
         default:
             return state;

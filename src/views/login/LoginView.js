@@ -45,7 +45,6 @@ class LoginView extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         isLoggedIn: state.auth.isLoggedIn
     }

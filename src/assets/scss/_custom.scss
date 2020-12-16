@@ -55,6 +55,7 @@
   filter: blur(3px);
 }
 
+
 .header-v2 {
   animation: fadeIn ease 1s;
   width: 100%;
@@ -142,6 +143,10 @@ h4.header-title {
 .slide-from-right{
   -webkit-animation: slide-from-right-anim .8s forwards;
   animation: slide-from-right-anim .8s forwards;
+}
+
+.success-dialog{
+  margin: 15px 30px;
 }
 
 @keyframes slide-from-left-anim {

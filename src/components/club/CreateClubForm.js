@@ -1,17 +1,23 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormTextarea, Row} from "shards-react";
 import classNames from "classnames";
 import {connect} from "react-redux";
 import {createNewClub} from "../../redux/club/action";
+import SuccessAlert from "./SuccessAlert";
+import {withRouter} from "react-router";
 
-class CreateClubForm extends PureComponent {
+
+
+class CreateClubForm extends Component {
 
     constructor(props) {
         super(props);
+        this.successDialog = React.createRef()
+
         this.state = {
             currentTab: 1,
+            formErrors: [],
             formAnimation: "slide-from-left",
-
             name: null,
             description: null,
             email: null,
@@ -25,6 +31,26 @@ class CreateClubForm extends PureComponent {
             twitter_url: null,
         }
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.backendErrors.length !== this.props.backendErrors.length) {
+            this.setBackendErrorsToState()
+        }
+        console.log(this.props)
+        if(this.props.successMessage){
+            this.successDialog.current.handleClickOpen()
+        }
+    }
+
+    setBackendErrorsToState = () => {
+        const {backendErrors} = this.props
+        if (backendErrors) {
+            let formErrors = this.state.formErrors
+            Array.prototype.push.apply(formErrors, backendErrors);
+            this.setState({formErrors: formErrors})
+        }
+    }
+
 
     handleTabChange = (type) => {
         this.setState(prevState => {
@@ -231,18 +257,20 @@ class CreateClubForm extends PureComponent {
 
         const {name, description} = this.state
         const validation = name && description
+        const formErrors = []
         if (!validation) {
-            let formErrors = []
             if (!name) formErrors.push("Club name is required.")
             if (!description) formErrors.push("Club description is required.")
-            this.setState({formErrors: formErrors})
         }
+        this.setState({formErrors: formErrors})
         return validation
     }
 
     onSubmitForm = () => {
-        // Validate form at first
-        if (!this.validateForm()) return
+
+        // Validate form
+        if (!this.validateForm())
+            return
 
         // Get form field data
         const {
@@ -261,61 +289,73 @@ class CreateClubForm extends PureComponent {
     }
 
     render() {
-
         const totalTab = 3  // Tab count of the form
         const {currentTab, formErrors} = this.state
-
         const formPanelPage1 = this.formPanelPage1()
         const formPanelPage2 = this.formPanelPage2()
         const formPanelPage3 = this.formPanelPage3()
+
         return (
 
-            <Card medium className="mb-4">
-                <CardBody>
-                    <Form className="" onSubmit={this.onSubmit}>
+            <div>
+                <Card medium className="mb-4">
+                    <CardBody>
+                        <Form className="" onSubmit={this.onSubmit}>
 
-                        {/** FORM ERROR MESSAGES */}
-                        {formErrors && <Alert theme="danger">
-                            {formErrors.map(error => {
-                                return (<div><strong>{error}</strong></div>)
-                            })}
-                        </Alert>}
+                            {/** FORM ERROR MESSAGES */}
+                            {formErrors.length > 0 && <Alert theme="danger">
+                                {formErrors.map(error => {
+                                    return (<div><strong>{error}</strong></div>)
+                                })}
+                            </Alert>}
 
-                        {/** FORM PANELS */}
-                        {currentTab === 1 && formPanelPage1}
+                            {/** FORM PANELS */}
+                            {currentTab === 1 && formPanelPage1}
 
-                        {currentTab === 2 && formPanelPage2}
+                            {currentTab === 2 && formPanelPage2}
 
-                        {currentTab === 3 && formPanelPage3}
+                            {currentTab === 3 && formPanelPage3}
 
-                        {/** BUTTONS */}
-                        {currentTab > 1 && <div className="float-left">
-                            <Button onClick={() => this.handleTabChange("back")}
-                                    className="btn btn-ghost-info mt-4">
-                                {'< Back '}
-                            </Button>
-                        </div>}
-                        {currentTab < totalTab && <div className="float-right">
-                            <Button onClick={() => this.handleTabChange("next")}
+                            {/** BUTTONS */}
+                            {currentTab > 1 && <div className="float-left">
+                                <Button onClick={() => this.handleTabChange("back")}
+                                        className="btn btn-ghost-info mt-4">
+                                    {'< Back '}
+                                </Button>
+                            </div>}
+                            {currentTab < totalTab && <div className="float-right">
+                                <Button onClick={() => this.handleTabChange("next")}
+                                        className="btn btn-info mt-4">
+                                    {' Next >'}
+                                </Button>
+                            </div>}
+                            {currentTab === totalTab && <div className="float-right">
+                                <Button
+                                    onClick={this.onSubmitForm}
+                                    size="lg"
                                     className="btn btn-info mt-4">
-                                {' Next >'}
-                            </Button>
-                        </div>}
-                        {currentTab === totalTab && <div className="float-right">
-                            <Button
-                                onClick={this.onSubmitForm}
-                                size="lg"
-                                className="btn btn-info mt-4">
-                                Create Club!
-                            </Button>
-                        </div>}
-                    </Form>
-                </CardBody>
-            </Card>
+                                    Create Club!
+                                </Button>
+                            </div>}
+                        </Form>
+                    </CardBody>
+                </Card>
+
+                {/** SUCCESS ALERT DIALOG */}
+                <SuccessAlert ref={this.successDialog} history={this.props.history}/>
+            </div>
+
+
         );
     }
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+        backendErrors: state.club.errors,
+        successMessage: state.club.success
+    }
+}
 
-export default connect(null, {createNewClub})(CreateClubForm);
+export default withRouter(connect(mapStateToProps, {createNewClub})(CreateClubForm));

@@ -1,16 +1,17 @@
 import {CLUB_CREATED_FAILED, CLUB_CREATED_PENDING, CLUB_CREATED_SUCCESS} from "./actionTypes";
 
 
-export const clubCreatedFailed = (error) => {
+export const clubCreatedFailed = (errors) => {
     return {
         type: CLUB_CREATED_FAILED,
-        error: error,
+        errors: errors,
     }
 }
 
-export const clubCreatedSuccess = () => {
+export const clubCreatedSuccess = (success) => {
     return {
         type: CLUB_CREATED_SUCCESS,
+        success: success
     }
 }
 
