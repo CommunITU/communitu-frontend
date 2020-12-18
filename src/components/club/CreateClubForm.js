@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormTextarea, Row} from "shards-react";
 import classNames from "classnames";
-import {connect} from "react-redux";
-import {createNewClub} from "../../redux/club/action";
 import SuccessAlert from "./SuccessAlert";
 import {withRouter} from "react-router";
-
-
+import {ClubService} from "../../services/ClubService";
 
 class CreateClubForm extends Component {
 
@@ -17,6 +14,7 @@ class CreateClubForm extends Component {
         this.state = {
             currentTab: 1,
             formErrors: [],
+            successMessage: null,
             formAnimation: "slide-from-left",
             name: null,
             description: null,
@@ -33,11 +31,7 @@ class CreateClubForm extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.backendErrors.length !== this.props.backendErrors.length) {
-            this.setBackendErrorsToState()
-        }
-        console.log(this.props)
-        if(this.props.successMessage){
+        if (this.state.successMessage) {
             this.successDialog.current.handleClickOpen()
         }
     }
@@ -285,7 +279,25 @@ class CreateClubForm extends Component {
         }
 
         // Send club data to backend server
-        this.props.createNewClub(club_data)
+        ClubService.createNewClub(club_data)
+            .then(resp => {
+                if (resp.data) {
+                    const successMessage = resp.data.message
+                    this.setState({successMessage: successMessage})
+                }
+            })
+            .catch(error => {
+                let formErrors = this.state.formErrors;
+                if (error.response && error.response.data && error.response.data.errors) {
+                    let backendErrors = error.response.data.errors;
+                    Array.prototype.push.apply(formErrors, backendErrors);
+                } else {
+                    Array.prototype.push.apply(formErrors, error);
+                }
+                this.setState({formErrors: formErrors})
+            });
+
+
     }
 
     render() {
@@ -294,7 +306,6 @@ class CreateClubForm extends Component {
         const formPanelPage1 = this.formPanelPage1()
         const formPanelPage2 = this.formPanelPage2()
         const formPanelPage3 = this.formPanelPage3()
-
         return (
 
             <div>
@@ -358,4 +369,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {createNewClub})(CreateClubForm));
+export default withRouter((CreateClubForm));

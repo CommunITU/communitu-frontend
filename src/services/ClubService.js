@@ -9,8 +9,8 @@ import {BASE_URL, CLUBS} from "../util/constants/ApiConfig";
 import {headersWithToken} from "./AuthService";
 import axios from "axios";
 
-const createNewClubReq = (clubData) => {
+const createNewClub = (clubData) => {
     return axios.post(BASE_URL + CLUBS, clubData, headersWithToken())
 }
 
-export const ClubService = {createNewClubReq}
+export const ClubService = {createNewClub}
