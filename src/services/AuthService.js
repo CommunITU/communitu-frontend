@@ -17,12 +17,24 @@ const loginWithToken = () => {
     return axios.post(BASE_URL + LOGIN_WITH_TOKEN, {}, headersWithToken())
 }
 
+const logout = () => {
+    localStorage.removeItem('login_token');
+
+};
+
 const saveJwtToken = (token) => {
     localStorage.setItem('login_token', token);
 }
 
 const getJwtToken = () => {
     return localStorage.getItem('login_token');
+}
+
+const hasJwtToken = () => {
+    let jwt = localStorage.getItem('login_token');
+    if (jwt != null)
+        return true
+    else return false
 }
 
 export const headersWithToken = () => {
@@ -36,4 +48,4 @@ export const headersWithToken = () => {
     }
 }
 
-export const AuthService = {login, loginWithToken, saveJwtToken, getJwtToken};
+export const AuthService = {login, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken};
