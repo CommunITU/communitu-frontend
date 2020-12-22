@@ -16,14 +16,12 @@ export const login = (user_info) => dispatch => {
             }
         })
         .catch(error => {
-            if (error.response && error.response.data && error.response.data.message){
+            if (error.response && error.response.data && error.response.data.message) {
                 dispatch(loginFailed(error.response.data.message))
-            }
-            else{
+            } else {
                 console.log(error)
                 dispatch(loginFailed(error))
             }
-
         });
 }
 
@@ -53,4 +51,12 @@ export const loginWithToken = () => dispatch => {
                 dispatch(loginFailed(error))
             }
         });
+}
+
+export const logout = () => dispatch => {
+
+    if (!AuthService.hasJwtToken())
+        return;
+
+    dispatch(loginPending())
 }

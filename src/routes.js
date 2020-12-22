@@ -46,7 +46,7 @@ const routes = [
     {
         name        :   "Logout",
         path        :   "/logout",
-        layout      :   BaseLayout,
+        layout      :   NoLayout,
         component   :   LogoutView,
         exact       :   true,
         autoLogin   :   false,
