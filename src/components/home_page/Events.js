@@ -31,7 +31,7 @@ class Events extends Component {
 
     render() {
 
-        const {events, isLoadingEvents} = this.state
+        const {events} = this.state
 
         return (
             <Container>
@@ -43,11 +43,12 @@ class Events extends Component {
                     </Col>
                 </Row>
                 <Row className="py-2">
-                    {events.map((event, i) => {
+                    {events.map((event) => {
                         return (<EventCard title= {event.title}
                                            eventLink= "/link"
-                                           img="event1.png"
+                                           img={event.image_url}
                                            owner="Umut Emre Bayramoğlu"
+                                           location = "Ankara"
                                            quota= {event.quota}
                                            date= {event.startDate}
                                            history="/"/>)
