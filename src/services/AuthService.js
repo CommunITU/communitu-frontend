@@ -1,5 +1,6 @@
 import axios from "axios";
 import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN} from "../util/constants/ApiConfig";
+import {headersWithToken} from "./Headers";
 
 /**
  *  Manages the all api requests associated with authentication.
@@ -37,15 +38,5 @@ const hasJwtToken = () => {
     else return false
 }
 
-export const headersWithToken = () => {
-    const token = AuthService.getJwtToken();
-    return {
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }
-}
 
 export const AuthService = {login, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken};

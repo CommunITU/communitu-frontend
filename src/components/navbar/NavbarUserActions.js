@@ -11,7 +11,6 @@ class NavbarUserActions extends Component {
     }
 
     render() {
-        const itemsCount = 5
         const {user} = this.props
         return (
             <CDropdown
@@ -19,8 +18,6 @@ class NavbarUserActions extends Component {
                 className="c-header-nav-item mx-2"
             >
                 <CDropdownToggle className="c-header-nav-link text-white" caret={true}>
-                    {/*<CIcon className="text-white" content={freeSet.cilBell}/>*/}
-                    {/*<CBadge shape="pill" color="danger">{itemsCount}</CBadge>*/}
                     <img
                         className="user-avatar rounded-circle mr-1"
                         src={require("../../assets/images/profile_pic.jpg").default}
