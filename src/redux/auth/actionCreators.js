@@ -1,4 +1,4 @@
-import {LOGIN_FAILED, LOGIN_PENDING, LOGIN_SUCCESS} from "./actionTypes";
+import {LOGIN_FAILED, LOGIN_PENDING, LOGIN_SUCCESS, LOGOUT} from "./actionTypes";
 
 
 export const loginFailed = (error) => {
@@ -18,5 +18,11 @@ export const loginSuccess = (user) => {
 export const loginPending = () => {
     return {
         type: LOGIN_PENDING,
+    }
+}
+
+export const logout = () => {
+    return {
+        type: LOGOUT,
     }
 }

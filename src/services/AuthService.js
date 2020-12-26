@@ -1,5 +1,6 @@
 import axios from "axios";
 import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN} from "../util/constants/ApiConfig";
+import {headersWithToken} from "./Headers";
 
 /**
  *  Manages the all api requests associated with authentication.
@@ -17,6 +18,11 @@ const loginWithToken = () => {
     return axios.post(BASE_URL + LOGIN_WITH_TOKEN, {}, headersWithToken())
 }
 
+const logout = () => {
+    localStorage.removeItem('login_token');
+
+};
+
 const saveJwtToken = (token) => {
     localStorage.setItem('login_token', token);
 }
@@ -25,15 +31,12 @@ const getJwtToken = () => {
     return localStorage.getItem('login_token');
 }
 
-export const headersWithToken = () => {
-    const token = AuthService.getJwtToken();
-    return {
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }
+const hasJwtToken = () => {
+    let jwt = localStorage.getItem('login_token');
+    if (jwt != null)
+        return true
+    else return false
 }
 
-export const AuthService = {login, loginWithToken, saveJwtToken, getJwtToken};
+
+export const AuthService = {login, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken};

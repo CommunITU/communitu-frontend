@@ -16,15 +16,21 @@ export const login = (user_info) => dispatch => {
             }
         })
         .catch(error => {
-            if (error.response && error.response.data && error.response.data.message)
+            if (error.response && error.response.data && error.response.data.message) {
                 dispatch(loginFailed(error.response.data.message))
-            else
+            } else {
+                console.log(error)
                 dispatch(loginFailed(error))
+            }
         });
 }
 
 
 export const loginWithToken = () => dispatch => {
+
+    if (!AuthService.hasJwtToken())
+        return;
+
     dispatch(loginPending())
     const token = AuthService.getJwtToken();
     AuthService.loginWithToken(token)
@@ -37,9 +43,20 @@ export const loginWithToken = () => dispatch => {
             }
         })
         .catch(error => {
-            if (error.response && error.response.data && error.response.data.message)
+            if (error.response && error.response.data && error.response.data.message) {
+                console.log(error.response.data.message)
                 dispatch(loginFailed(error.response.data.message))
-            else
+            } else {
+                console.log(error)
                 dispatch(loginFailed(error))
+            }
         });
+}
+
+export const logout = () => dispatch => {
+
+    if (!AuthService.hasJwtToken())
+        return;
+
+    dispatch(loginPending())
 }

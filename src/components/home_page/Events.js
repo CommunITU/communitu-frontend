@@ -1,22 +1,37 @@
 import React, {Component} from 'react';
 import {Container, Col, Row} from "react-bootstrap";
 import EventCard from "./EventCard";
+import {EventService} from "../../services/EventService";
 
 
 class Events extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLoadingEvents: false,
+            events: []
+        }
+    }
+
+    componentDidMount() {
+        this.setState({...this.state, isLoadingEvents: true})
+        EventService.fetchEvents()
+            .then(resp => {
+                if (resp && resp.data) {
+                    let events = resp.data;
+                    this.setState({...this.state, events: events, isLoadingEvents:false});
+
+                }
+            })
+            .catch(err => {
+                this.setState({...this.state, events: [], isLoadingEvents:false});
+            })
+    }
+
     render() {
 
-        let events = [];
-        for (let i = 0; i < 6; i++) {
-            events.push(<EventCard title="Event title"
-                                 eventLink=""
-                                 img="event1.png"
-                                 owner="Umut Emre Bayramoğlu"
-                                 location="Ankara"
-                                 quota="10"
-                                 date="Today"
-                                 history="/"/>);
-        }
+        const {events} = this.state
 
         return (
             <Container>
@@ -28,7 +43,16 @@ class Events extends Component {
                     </Col>
                 </Row>
                 <Row className="py-2">
-                    {events}
+                    {events.map((event) => {
+                        return (<EventCard title= {event.title}
+                                           eventLink= "/link"
+                                           img={event.image_url}
+                                           owner="Umut Emre Bayramoğlu"
+                                           location = "Ankara"
+                                           quota= {event.quota}
+                                           date= {event.startDate}
+                                           history="/"/>)
+                    })}
                 </Row>
             </Container>
         );

@@ -47,12 +47,10 @@
   animation: fadeIn ease 1s;
   width: 100%;
   height: 260px;
-  background: url("../images/header_img.jpg");
+  background: url("../images/header_city.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 100% 10%;
-  filter: grayscale(50%);
-  filter: blur(3px);
 }
 
 
@@ -101,6 +99,12 @@ h4.header-title {
   color: #f1f1f1;
 }
 
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
 .event-title {
   font-family: Georgia, serif;
   margin-bottom: 7.5px;
@@ -135,17 +139,17 @@ h4.header-title {
   max-width: 1.6rem;
 }
 
-.slide-from-left{
+.slide-from-left {
   -webkit-animation: slide-from-left-anim .8s forwards;
   animation: slide-from-left-anim .8s forwards;
 }
 
-.slide-from-right{
+.slide-from-right {
   -webkit-animation: slide-from-right-anim .8s forwards;
   animation: slide-from-right-anim .8s forwards;
 }
 
-.success-dialog{
+.success-dialog {
   margin: 15px 30px;
 }
 

@@ -6,3 +6,6 @@ export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 
 /** Clubs */
 export const CLUBS = "/clubs";
+
+/** Events */
+export const EVENTS = "/events";

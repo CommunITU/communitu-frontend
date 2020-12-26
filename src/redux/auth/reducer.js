@@ -1,4 +1,4 @@
-import {LOGIN_FAILED, LOGIN_PENDING, LOGIN_SUCCESS} from "./actionTypes";
+import {LOGIN_FAILED, LOGIN_PENDING, LOGIN_SUCCESS, LOGOUT} from "./actionTypes";
 
 const initialState = {
     pending: false,
@@ -31,6 +31,10 @@ export const authReducer = (state = initialState, action) => {
                 pending: true,
                 isLoggedIn: false
             }
+
+        case LOGOUT:
+            return initialState;
+
         default:
             return state;
 

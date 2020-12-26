@@ -9,8 +9,8 @@ export default class Header extends Component {
                     <div className="header-img"/>
                     <div className="carousel-caption">
                        <Row className="align-items-center">
-                           <Col lg={12} md={12} sm={12}> <h1 className="carousel-title">discover events </h1></Col>
-                           <Col lg={12} md={12} sm={12}> <h1 className="carousel-title">on ITU </h1></Col>
+                           <Col lg={12} md={12} sm={12}> <h1 className="carousel-title">Discover </h1></Col>
+                           <Col lg={12} md={12} sm={12}> <h1 className="carousel-title">Campus Events</h1></Col>
                        </Row>
                     </div>
                 </div>
