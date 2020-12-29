@@ -47,7 +47,7 @@ class SuccessAlert extends Component {
                         <DialogContentText id="alert-dialog-description my-auto">
                             <div class="success-dialog text-center">
                                 <h5><b>You are ready to organize events!</b></h5>
-                                <img src={require('../../assets/images/tick-gif.gif').default}/>
+                                <img alt="created-successfully" src={require('../../assets/images/tick-gif.gif').default}/>
                             </div>
                         </DialogContentText>
                     </DialogContent>

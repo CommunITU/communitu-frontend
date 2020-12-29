@@ -14,6 +14,7 @@ class _Navbar extends Component {
         this.props.history.push(uri)
     }
 
+
     render() {
         const {isLoggedIn, user} = this.props;
 
@@ -54,12 +55,12 @@ class _Navbar extends Component {
                             : <Nav navbar className="mx-2">
                                 <Col>
                                     <Row>
-                                        <NavItem className="py-2">
-                                            <NavLink href="/login"><span
+                                        <NavItem className="py-2" onClick={() => this.handleNavAction("/login")}>
+                                            <NavLink><span
                                                 className="mr-2 text-gray"><FaSignInAlt/> Login</span></NavLink>
                                         </NavItem>
-                                        <NavItem className="py-2">
-                                            <NavLink href="/register"><span
+                                        <NavItem className="py-2" onClick={() => this.handleNavAction("/register")}>
+                                            <NavLink><span
                                                 className="text-gray"><FaRegUser
                                                 className="mr-1 mb-1"/>Register</span></NavLink>
                                         </NavItem>

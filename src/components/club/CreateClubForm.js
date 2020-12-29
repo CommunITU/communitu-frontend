@@ -362,11 +362,4 @@ class CreateClubForm extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-        backendErrors: state.club.errors,
-        successMessage: state.club.success
-    }
-}
-
 export default withRouter((CreateClubForm));
