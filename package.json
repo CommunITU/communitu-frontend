@@ -33,6 +33,7 @@
     "reactstrap": "^8.7.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "serve": "^11.3.2",
     "shards-react": "^1.0.3",
     "url-loader": "^4.1.1",
     "web-vitals": "^0.2.4"
