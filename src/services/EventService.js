@@ -9,8 +9,8 @@ import axios from "axios";
 import {BASE_URL, EVENTS} from "../util/constants/ApiConfig";
 import {baseHeaders} from "./Headers";
 
-const fetchEvents = () => {
-    return axios.get(BASE_URL + EVENTS, baseHeaders())
+const fetchEvents = (loadSize, page) => {
+    return axios.get(BASE_URL + EVENTS + `?page=${page}&size=${loadSize}`, baseHeaders())
 }
 
 export const EventService = {fetchEvents}

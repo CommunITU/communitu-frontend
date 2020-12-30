@@ -5,27 +5,31 @@ import {EventService} from "../../services/EventService";
 
 
 class Events extends Component {
+
+    static EVENT_LOAD_SIZE = 3
+
     constructor(props) {
         super(props);
 
         this.state = {
             isLoadingEvents: false,
-            events: []
+            events: [],
+            page: 1,
         }
     }
 
     componentDidMount() {
         this.setState({...this.state, isLoadingEvents: true})
-        EventService.fetchEvents()
+        EventService.fetchEvents(Events.EVENT_LOAD_SIZE, this.state.page)
             .then(resp => {
                 if (resp && resp.data) {
                     let events = resp.data;
-                    this.setState({...this.state, events: events, isLoadingEvents:false});
+                    this.setState({...this.state, events: events, isLoadingEvents: false});
 
                 }
             })
             .catch(err => {
-                this.setState({...this.state, events: [], isLoadingEvents:false});
+                this.setState({...this.state, events: [], isLoadingEvents: false});
             })
     }
 
@@ -44,13 +48,13 @@ class Events extends Component {
                 </Row>
                 <Row className="py-2">
                     {events.map((event) => {
-                        return (<EventCard title= {event.title}
-                                           eventLink= "/link"
+                        return (<EventCard title={event.title}
+                                           eventLink="/link"
                                            img={event.image_url}
                                            owner="Umut Emre Bayramoğlu"
-                                           location = "Ankara"
-                                           quota= {event.quota}
-                                           date= {event.startDate}
+                                           location="Ankara"
+                                           quota={event.quota}
+                                           date={event.startDate}
                                            history="/"/>)
                     })}
                 </Row>
