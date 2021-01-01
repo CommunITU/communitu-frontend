@@ -24,7 +24,6 @@ class LoginForm extends Component {
 
         this.state = {
             isCompleted: false,
-            checked: false
         }
     }
 
@@ -44,7 +43,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {email, pass, checked} = this.state;
+        const {email, pass} = this.state;
         return (
             <div className="col-sm-10 col-md-9 col-xl-5 col-lg-7 mx-auto">
                 <div className="card py-lg-2 py-md-2 ">
@@ -61,7 +60,7 @@ class LoginForm extends Component {
                                     <FormInput
                                         id="email"
                                         name="email"
-                                        type=""
+                                        type="email"
                                         placeholder="Email"
                                         onChange={this.onChange}
                                     />
@@ -85,23 +84,9 @@ class LoginForm extends Component {
 
                             </FormGroup>
 
-                            {/* CHECKBOX FIELD */}
-                            <Row className="justify-content-center">
-                                <Col md="12" className="form-group">
-                                    <FormCheckbox
-                                        onChange={this.handleCheckbox}
-                                        checked={checked}
-
-                                    >
-                                        I agree with your{" "}
-                                        <a href="/">Privacy Policy</a>.
-                                    </FormCheckbox>
-                                </Col>
-                            </Row>
-
                             {/* LOGIN BUTTON FIELD */}
                             <Row className="justify-content-center">
-                                <Button className="btn-primary" disabled={!email || !pass || !checked}>Login</Button>
+                                <Button className="btn-primary" disabled={!email || !pass}>Login</Button>
                             </Row>
 
                         </Form>

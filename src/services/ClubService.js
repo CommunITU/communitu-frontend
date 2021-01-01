@@ -5,7 +5,7 @@
  *  @author Umut Emre Bayramoglu
  */
 
-import {BASE_URL, CLUBS} from "../util/constants/ApiConfig";
+import {BASE_URL, CLUBS} from "../constants/ApiConfig";
 import axios from "axios";
 import {headersWithToken} from "./Headers";
 

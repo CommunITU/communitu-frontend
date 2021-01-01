@@ -25,7 +25,6 @@ export const login = (user_info) => dispatch => {
         });
 }
 
-
 export const loginWithToken = () => dispatch => {
 
     if (!AuthService.hasJwtToken())

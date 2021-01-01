@@ -6,7 +6,7 @@
  */
 
 import axios from "axios";
-import {BASE_URL, EVENTS} from "../util/constants/ApiConfig";
+import {BASE_URL, EVENTS} from "../constants/ApiConfig";
 import {baseHeaders} from "./Headers";
 
 const fetchEvents = (loadSize, page) => {

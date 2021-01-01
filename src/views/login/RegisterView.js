@@ -5,11 +5,12 @@ import {AuthSidebar} from "../../components/auth/AuthSidebar";
 import Container from "react-bootstrap/Container";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router';
+import RegisterForm from "../../components/auth/RegisterForm";
 
 /**
- *  Login page of the application.
+ *  Register page of the application.
  *
- *  @created    12/14/2020
+ *  @created    01/01/2021
  *  @author Umut Emre Bayramoglu
  */
 
@@ -36,7 +37,7 @@ class LoginView extends PureComponent {
                     <AuthSidebar/>
                     <div className="col-lg col-md offset-lg-4 offset-md-4 login-right-container">
                         <h3 className="text-center font-weight-bold text-in-logo-color mb-4">CommunITU </h3>
-                        <LoginForm/>
+                        <RegisterForm/>
                     </div>
                 </Row>
             </Container>

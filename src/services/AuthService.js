@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN} from "../util/constants/ApiConfig";
+import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER} from "../constants/ApiConfig";
 import {headersWithToken} from "./Headers";
 
 /**
@@ -12,6 +12,10 @@ import {headersWithToken} from "./Headers";
 
 const login = (email, pass) => {
     return axios.post(BASE_URL + LOGIN, {email: email, password: pass})
+}
+
+const register = (userData) => {
+    return axios.post(BASE_URL + REGISTER,  userData)
 }
 
 const loginWithToken = () => {
@@ -39,4 +43,4 @@ const hasJwtToken = () => {
 }
 
 
-export const AuthService = {login, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken};
+export const AuthService = {login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken};

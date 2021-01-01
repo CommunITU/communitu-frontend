@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormTextarea, Row} from "shards-react";
 import classNames from "classnames";
-import SuccessAlert from "./SuccessAlert";
+import ClubSuccessAlert from "./ClubSuccessAlert";
 import {withRouter} from "react-router";
 import {ClubService} from "../../services/ClubService";
 
@@ -353,7 +353,7 @@ class CreateClubForm extends Component {
                 </Card>
 
                 {/** SUCCESS ALERT DIALOG */}
-                <SuccessAlert ref={this.successDialog} history={this.props.history}/>
+                <ClubSuccessAlert ref={this.successDialog} history={this.props.history}/>
             </div>
 
 

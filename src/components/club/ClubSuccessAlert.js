@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 
-class SuccessAlert extends Component {
+class ClubSuccessAlert extends Component {
 
     constructor(props) {
         super(props);
@@ -62,4 +62,4 @@ class SuccessAlert extends Component {
     }
 }
 
-export default SuccessAlert;
+export default ClubSuccessAlert;

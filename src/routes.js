@@ -5,6 +5,7 @@ import LoginView from "./views/login/LoginView";
 import CreateNewClubView from "./views/club/CreateNewClubView";
 import CreateNewEventView from "./views/event/CreateNewEventView";
 import LogoutView from "./views/login/LogoutView";
+import RegisterView from "./views/login/RegisterView";
 
 /**
  *  Route list for the application. Returns all routes as an array.
@@ -39,6 +40,15 @@ const routes = [
         path        :   "/login",
         layout      :   NoLayout,
         component   :   LoginView,
+        exact       :   true,
+        autoLogin   :   true,
+        needAuth    :   false,
+    },
+    {
+        name        :   "Register Page",
+        path        :   "/register",
+        layout      :   NoLayout,
+        component   :   RegisterView,
         exact       :   true,
         autoLogin   :   true,
         needAuth    :   false,

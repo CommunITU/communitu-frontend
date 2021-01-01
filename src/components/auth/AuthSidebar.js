@@ -3,7 +3,7 @@ import {Col} from "shards-react";
 import classNames from "classnames";
 
 
-export class LoginSidebar extends Component {
+export class AuthSidebar extends Component {
 
     render() {
         const classes = classNames(
@@ -21,4 +21,4 @@ export class LoginSidebar extends Component {
     }
 }
 
-export default LoginSidebar;
+export default AuthSidebar;
