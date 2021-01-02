@@ -4,10 +4,8 @@ import {withRouter} from 'react-router';
 
 import {
     Row,
-    Col,
     Button,
     Form,
-    FormCheckbox,
     FormInput,
     FormGroup,
     InputGroup,

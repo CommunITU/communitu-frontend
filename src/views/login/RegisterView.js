@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import {Row} from "reactstrap";
-import LoginForm from "../../components/auth/LoginForm"
 import {AuthSidebar} from "../../components/auth/AuthSidebar";
 import Container from "react-bootstrap/Container";
 import {connect} from "react-redux";
