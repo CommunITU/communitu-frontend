@@ -14,18 +14,14 @@ import {loginWithToken} from "../redux/auth/action";
  */
 class MyRouter extends PureComponent {
     render() {
+        this.props.loginWithToken();
+
         return (
             <BrowserRouter>
                 <Switch>
                     {
                         routes.map((route,
                                     index) => {
-
-                            if (route.autoLogin) {
-                                this.props.loginWithToken()
-                            }
-
-
                             return (
                                 <Route
                                     key={index}
@@ -54,5 +50,4 @@ const actionCreators = {
     loginWithToken: loginWithToken
 }
 
-
-export default withRouter(connect(null, actionCreators)(MyRouter));
+export default withRouter(connect(null,actionCreators)(MyRouter));

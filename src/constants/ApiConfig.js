@@ -10,3 +10,6 @@ export const CLUBS = "/clubs";
 
 /** Events */
 export const EVENTS = "/events";
+
+/** Users */
+export const USERS = "/users";

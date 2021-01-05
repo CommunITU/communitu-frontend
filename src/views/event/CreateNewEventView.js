@@ -2,6 +2,8 @@ import React, {PureComponent} from 'react'
 import {Row} from "reactstrap";
 import Container from "react-bootstrap/Container";
 import {withRouter} from 'react-router';
+import CreateEventForm from "../../components/event/CreateEventForm";
+import {Col} from "shards-react";
 
 /**
  *  'Create new event' view.
@@ -14,9 +16,19 @@ class CreateNewEventView extends PureComponent {
 
     render() {
         return (
-            <Container fluid>
-                <Row className="h-100">
-                   CREATE NEW EVENT VIEW
+            <Container fluid className="p-0 header-v2">
+
+                <Row className="justify-content-center align-items-center py-4">
+                    <div>
+                        <h4 className="header-title mt-4 text-center">Create your event !</h4>
+                        <h3 className="text-white-50 text-center">and get together</h3>
+                    </div>
+                </Row>
+
+                <Row className="justify-content-center mt-4 mx-2">
+                    <Col className="justify-content-center" lg={5} md={10} xs={12} sm={10}>
+                        <CreateEventForm/>
+                    </Col>
                 </Row>
             </Container>
         )

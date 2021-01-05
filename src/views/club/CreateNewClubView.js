@@ -12,6 +12,9 @@ import CreateClubForm from "../../components/club/CreateClubForm";
 
 class CreateNewClubView extends PureComponent {
 
+    componentDidMount() {
+    }
+
     render() {
         return (
             <Container fluid className="p-0 header-v2">
@@ -33,11 +36,4 @@ class CreateNewClubView extends PureComponent {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     console.log(state)
-//     return {
-//         isLoggedIn: state.auth.isLoggedIn
-//     }
-// }
-
-export default CreateNewClubView
+export default (CreateNewClubView)

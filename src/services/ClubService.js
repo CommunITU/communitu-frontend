@@ -5,7 +5,7 @@
  *  @author Umut Emre Bayramoglu
  */
 
-import {BASE_URL, CLUBS} from "../constants/ApiConfig";
+import {BASE_URL, CLUBS, USERS} from "../constants/ApiConfig";
 import axios from "axios";
 import {headersWithToken} from "./Headers";
 
@@ -13,4 +13,8 @@ const createNewClub = (clubData) => {
     return axios.post(BASE_URL + CLUBS, clubData, headersWithToken())
 }
 
-export const ClubService = {createNewClub}
+const getClubsNameExecutedByUser = (userId) =>{
+    return axios.get(BASE_URL + USERS + "/"+ userId + CLUBS + "?role=executive&fields=id,name")
+}
+
+export const ClubService = {createNewClub, getClubsNameExecutedByUser}
