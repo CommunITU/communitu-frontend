@@ -18,7 +18,6 @@ import ReactQuill from "react-quill";
 import {DatePicker_} from "../../util/DatePicker";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
-import {CBadge} from "@coreui/react";
 import {formInputLabelClasses} from "../../util/FormUtils";
 import EventRegistrationQuestion from "./EventRegistrationQuestion";
 
@@ -42,11 +41,12 @@ class CreateEventForm extends Component {
             start_date: null,
             end_date: null,
             ask_registration_questions: null,
-            registration_questions: [],
+            registration_questions_dom: [],
 
-            registration_questions_map: {},
             clubsLoading: false,
             clubsFetched: false,
+            clubSelection: null,
+
             myClubs: [],
         }
     }
@@ -63,8 +63,6 @@ class CreateEventForm extends Component {
         if (this.state.successMessage) {
             this.successDialog.current.handleClickOpen()
         }
-
-
     }
 
     fetchMyClubs = () => {
@@ -75,6 +73,7 @@ class CreateEventForm extends Component {
                 .then(resp => {
                     this.setState({...this.state, myClubs: resp.data.clubs})
                     this.setState({...this.state, clubsFetched: true, clubsLoading: false})
+                    this.setState({...this.state, clubSelection: resp.data.clubs[0].id})
                 })
                 .catch(err => {
                     this.setState({...this.state, clubsFetched: true, clubsLoading: false})
@@ -114,7 +113,8 @@ class CreateEventForm extends Component {
     }
 
     onFormSelectionChange = (e) => {
-        this.setState({[e.target.name]: e.target.value});
+        let clubID = parseInt(e.target.value)
+        this.setState({"clubSelection": clubID});
     }
 
     onCheckboxChange = (e, opt) => {
@@ -128,27 +128,32 @@ class CreateEventForm extends Component {
 
     }
 
-    updateQuestion = (questionId, question) => {
-
-        let questions = this.state.registration_questions_map
-        questions[questionId] = question
-        this.setState({registration_questions_map: questions})
-    }
-
     addNewQuestion = () => {
-        let questionId = this.state.registration_questions.length + 1
+        let questionId = this.state.registration_questions_dom.length;
         this.setState({
             ...this.state,
-            registration_questions: [...this.state.registration_questions,
-                <EventRegistrationQuestion id={questionId} updateQuestion={this.updateQuestion}/>]
+            registration_questions_dom: [...this.state.registration_questions_dom,
+                <EventRegistrationQuestion id={questionId}/>]
         })
 
     }
 
+    createClubSelectOptions = () => {
+        const {myClubs, clubsFetched} = this.state
+        const options = []
+
+        clubsFetched
+            ? myClubs.map((club, ind) => {
+                let selected = (club.id === this.state.clubSelection)
+                return (options.push(<option selected={selected} value={club.id}>{club.name}</option>))
+            })
+            : options.push(<option selected>Loading clubs...</option>)
+
+        return options
+    }
 
     formPanelPage1 = () => {
         const panelClasses = this.state.formAnimation
-        const {myClubs, clubsFetched} = this.state
 
         return (
             <div className={panelClasses}>
@@ -163,20 +168,7 @@ class CreateEventForm extends Component {
                 <div className="panelClasses">
                     <FormSelect onChange={this.onFormSelectionChange} name="clubSelection">
                         {
-                            clubsFetched
-                                ? myClubs.map((club) => {
-                                    let {clubSelection} = this.state
-                                    let selected = false
-                                    if (clubSelection === undefined || clubSelection === null) {
-                                        this.setState({...this.state, clubSelection: club.id}, () => {
-                                            selected = true
-                                        })
-                                    } else {
-                                        selected = parseInt(this.state.clubSelection) === club.id
-                                    }
-                                    return (<option selected={selected} value={club.id}>{club.name}</option>)
-                                })
-                                : <option selected>Loading clubs...</option>
+                            this.createClubSelectOptions()
                         }
                     </FormSelect>
                 </div>
@@ -309,6 +301,8 @@ class CreateEventForm extends Component {
 
     formPanelPage4 = () => {
         const panelClasses = this.state.formAnimation
+        console.log(this.state.registration_questions_dom)
+
         return (
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
@@ -341,8 +335,7 @@ class CreateEventForm extends Component {
                 {/*    color: 'white', fontSize: 18, lineHeight: 7,*/}
                 {/*}} size="2xl" shape="pill" color="secondary">Add New Question</CBadge>*/}
 
-                {this.state.registration_questions.map((question) => {
-                    console.log(question)
+                {this.state.registration_questions_dom.map((question) => {
                     return question
                 })}
 
@@ -478,7 +471,8 @@ const mapStateToProps = (state) => {
 
     return {
         loggedUser: state.auth.user,
-        loginPending: state.auth.pending
+        loginPending: state.auth.pending,
+        registrationQuestions: state.questionForm.questions
     }
 }
 
