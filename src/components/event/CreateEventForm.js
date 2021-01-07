@@ -19,7 +19,6 @@ import {DatePicker_} from "../../util/DatePicker";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {formInputLabelClasses} from "../../util/FormUtils";
-import EventRegistrationQuestion from "./EventRegistrationQuestion";
 import {addQuestionFormAction} from "../../redux/event/action";
 
 class CreateEventForm extends Component {
@@ -358,42 +357,42 @@ class CreateEventForm extends Component {
 
     onSubmitForm = () => {
 
-        // Validate form
-        if (!this.validateForm())
-            return
+        // // Validate form
+        // if (!this.validateForm())
+        //     return
+        //
+        // // Get form field data
+        // const {
+        //     name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
+        //     facebook_url, discord_url, telegram_url
+        // } = this.state
+        //
+        // // Create club object
+        // const club_data = {
+        //     name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
+        //     facebook_url, discord_url, telegram_url
+        // }
+        //
+        // // Send club data to backend server
+        // ClubService.createNewClub(club_data)
+        //     .then(resp => {
+        //         if (resp.data) {
+        //             const successMessage = resp.data.message
+        //             this.setState({successMessage: successMessage})
+        //         }
+        //     })
+        //     .catch(error => {
+        //         let formErrors = this.state.formErrors;
+        //         if (error.response && error.response.data && error.response.data.errors) {
+        //             let backendErrors = error.response.data.errors;
+        //             Array.prototype.push.apply(formErrors, backendErrors);
+        //         } else {
+        //             Array.prototype.push.apply(formErrors, error);
+        //         }
+        //         this.setState({formErrors: formErrors})
+        //     });
 
-        // Get form field data
-        const {
-            name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
-            facebook_url, discord_url, telegram_url
-        } = this.state
-
-        // Create club object
-        const club_data = {
-            name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
-            facebook_url, discord_url, telegram_url
-        }
-
-        // Send club data to backend server
-        ClubService.createNewClub(club_data)
-            .then(resp => {
-                if (resp.data) {
-                    const successMessage = resp.data.message
-                    this.setState({successMessage: successMessage})
-                }
-            })
-            .catch(error => {
-                let formErrors = this.state.formErrors;
-                if (error.response && error.response.data && error.response.data.errors) {
-                    let backendErrors = error.response.data.errors;
-                    Array.prototype.push.apply(formErrors, backendErrors);
-                } else {
-                    Array.prototype.push.apply(formErrors, error);
-                }
-                this.setState({formErrors: formErrors})
-            });
-
-
+        console.log(this.props.registrationQuestions)
     }
 
     render() {
@@ -466,7 +465,7 @@ const mapStateToProps = (state) => {
     return {
         loggedUser: state.auth.user,
         loginPending: state.auth.pending,
-        registrationQuestions: state.questionForm.registrationQuestions,
+        registrationQuestions: state.questionForm.questions,
         registrationQuestionsDom: state.questionForm.questionsDom,
     }
 }
