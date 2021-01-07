@@ -20,6 +20,7 @@ import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {formInputLabelClasses} from "../../util/FormUtils";
 import EventRegistrationQuestion from "./EventRegistrationQuestion";
+import {addQuestionFormAction} from "../../redux/event/action";
 
 class CreateEventForm extends Component {
 
@@ -129,13 +130,8 @@ class CreateEventForm extends Component {
     }
 
     addNewQuestion = () => {
-        let questionId = this.state.registration_questions_dom.length;
-        this.setState({
-            ...this.state,
-            registration_questions_dom: [...this.state.registration_questions_dom,
-                <EventRegistrationQuestion id={questionId}/>]
-        })
-
+        let questionId = Object.values(this.props.registrationQuestionsDom).length;
+        this.props.addQuestionFormAction(questionId)
     }
 
     createClubSelectOptions = () => {
@@ -301,7 +297,6 @@ class CreateEventForm extends Component {
 
     formPanelPage4 = () => {
         const panelClasses = this.state.formAnimation
-        console.log(this.state.registration_questions_dom)
 
         return (
             <div className={panelClasses}>
@@ -335,7 +330,7 @@ class CreateEventForm extends Component {
                 {/*    color: 'white', fontSize: 18, lineHeight: 7,*/}
                 {/*}} size="2xl" shape="pill" color="secondary">Add New Question</CBadge>*/}
 
-                {this.state.registration_questions_dom.map((question) => {
+                {Object.values(this.props.registrationQuestionsDom).map((question) => {
                     return question
                 })}
 
@@ -468,12 +463,12 @@ class CreateEventForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-
     return {
         loggedUser: state.auth.user,
         loginPending: state.auth.pending,
-        registrationQuestions: state.questionForm.questions
+        registrationQuestions: state.questionForm.registrationQuestions,
+        registrationQuestionsDom: state.questionForm.questionsDom,
     }
 }
 
-export default withRouter(connect(mapStateToProps, null)(CreateEventForm));
+export default withRouter(connect(mapStateToProps, {addQuestionFormAction})(CreateEventForm));
