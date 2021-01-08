@@ -41,7 +41,7 @@ export const customTheme = createMuiTheme({
     },
 })
 
-export class DatePicker_ extends Component {
+export class DatePicker extends Component {
     constructor(props) {
         super(props);
 

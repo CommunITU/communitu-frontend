@@ -2,7 +2,6 @@ import {
     ADD_QUESTION_OPTION,
     ADD_QUESTION_TO_FORM,
     DELETE_QUESTION_FROM_FORM,
-    UPDATE_QUESTION_OPTION,
     UPDATE_QUESTIONS_FORM
 } from "./actionTypes";
 import EventRegistrationQuestion from "../../components/event/EventRegistrationQuestion";
