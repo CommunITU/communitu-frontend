@@ -12,7 +12,7 @@ import {
 } from "shards-react";
 import {withRouter} from "react-router";
 import {ClubService} from "../../services/ClubService";
-import EventSuccessAlert from "./EventSuccessAlert";
+import {EventService} from "../../services/EventService";
 import {connect} from "react-redux";
 import ReactQuill from "react-quill";
 import {DatePicker_} from "../../util/DatePicker";
@@ -20,6 +20,7 @@ import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {formInputLabelClasses} from "../../util/FormUtils";
 import {addQuestionFormAction} from "../../redux/event/action";
+import SuccessModal from "../alert/SuccessModal";
 
 class CreateEventForm extends Component {
 
@@ -40,12 +41,14 @@ class CreateEventForm extends Component {
             profile_photo_url: null,
             start_date: null,
             end_date: null,
+            location: null,
+            quota: null,
             ask_registration_questions: null,
             registration_questions_dom: [],
 
-            clubsLoading: false,
-            clubsFetched: false,
-            clubSelection: null,
+            clubs_loading: false,
+            clubs_fetched: false,
+            club_selection: null,
 
             myClubs: [],
         }
@@ -68,15 +71,15 @@ class CreateEventForm extends Component {
     fetchMyClubs = () => {
         const {loggedUser} = this.props
         if (loggedUser) {
-            this.setState({...this.state, clubsLoading: true})
+            this.setState({...this.state, clubs_loading: true})
             ClubService.getClubsNameExecutedByUser(loggedUser.id)
                 .then(resp => {
                     this.setState({...this.state, myClubs: resp.data.clubs})
-                    this.setState({...this.state, clubsFetched: true, clubsLoading: false})
-                    this.setState({...this.state, clubSelection: resp.data.clubs[0].id})
+                    this.setState({...this.state, clubs_fetched: true, clubs_loading: false})
+                    this.setState({...this.state, club_selection: resp.data.clubs[0].id})
                 })
                 .catch(err => {
-                    this.setState({...this.state, clubsFetched: true, clubsLoading: false})
+                    this.setState({...this.state, clubs_fetched: true, clubs_loading: false})
                 })
         }
     }
@@ -114,7 +117,7 @@ class CreateEventForm extends Component {
 
     onFormSelectionChange = (e) => {
         let clubID = parseInt(e.target.value)
-        this.setState({"clubSelection": clubID});
+        this.setState({"club_selection": clubID});
     }
 
     onCheckboxChange = (e, opt) => {
@@ -134,12 +137,12 @@ class CreateEventForm extends Component {
     }
 
     createClubSelectOptions = () => {
-        const {myClubs, clubsFetched} = this.state
+        const {myClubs, clubs_fetched} = this.state
         const options = []
 
-        clubsFetched
+        clubs_fetched
             ? myClubs.map((club, ind) => {
-                let selected = (club.id === this.state.clubSelection)
+                let selected = (club.id === this.state.club_selection)
                 return (options.push(<option selected={selected} value={club.id}>{club.name}</option>))
             })
             : options.push(<option selected>Loading clubs...</option>)
@@ -161,7 +164,7 @@ class CreateEventForm extends Component {
 
                 {/** Club selection  */}
                 <div className="panelClasses">
-                    <FormSelect onChange={this.onFormSelectionChange} name="clubSelection">
+                    <FormSelect onChange={this.onFormSelectionChange} name="club_selection">
                         {
                             this.createClubSelectOptions()
                         }
@@ -216,15 +219,23 @@ class CreateEventForm extends Component {
 
 
                 {/** LOCATION */}
-                <Row>
-                    <Col lg="12" md="12">
+                <Row className="mt-2">
+                    <Col lg="6" md="6">
                         <strong className={formInputLabel}>Location</strong>
 
                         <FormInput name="location" type="text" onChange={this.onTextChange} size="md"
                                    placeholder="Enter the location"/>
                     </Col>
 
+                    <Col lg="6" md="6">
+                        <strong className={formInputLabel}>Quota</strong>
+
+                        <FormInput name="quota" type="number" onChange={this.onTextChange} size="md"
+                                   placeholder="Enter the quota"/>
+                    </Col>
+
                 </Row>
+
 
             </div>
         )
@@ -344,55 +355,106 @@ class CreateEventForm extends Component {
 
     validateForm = () => {
 
-        const {name, description} = this.state
-        const validation = name && description
+        const {club_selection, name, description, start_date, end_date, location, quota} = this.state
+        const {registrationQuestions} = this.props
+        let validation = true
+
         const formErrors = []
-        if (!validation) {
-            if (!name) formErrors.push("Club name is required.")
-            if (!description) formErrors.push("Club description is required.")
+        if (!club_selection) {
+            formErrors.push("Please select the club.")
+            validation = false
         }
+        if (!name) {
+            formErrors.push("Event name is required.")
+            validation = false
+        }
+        if (!description) {
+            formErrors.push("Event description is required.")
+            validation = false
+        }
+        if (!start_date) {
+            formErrors.push("Event start date is required.")
+            validation = false
+        }
+        if (!end_date) {
+            formErrors.push("Event end date is required.")
+            validation = false
+        }
+        if (!location) {
+            formErrors.push("Event location is required.")
+            validation = false
+        }
+        if (!quota) {
+            formErrors.push("Event quota is required.")
+            validation = false
+        }
+
+        let questions = Object.values(registrationQuestions)
+        if (questions.length > 0) {
+            questions.map((question, qInd) => {
+                const {title, explanation, questionOptions, questionType} = question
+                if (!title) {
+                    formErrors.push(`Registration question ${qInd + 1} title is required!`)
+                    validation = false
+                }
+                if (!explanation) {
+                    formErrors.push(`Registration question ${qInd + 1} explanation is required!`)
+                    validation = false
+                }
+
+                let options = Object.values(questionOptions)
+                if (questionType === "choice" && options.length > 0) {
+                    options.map((option, oInd) => {
+                        const {optionText} = option
+                        if (!optionText) {
+                            formErrors.push(`Registration question ${oInd + 1} option ${oInd + 1} explanation is required!`)
+                            validation = false
+                        }
+                    })
+                }
+            })
+        }
+
         this.setState({formErrors: formErrors})
         return validation
     }
 
     onSubmitForm = () => {
 
-        // // Validate form
-        // if (!this.validateForm())
-        //     return
-        //
-        // // Get form field data
-        // const {
-        //     name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
-        //     facebook_url, discord_url, telegram_url
-        // } = this.state
-        //
-        // // Create club object
-        // const club_data = {
-        //     name, description, profile_photo_url, header_photo_url, website_url, email, twitter_url, instagram_url,
-        //     facebook_url, discord_url, telegram_url
-        // }
-        //
-        // // Send club data to backend server
-        // ClubService.createNewClub(club_data)
-        //     .then(resp => {
-        //         if (resp.data) {
-        //             const successMessage = resp.data.message
-        //             this.setState({successMessage: successMessage})
-        //         }
-        //     })
-        //     .catch(error => {
-        //         let formErrors = this.state.formErrors;
-        //         if (error.response && error.response.data && error.response.data.errors) {
-        //             let backendErrors = error.response.data.errors;
-        //             Array.prototype.push.apply(formErrors, backendErrors);
-        //         } else {
-        //             Array.prototype.push.apply(formErrors, error);
-        //         }
-        //         this.setState({formErrors: formErrors})
-        //     });
+        // Validate form
+        if (!this.validateForm())
+            return
 
-        console.log(this.props.registrationQuestions)
+        // Get form field data
+        const {
+            club_selection, name, description, start_date, end_date, location, quota
+        } = this.state
+
+        const registration_questions = this.props.registrationQuestions
+
+        // Create event object
+        const event_data = {
+            club_selection, name, description, start_date, end_date, location, quota, registration_questions
+        }
+
+        // Send event data to backend server
+        EventService.createNewEvent(event_data)
+            .then(resp => {
+                if (resp.data) {
+                    const successMessage = resp.data.message
+                    this.setState({successMessage: successMessage})
+                }
+            })
+            .catch(error => {
+                let formErrors = this.state.formErrors;
+                if (error.response && error.response.data && error.response.data.errors) {
+                    let backendErrors = error.response.data.errors;
+                    Array.prototype.push.apply(formErrors, backendErrors);
+                } else {
+                    Array.prototype.push.apply(formErrors, error);
+                }
+                this.setState({formErrors: formErrors})
+            });
     }
 
     render() {
@@ -452,7 +514,8 @@ class CreateEventForm extends Component {
                 </Card>
 
                 {/** SUCCESS ALERT DIALOG */}
-                <EventSuccessAlert ref={this.successDialog} history={this.props.history}/>
+                <SuccessModal modalTitle="Event created!" modalMessage="You are ready to share event!"
+                              ref={this.successDialog} history={this.props.history}/>
             </div>
 
 

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Alert, Button, Card, CardBody, Col, Form, FormInput, FormTextarea, Row} from "shards-react";
 import classNames from "classnames";
-import ClubSuccessAlert from "./ClubSuccessAlert";
 import {withRouter} from "react-router";
 import {ClubService} from "../../services/ClubService";
+import SuccessModal from "../alert/SuccessModal";
 
 class CreateClubForm extends Component {
 
@@ -353,7 +353,8 @@ class CreateClubForm extends Component {
                 </Card>
 
                 {/** SUCCESS ALERT DIALOG */}
-                <ClubSuccessAlert ref={this.successDialog} history={this.props.history}/>
+                <SuccessModal modalTitle="Club created!" modalMessage="You are ready to organize events !"
+                              ref={this.successDialog} history={this.props.history}/>
             </div>
 
 

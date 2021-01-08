@@ -107,7 +107,6 @@ class EventRegistrationQuestion extends Component {
 
     render() {
 
-        const id = this.props.id
         const question = this.state.question
         return (
             <Form className="wipe-open"

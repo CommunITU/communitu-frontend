@@ -7,10 +7,14 @@
 
 import axios from "axios";
 import {BASE_URL, EVENTS} from "../constants/ApiConfig";
-import {baseHeaders} from "./Headers";
+import {baseHeaders, headersWithToken} from "./Headers";
 
 const fetchEvents = (loadSize, page) => {
     return axios.get(BASE_URL + EVENTS + `?page=${page}&size=${loadSize}`, baseHeaders())
 }
 
-export const EventService = {fetchEvents}
+const createNewEvent = (eventData) => {
+    return axios.post(BASE_URL + EVENTS, eventData, headersWithToken())
+}
+
+export const EventService = {fetchEvents,createNewEvent}
