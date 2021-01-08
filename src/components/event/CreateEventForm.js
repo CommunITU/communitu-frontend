@@ -15,7 +15,7 @@ import {ClubService} from "../../services/ClubService";
 import {EventService} from "../../services/EventService";
 import {connect} from "react-redux";
 import ReactQuill from "react-quill";
-import {DatePicker_} from "../../util/DatePicker";
+import {DatePicker} from "../../util/DatePicker";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {formInputLabelClasses} from "../../util/FormUtils";
@@ -204,7 +204,7 @@ class CreateEventForm extends Component {
                 <Row className="mt-2">
                     <Col lg="6" md="6">
                         <strong className={formInputLabel}>Start Date</strong>
-                        <div className="form-control p-1 m-1 text-center"><DatePicker_
+                        <div className="form-control p-1 m-1 text-center"><DatePicker
                             onDateChange={this.onDateChange} selectedDate={this.state.start_date} name="start_date"/>
                         </div>
 
@@ -212,7 +212,7 @@ class CreateEventForm extends Component {
 
                     <Col lg="6" md="6" className="mt-xs-2 mt-sm-2">
                         <strong className={formInputLabel}>End Date</strong>
-                        <div className="form-control p-1 m-1 text-center"><DatePicker_
+                        <div className="form-control p-1 m-1 text-center"><DatePicker
                             onDateChange={this.onDateChange} selectedDate={this.state.end_date} name="end_date"/></div>
                     </Col>
                 </Row>
@@ -410,11 +410,13 @@ class CreateEventForm extends Component {
                             formErrors.push(`Registration question ${oInd + 1} option ${oInd + 1} explanation is required!`)
                             validation = false
                         }
+                        return true;
                     })
+
                 }
+                return true;
             })
         }
-
         this.setState({formErrors: formErrors})
         return validation
     }

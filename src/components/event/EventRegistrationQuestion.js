@@ -71,7 +71,7 @@ class EventRegistrationQuestion extends Component {
     }
 
     changeQuestionType = (type) => {
-        if (type == "choice" && Object.keys(this.state.question.questionOptions).length === 0) {
+        if (type === "choice" && Object.keys(this.state.question.questionOptions).length === 0) {
             this.addNewOption()
             this.addNewOption()
         }
