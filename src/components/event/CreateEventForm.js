@@ -37,8 +37,7 @@ class CreateEventForm extends Component {
             formAnimation: "slide-from-left",
             name: null,
             description: null,
-            header_photo_url: null,
-            profile_photo_url: null,
+            image_url: null,
             start_date: null,
             end_date: null,
             location: null,
@@ -223,20 +222,19 @@ class CreateEventForm extends Component {
                     <Col lg="6" md="6">
                         <strong className={formInputLabel}>Location</strong>
 
-                        <FormInput value={this.state.location} name="location" type="text" onChange={this.onTextChange} size="md"
+                        <FormInput value={this.state.location} name="location" type="text" onChange={this.onTextChange}
+                                   size="md"
                                    placeholder="Enter the location"/>
                     </Col>
 
                     <Col lg="6" md="6">
                         <strong className={formInputLabel}>Quota</strong>
 
-                        <FormInput value={this.state.quota} name="quota" type="number" onChange={this.onTextChange} size="md"
+                        <FormInput value={this.state.quota} name="quota" type="number" onChange={this.onTextChange}
+                                   size="md"
                                    placeholder="Enter the quota"/>
                     </Col>
-
                 </Row>
-
-
             </div>
         )
     }
@@ -253,44 +251,19 @@ class CreateEventForm extends Component {
                 </div>
                 <hr/>
 
-                {/** PROFILE PHOTO  */}
-                <div>
-                    <strong className={formInputLabel}>Select Profile Photo</strong>
-                    <Row>
-                        <Col lg="10" md="10" sm="10" xs="10" className="pr-0">
-                            <div className="custom-file mb-3">
-                                <input type="file" name="profile_photo_url" onChange={e => this.onFileUpload(e)}
-                                       className="custom-file-input"
-                                       id="customFile2">
-
-                                </input>
-                                <label className="custom-file-label" htmlFor="customFile2">
-                                    {this.state.profile_photo_url}
-                                </label>
-                            </div>
-                        </Col>
-                        <Col lg="2" md="2" sm="2" xs="2" className="text-center pl-0">
-                            <Button onClick={this.handleUploadPhoto()} className="btn btn-light">
-                                Upload
-                            </Button>
-                        </Col>
-                    </Row>
-                </div>
-
-
                 {/** HEADER PHOTO  */}
                 <div className="mt-2">
                     <strong className={formInputLabel}>Select Header Photo</strong>
                     <Row>
                         <Col lg="10" md="10" sm="10" xs="10" className="pr-0">
                             <div className="custom-file mb-3">
-                                <input type="file" name="header_photo_url" onChange={e => this.onFileUpload(e)}
+                                <input type="file" name="image_url" onChange={e => this.onFileUpload(e)}
                                        className="custom-file-input"
                                        id="customFile2">
 
                                 </input>
                                 <label className="custom-file-label" htmlFor="customFile2">
-                                    {this.state.header_photo_url}
+                                    {this.state.image_url}
                                 </label>
                             </div>
                         </Col>
@@ -392,7 +365,7 @@ class CreateEventForm extends Component {
         let questions = Object.values(registrationQuestions)
         if (questions.length > 0) {
             questions.map((question, qInd) => {
-                const {title, explanation, questionOptions, questionType} = question
+                const {title, explanation, question_options, question_type} = question
                 if (!title) {
                     formErrors.push(`Registration question ${qInd + 1} title is required!`)
                     validation = false
@@ -402,12 +375,12 @@ class CreateEventForm extends Component {
                     validation = false
                 }
 
-                let options = Object.values(questionOptions)
-                if (questionType === "choice" && options.length > 0) {
+                let options = Object.values(question_options)
+                if (question_type === "choice" && options.length > 0) {
                     options.map((option, oInd) => {
-                        const {optionText} = option
-                        if (!optionText) {
-                            formErrors.push(`Registration question ${oInd + 1} option ${oInd + 1} explanation is required!`)
+                        const {option_text} = option
+                        if (!option_text) {
+                            formErrors.push(`Registration question ${oInd + 1} option ${oInd + 1} is required!`)
                             validation = false
                         }
                         return true;
@@ -428,19 +401,26 @@ class CreateEventForm extends Component {
             return
 
         // Get form field data
-        const {
-            club_selection, name, description, start_date, end_date, location, quota
+        let {
+            club_selection, name, description, start_date, end_date, location, quota, image_url
         } = this.state
 
-        const registration_questions = this.props.registrationQuestions
 
-        // Create event object
-        const event_data = {
-            club_selection, name, description, start_date, end_date, location, quota, registration_questions
+        // The fields that will be send to backend
+        const registrationQuestions = this.props.registrationQuestions
+        const created_by = club_selection
+
+        if(!image_url)
+            image_url = "no_event_image.png"
+
+        const eventData = {
+            name, description, start_date, end_date, location, quota, image_url,
+            created_by
         }
+        eventData['registration_questions'] = registrationQuestions
 
         // Send event data to backend server
-        EventService.createNewEvent(event_data)
+        EventService.createNewEvent(eventData)
             .then(resp => {
                 if (resp.data) {
                     const successMessage = resp.data.message

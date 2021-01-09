@@ -54,7 +54,7 @@ export const questionFormReducer = (state = initialState, {newQuestionOptionDom,
             }
 
         case ADD_QUESTION_OPTION:
-            questions[questionID].questionOptions[optionID] = questionOption
+            questions[questionID].question_options[optionID] = questionOption
             questionsOptionsDom[questionID] = {...questionsOptionsDom[questionID]}
             questionsOptionsDom[questionID][optionID] = newQuestionOptionDom
 

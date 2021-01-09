@@ -33,13 +33,13 @@ class EventRegistrationQuestion extends Component {
     onOptionTextChange = (e) => {
         let questionId = this.props.id
         let optionId = e.target.id
-        let questionOptions = this.props.registrationQuestions[questionId].questionOptions
-        questionOptions[optionId].optionText = e.target.value
+        let question_options = this.props.registrationQuestions[questionId].question_options
+        question_options[optionId].option_text = e.target.value
 
         this.setState({
             question: {
                 ...this.props.registrationQuestions[questionId],
-                questionOptions: questionOptions
+                question_options: question_options
             }
         }, () => {
             this.props.updateQuestionsForm(questionId, this.state.question)
@@ -53,7 +53,7 @@ class EventRegistrationQuestion extends Component {
                 <CIcon size="md" color="danger" content={freeSet.cilArrowRight}/>
 
                 <FormInput id={optionId}
-                           value={this.state.question.questionOptions[optionId]}
+                           value={this.state.question.question_options[optionId]}
                            className="mx-3 border-top-0 border-left-0 border-right-0"
                            onChange={this.onOptionTextChange}
                            placeHolder="Enter the option"/>
@@ -65,33 +65,33 @@ class EventRegistrationQuestion extends Component {
 
     addNewOption = () => {
 
-        let questionOptionId = Object.keys(this.state.question.questionOptions).length + 1
+        let questionOptionId = Object.keys(this.state.question.question_options).length + 1
         let questionOptionDom = this.createOptionDom(questionOptionId)
         this.props.addQuestionOption(this.props.id, questionOptionId, questionOptionDom)
     }
 
     changeQuestionType = (type) => {
-        if (type === "choice" && Object.keys(this.state.question.questionOptions).length === 0) {
+        if (type === "choice" && Object.keys(this.state.question.question_options).length === 0) {
             this.addNewOption()
             this.addNewOption()
         }
 
-        this.setState({question: {...this.state.question, questionType: type}}, () => {
+        this.setState({question: {...this.state.question, question_type: type}}, () => {
             this.props.updateQuestionsForm(this.props.id,this.state.question)
         })
     }
 
     choiceAnswerPanel = () => {
         const {questionOptionsDom} = this.props
-        const {questionType} = this.state.question
+        const {question_type} = this.state.question
         return (
             <>
-                {questionType === "choice" && Object.values(questionOptionsDom[this.props.id]).map((option, ind) => {
+                {question_type === "choice" && Object.values(questionOptionsDom[this.props.id]).map((option, ind) => {
                     return option
                 })}
 
 
-                {questionType === "choice" &&
+                {question_type === "choice" &&
                 <Button onClick={this.addNewOption} className="btn-ghost-dark border my-3">Add new option</Button>}
             </>
         )
@@ -99,7 +99,7 @@ class EventRegistrationQuestion extends Component {
 
     hoverBg = (type) => {
         const hoverBg = "bg-info text-white"
-        if (this.state.question.questionType === type)
+        if (this.state.question.question_type === type)
             return hoverBg
 
         return ""

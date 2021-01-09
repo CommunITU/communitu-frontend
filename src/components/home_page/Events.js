@@ -48,7 +48,7 @@ class Events extends Component {
                 </Row>
                 <Row className="py-2">
                     {events.map((event) => {
-                        return (<EventCard title={event.title}
+                        return (<EventCard name={event.name}
                                            eventLink="/link"
                                            img={event.image_url}
                                            owner="Umut Emre Bayramoğlu"

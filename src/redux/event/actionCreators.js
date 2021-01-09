@@ -18,7 +18,7 @@ export const addQuestionToForm = (questionID) => {
     return {
         type: ADD_QUESTION_TO_FORM,
         questionID: questionID,
-        questionFields: {title: null, explanation: null, questionType: "text", questionOptions: {}},
+        questionFields: {title: null, explanation: null, question_type: "text", question_options: {}},
     }
 }
 
@@ -35,7 +35,7 @@ export const addQuestionOption = (questionID, optionID,questionOptionDom) => {
         type: ADD_QUESTION_OPTION,
         questionID: questionID,
         optionID: optionID,
-        questionOption: {optionText: null},
+        questionOption: {option_text: null},
         newQuestionOptionDom: questionOptionDom
     }
 }

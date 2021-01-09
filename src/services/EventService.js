@@ -13,8 +13,8 @@ const fetchEvents = (loadSize, page) => {
     return axios.get(BASE_URL + EVENTS + `?page=${page}&size=${loadSize}`, baseHeaders())
 }
 
-const createNewEvent = (eventData) => {
-    return axios.post(BASE_URL + EVENTS, eventData, headersWithToken())
+const createNewEvent = (event_data) => {
+    return axios.post(BASE_URL + EVENTS, {event_data}, headersWithToken())
 }
 
-export const EventService = {fetchEvents,createNewEvent}
+export const EventService = {fetchEvents, createNewEvent}
