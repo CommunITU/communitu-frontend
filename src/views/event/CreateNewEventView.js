@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react'
 import {Row} from "reactstrap";
 import Container from "react-bootstrap/Container";
 import {withRouter} from 'react-router';
-import CreateEventForm from "../../components/event/CreateEventForm";
+import CreateEventForm from "../../components/event/create_form/CreateEventForm";
 import {Col} from "shards-react";
 
 /**

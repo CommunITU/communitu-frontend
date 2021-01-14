@@ -11,6 +11,7 @@ class NavbarNotifications extends Component {
                 inNav
                 className="c-header-nav-item mx-2"
                 direction="down"
+                style={{zIndex:"99999"}}
             >
                 <CDropdownToggle className="c-header-nav-link text-white " caret={false}>
                     <CIcon size="lg" content={freeSet.cilBell}/><CBadge shape="pill"

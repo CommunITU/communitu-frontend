@@ -11,16 +11,16 @@ import {
     Row
 } from "shards-react";
 import {withRouter} from "react-router";
-import {ClubService} from "../../services/ClubService";
-import {EventService} from "../../services/EventService";
+import {ClubService} from "../../../services/ClubService";
+import {EventService} from "../../../services/EventService";
 import {connect} from "react-redux";
 import ReactQuill from "react-quill";
-import {DatePicker} from "../../util/DatePicker";
+import {DatePicker} from "../../../util/DatePicker";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
-import {formInputLabelClasses} from "../../util/FormUtils";
-import {addQuestionFormAction} from "../../redux/event/action";
-import SuccessModal from "../alert/SuccessModal";
+import {formInputLabelClasses} from "../../../util/FormUtils";
+import {addQuestionFormAction} from "../../../redux/event/action";
+import SuccessModal from "../../alert/SuccessModal";
 
 class CreateEventForm extends Component {
 

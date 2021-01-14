@@ -16,6 +16,7 @@ class NavbarUserActions extends Component {
             <CDropdown
                 inNav
                 className="c-header-nav-item mx-2"
+                style={{zIndex:"99999"}}
             >
                 <CDropdownToggle className="c-header-nav-link text-white" caret={true}>
                     <img

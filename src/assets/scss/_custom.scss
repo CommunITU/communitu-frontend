@@ -65,6 +65,32 @@
   background-position: 100% 0%;
 }
 
+.event-page-header-image {
+  position: fixed;
+  left: 0;
+  top:0px;
+  right: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 100% 0%;
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+}
+
+.event-page-content {
+  position: fixed;
+  z-index: 2;
+  margin-top: 100px;
+  width: 100%;
+}
+
 .carousel-title {
   line-height: 1.2;
   font-size: 40px;
@@ -129,7 +155,7 @@ h4.header-title {
   transition: box-shadow 0.3s ease-in-out;
 }
 
-.registration-add-question{
+.registration-add-question {
   padding: 5px;
 }
 

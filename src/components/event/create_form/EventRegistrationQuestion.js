@@ -3,7 +3,7 @@ import {Button, Form, FormInput} from "shards-react";
 import {connect} from "react-redux";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
-import {addQuestionOption, deleteQuestionFromForm, updateQuestionsForm} from "../../redux/event/actionCreators";
+import {addQuestionOption, deleteQuestionFromForm, updateQuestionsForm} from "../../../redux/event/actionCreators";
 
 class EventRegistrationQuestion extends Component {
 

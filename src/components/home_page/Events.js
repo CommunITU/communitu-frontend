@@ -48,14 +48,14 @@ class Events extends Component {
                 </Row>
                 <Row className="py-2">
                     {events.map((event) => {
-                        return (<EventCard name={event.name}
+                        return (<EventCard id={event.id}
+                                           name={event.name}
                                            eventLink="/link"
                                            img={event.image_url}
                                            owner="Umut Emre Bayramoğlu"
-                                           location="Ankara"
+                                           eventLocation={event.location}
                                            quota={event.quota}
-                                           date={event.startDate}
-                                           history="/"/>)
+                                           date={event.startDate}/>)
                     })}
                 </Row>
             </Container>

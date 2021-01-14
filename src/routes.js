@@ -6,6 +6,7 @@ import CreateNewClubView from "./views/club/CreateNewClubView";
 import CreateNewEventView from "./views/event/CreateNewEventView";
 import LogoutView from "./views/login/LogoutView";
 import RegisterView from "./views/login/RegisterView";
+import EventPageView from "./views/event/EventPageView";
 
 /**
  *  Route list for the application. Returns all routes as an array.
@@ -79,6 +80,15 @@ const routes = [
         exact       :   true,
         autoLogin   :   true,
         needAuth    :   true,
+    },
+    {
+        name        :   "Event Page",
+        path        :   "/:clubName/events/:eventId",
+        layout      :   BaseLayout,
+        component   :   EventPageView,
+        exact       :   true,
+        autoLogin   :   true,
+        needAuth    :   false,
     },
 
 

@@ -4,7 +4,7 @@ import {
     DELETE_QUESTION_FROM_FORM,
     UPDATE_QUESTIONS_FORM
 } from "./actionTypes";
-import EventRegistrationQuestion from "../../components/event/EventRegistrationQuestion";
+import EventRegistrationQuestion from "../../components/event/create_form/EventRegistrationQuestion";
 import React from "react";
 
 const initialState = {
