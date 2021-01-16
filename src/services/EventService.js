@@ -21,4 +21,24 @@ const createNewEvent = (event_data) => {
     return axios.post(BASE_URL + EVENTS, {event_data}, headersWithToken())
 }
 
-export const EventService = {fetchEvents, getEventById, createNewEvent}
+const getParticipationStatus = (eventId, userId) => {
+    return axios.get(BASE_URL + EVENTS + `/${eventId}/participants/${userId}`, headersWithToken())
+}
+
+const participateToEvent = (eventId) => {
+    return axios.post(BASE_URL + EVENTS + `/${eventId}/participants`, {}, headersWithToken())
+}
+
+const cancelParticipationToEvent = (eventId) => {
+    return axios.delete(BASE_URL + EVENTS + `/${eventId}/participants`, headersWithToken())
+}
+
+
+export const EventService = {
+    fetchEvents,
+    getEventById,
+    createNewEvent,
+    cancelParticipationToEvent,
+    participateToEvent,
+    getParticipationStatus
+}
