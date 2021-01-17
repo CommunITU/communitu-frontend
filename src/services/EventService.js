@@ -33,6 +33,9 @@ const cancelParticipationToEvent = (eventId) => {
     return axios.delete(BASE_URL + EVENTS + `/${eventId}/participants`, headersWithToken())
 }
 
+const getRegistrationQuestions = (eventId) => {
+    return axios.get(BASE_URL + EVENTS + `/${eventId}/reg_questions`, headersWithToken())
+}
 
 export const EventService = {
     fetchEvents,
@@ -40,5 +43,6 @@ export const EventService = {
     createNewEvent,
     cancelParticipationToEvent,
     participateToEvent,
-    getParticipationStatus
+    getParticipationStatus,
+    getRegistrationQuestions
 }
