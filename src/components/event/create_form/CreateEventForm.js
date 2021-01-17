@@ -21,6 +21,7 @@ import {freeSet} from "@coreui/icons";
 import {formInputLabelClasses} from "../../../util/FormUtils";
 import {addQuestionFormAction} from "../../../redux/event/action";
 import SuccessModal from "../../alert/SuccessModal";
+import {UploadService} from "../../../services/UploadService";
 
 class CreateEventForm extends Component {
 
@@ -48,7 +49,7 @@ class CreateEventForm extends Component {
             clubs_loading: false,
             clubs_fetched: false,
             club_selection: null,
-
+            event_image_file: null,
             myClubs: [],
         }
     }
@@ -126,9 +127,6 @@ class CreateEventForm extends Component {
         this.setState({...this.state, ...newState})
     }
 
-    handleUploadPhoto = (e) => {
-
-    }
 
     addNewQuestion = () => {
         let questionId = Object.values(this.props.registrationQuestionsDom).length;
@@ -257,18 +255,22 @@ class CreateEventForm extends Component {
                     <Row>
                         <Col lg="10" md="10" sm="10" xs="10" className="pr-0">
                             <div className="custom-file mb-3">
-                                <input type="file" name="image_url" onChange={e => this.onFileUpload(e)}
-                                       className="custom-file-input"
-                                       id="customFile2">
+                                <input id="eventPhoto" type="file"
+                                       name="event_image_file"
+                                       onChange={e => this.onFileSelection(e)}
+                                       className="custom-file-input">
 
                                 </input>
-                                <label className="custom-file-label" htmlFor="customFile2">
-                                    {this.state.image_url}
+                                <label className="custom-file-label"
+                                       htmlFor="eventPhoto">
+                                    {this.state.event_image_file ? this.state.event_image_file.name : ""}
                                 </label>
                             </div>
                         </Col>
                         <Col lg="2" md="2" sm="2" xs="2" className="text-center pl-0">
-                            <Button onClick={this.handleUploadPhoto()} className="btn btn-light">
+                            <Button
+                                disabled={!this.state.event_image_file}
+                                id="eventPhotoUpload" onClick={this.onFileUpload} className="btn btn-light">
                                 Upload
                             </Button>
                         </Col>
@@ -322,8 +324,31 @@ class CreateEventForm extends Component {
         )
     }
 
-    onFileUpload(e) {
-        this.setState({[e.target.name]: [e.target.value]})
+    onFileSelection(e) {
+        this.setState({[e.target.name]: e.target.files[0]})
+    }
+
+    onFileUpload = (e) => {
+        const {id} = e.target
+        let file = null
+
+        if (id === "eventPhotoUpload")
+            file = this.state.event_image_file
+
+        UploadService.uploadEventPhoto(file)
+            .then(resp => {
+                if (resp.status === 200) {
+                    let file_url = resp.data.file_url
+                    if (id === "eventPhotoUpload")
+                        this.setState({'image_url': file_url})
+
+                    console.log("File uploaded !")
+                }
+            })
+            .catch(err => {
+                console.log("File could not be uploaded !")
+            })
+
     }
 
     validateForm = () => {
@@ -410,7 +435,7 @@ class CreateEventForm extends Component {
         const registrationQuestions = this.props.registrationQuestions
         const created_by = club_selection
 
-        if(!image_url)
+        if (!image_url)
             image_url = "no_event_image.png"
 
         const eventData = {

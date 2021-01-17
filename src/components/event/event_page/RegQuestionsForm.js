@@ -24,7 +24,7 @@ export class RegQuestionsForm extends Component {
     }
 
     handleTextChange = (e) => {
-        const {id, value, name} = e.target;
+        const {id, value} = e.target;
         const {userResponses} = this.state
         userResponses[id] = {'type': "text", 'answer': value}
         this.setState({
@@ -49,53 +49,65 @@ export class RegQuestionsForm extends Component {
         })
     }
 
-    validateForm = async () => {
+    validateForm = () => {
         const {questions} = this.props
         const {userResponses} = this.state
+
+        let validation = true
         questions.map((question) => {
+            if (!validation)
+                return ""
+
             if (question.is_mandatory
                 && ((typeof userResponses[question.id]) === 'undefined'
                     || (typeof userResponses[question.id].answer == 'undefined')
                     || userResponses[question.id].answer === "")) {
 
+                validation = false
                 this.setState({formError: "Please answer the mandatory questions"})
-                return false
             }
+
+            return ""
         })
 
-        return true
+        console.log(validation)
+        return validation;
     }
 
     onSubmitForm = () => {
-        this.setState({formError:null})
+        this.setState({formError: null})
         if (!this.validateForm())
             return
 
         this.props.formCompletedCallback("success")
-        // this.setState({showDialog: false})
-
-
+        this.setState({showDialog: false})
     };
 
     createQuestion = (ind, question) => {
         const questionId = question.id
         return (
             <div className="mt-3">
+
+                {/** Create question title and explanation */}
                 <DialogContentText>
-                    <b>{ind + 1}) {question.title}</b>
+                    <b>{ind + 1}) {question.title}
+                        <span className="text-danger">{question.is_mandatory ? " *" : ""}</span>
+                    </b>
                 </DialogContentText>
                 <DialogContentText style={{fontSize: "14px", fontStyle: "italic"}}>
                     {question.explanation}
                 </DialogContentText>
 
-                {question.question_type === "text" &&
 
+                {/** Create text answer question */}
+                {question.question_type === "text" &&
                 <FormTextarea
                     id={questionId}
                     onChange={this.handleTextChange}
                     size="md"
                 />}
 
+                {/** Create choice answer question */}
                 {question.question_type === "choice" &&
                 <FormControl component="fieldset">
                     <RadioGroup onChange={(e) => this.handleOptionChange(questionId, parseInt(e.target.name))}>

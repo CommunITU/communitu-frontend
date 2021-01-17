@@ -8,11 +8,12 @@ class EventContainer extends Component {
 
 
     eventImage = (url) => {
+        console.log(url)
         const style = {
             width: '100%',
             height: '100%',
         }
-        return <img alt="event" style={style} src={require(`../../../assets/images/${url}`).default}/>
+        return <img alt="event" style={style} src={url}/>
     }
 
 

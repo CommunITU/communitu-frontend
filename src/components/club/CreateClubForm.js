@@ -4,6 +4,7 @@ import classNames from "classnames";
 import {withRouter} from "react-router";
 import {ClubService} from "../../services/ClubService";
 import SuccessModal from "../alert/SuccessModal";
+import {UploadService} from "../../services/UploadService";
 
 class CreateClubForm extends Component {
 
@@ -16,17 +17,21 @@ class CreateClubForm extends Component {
             formErrors: [],
             successMessage: null,
             formAnimation: "slide-from-left",
+
+
             name: null,
             description: null,
             email: null,
             facebook_url: null,
             header_photo_url: null,
-            profile_photo_url: "",
+            profile_photo_url: null,
             telegram_url: null,
             instagram_url: null,
             website_url: null,
             discord_url: null,
             twitter_url: null,
+            header_photo_file: null,
+            profile_photo_file: null,
         }
     }
 
@@ -59,7 +64,39 @@ class CreateClubForm extends Component {
         this.setState({[e.target.name]: e.target.value});
     }
 
-    handleUploadPhoto = (e) => {
+
+    onFileSelect(e) {
+        this.setState({[e.target.name]: e.target.files[0]})
+    }
+
+    onFileUpload = (e) => {
+        const {id} = e.target
+        let file = null
+
+        if (id === "profilePhotoUpload")
+            file = this.state.profile_photo_file
+        else if (id === "headerPhotoUpload") {
+            file = this.state.header_photo_file
+        }
+
+        UploadService.uploadClubPhoto(file)
+            .then(resp => {
+                console.log(resp)
+                if (resp.status === 200) {
+                    let file_url = resp.data.file_url
+                    console.log(file_url)
+                    if (id === "profilePhotoUpload")
+                        this.setState({'profile_photo_url': file_url})
+                    else if (id === "headerPhotoUpload") {
+                        this.setState({'header_photo_url': file_url})
+                    }
+
+                    console.log("File uploaded !")
+                }
+            })
+            .catch(err => {
+                console.log("File could not be uploaded !")
+            })
 
     }
 
@@ -121,18 +158,20 @@ class CreateClubForm extends Component {
                     <Row>
                         <Col lg="10" md="10" sm="10" xs="10" className="pr-0">
                             <div className="custom-file mb-3">
-                                <input type="file" name="profile_photo_url" onChange={e => this.onFileUpload(e)}
+                                <input type="file" name="profile_photo_file" onChange={e => this.onFileSelect(e)}
                                        className="custom-file-input"
-                                       id="customFile2">
+                                       id="profilePhoto">
 
                                 </input>
-                                <label className="custom-file-label" htmlFor="customFile2">
-                                    {this.state.profile_photo_url}
+                                <label className="custom-file-label" htmlFor="profilePhoto">
+                                    {this.state.profile_photo_file ? this.state.profile_photo_file.name : ""}
                                 </label>
                             </div>
                         </Col>
                         <Col lg="2" md="2" sm="2" xs="2" className="text-center pl-0">
-                            <Button onClick={this.handleUploadPhoto()} className="btn btn-light">
+                            <Button disabled={!this.state.profile_photo_file}
+                                    id="profilePhotoUpload" htmlFor="profilePhoto" onClick={this.onFileUpload}
+                                    className="btn btn-light">
                                 Upload
                             </Button>
                         </Col>
@@ -146,18 +185,21 @@ class CreateClubForm extends Component {
                     <Row>
                         <Col lg="10" md="10" sm="10" xs="10" className="pr-0">
                             <div className="custom-file mb-3">
-                                <input type="file" name="header_photo_url" onChange={e => this.onFileUpload(e)}
+                                <input type="file" name="header_photo_file" onChange={e => this.onFileSelect(e)}
                                        className="custom-file-input"
-                                       id="customFile2">
+                                       id="headerPhoto">
 
                                 </input>
-                                <label className="custom-file-label" htmlFor="customFile2">
-                                    {this.state.header_photo_url}
+                                <label className="custom-file-label" htmlFor="headerPhoto">
+                                    {this.state.header_photo_file ? this.state.header_photo_file.name : ""}
                                 </label>
                             </div>
                         </Col>
                         <Col lg="2" md="2" sm="2" xs="2" className="text-center pl-0">
-                            <Button onClick={this.handleUploadPhoto()} className="btn btn-light">
+                            <Button
+                                disabled={!this.state.header_photo_file}
+                                id="headerPhotoUpload" htmlFor="headerPhoto" onClick={this.onFileUpload}
+                                className="btn btn-light">
                                 Upload
                             </Button>
                         </Col>
@@ -241,10 +283,6 @@ class CreateClubForm extends Component {
 
             </div>
         )
-    }
-
-    onFileUpload(e) {
-        this.setState({[e.target.name]: [e.target.value]})
     }
 
     validateForm = () => {

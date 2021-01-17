@@ -18,7 +18,7 @@ export class EventCard extends Component {
             <Col lg="4" md="6" sm="12">
                 <div className="card selection-effect" style={{cursor: "pointer"}} onClick={this.onEventClick}>
                     <img alt="event" className="card-img-top fade-in"
-                         src={require('../../assets/images/' + img).default}/>
+                         src={img}/>
                     <div className="card-body pt-0 mt-0">
                         <h3 className="event-title">{name}</h3>
                         <hr className="m-0 p-0"></hr>

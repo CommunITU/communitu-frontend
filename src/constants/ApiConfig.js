@@ -5,6 +5,9 @@ export const LOGIN = "/auth/login";
 export const REGISTER = "/auth/register";
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 
+/** Upload */
+export const UPLOAD = "/upload";
+
 /** Clubs */
 export const CLUBS = "/clubs";
 
@@ -13,3 +16,4 @@ export const EVENTS = "/events";
 
 /** Users */
 export const USERS = "/users";
+

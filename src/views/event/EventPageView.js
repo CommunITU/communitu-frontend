@@ -35,7 +35,7 @@ class EventPageView extends Component {
         const {event} = this.state
 
         const pageStyle = {
-            backgroundImage: this.state.event ? `url(` + require(`../../assets/images/${this.state.event.image_url}`).default + `)` : '',
+            backgroundImage: this.state.event ? `url(${this.state.event.image_url})` : '',
         };
 
         return (
