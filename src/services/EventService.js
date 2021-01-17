@@ -25,8 +25,8 @@ const getParticipationStatus = (eventId, userId) => {
     return axios.get(BASE_URL + EVENTS + `/${eventId}/participants/${userId}`, headersWithToken())
 }
 
-const participateToEvent = (eventId) => {
-    return axios.post(BASE_URL + EVENTS + `/${eventId}/participants`, {}, headersWithToken())
+const participateToEvent = (eventId,userResponses) => {
+    return axios.post(BASE_URL + EVENTS + `/${eventId}/participants`, {user_responses: userResponses}, headersWithToken())
 }
 
 const cancelParticipationToEvent = (eventId) => {

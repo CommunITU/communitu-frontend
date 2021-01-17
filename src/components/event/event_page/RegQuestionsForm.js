@@ -38,7 +38,7 @@ export class RegQuestionsForm extends Component {
 
     handleClose = () => {
         this.setState({showDialog: false})
-        this.props.formCompletedCallback("failed")
+        this.props.formCompletedCallback("failed", this.state.userResponses)
     };
 
     handleOptionChange = (questionId, optionId) => {
@@ -79,7 +79,7 @@ export class RegQuestionsForm extends Component {
         if (!this.validateForm())
             return
 
-        this.props.formCompletedCallback("success")
+        this.props.formCompletedCallback("success", this.state.userResponses)
         this.setState({showDialog: false})
     };
 

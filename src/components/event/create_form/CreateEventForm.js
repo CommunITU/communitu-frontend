@@ -386,6 +386,10 @@ class CreateEventForm extends Component {
             formErrors.push("Event quota is required.")
             validation = false
         }
+        if (this.state.event_image_file && !this.state.image_url) {
+            formErrors.push("Please upload the selected image.")
+            validation = false
+        }
 
         let questions = Object.values(registrationQuestions)
         if (questions.length > 0) {

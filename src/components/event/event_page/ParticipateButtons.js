@@ -67,21 +67,19 @@ const ParticipateButtons = (props) => {
             })
     }
 
-    const onParticipationFormCompleted = (status) => {
+    const onParticipationFormCompleted = (status, responses) => {
 
         if (status === "success") {
-            console.log("form completed successfully")
-            doParticipation()
+            doParticipation(responses)
         } else if (status === "failed") {
             setParticipationLoading(() => false)
-            console.log("form completed failed")
         }
     }
 
-    const doParticipation = () => {
+    const doParticipation = (userResponses) => {
         const {eventId} = props;
         setParticipationLoading(() => true)
-        EventService.participateToEvent(eventId)
+        EventService.participateToEvent(eventId,userResponses)
             .then(resp => {
                 setParticipationLoading(() => false)
                 setParticipated(() => true)
