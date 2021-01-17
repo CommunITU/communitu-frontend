@@ -25,7 +25,7 @@ const getParticipationStatus = (eventId, userId) => {
     return axios.get(BASE_URL + EVENTS + `/${eventId}/participants/${userId}`, headersWithToken())
 }
 
-const participateToEvent = (eventId,userResponses) => {
+const participateToEvent = (eventId, userResponses) => {
     return axios.post(BASE_URL + EVENTS + `/${eventId}/participants`, {user_responses: userResponses}, headersWithToken())
 }
 
@@ -37,6 +37,14 @@ const getRegistrationQuestions = (eventId) => {
     return axios.get(BASE_URL + EVENTS + `/${eventId}/reg_questions`, headersWithToken())
 }
 
+const getAllEventCommentsById = (eventId) => {
+    return axios.get(BASE_URL + EVENTS + `/${eventId}/comments`, baseHeaders())
+}
+
+const addEventComment = (comment, eventId) => {
+    return axios.post(BASE_URL + EVENTS + `/${eventId}/comments`, {comment: comment}, headersWithToken())
+}
+
 export const EventService = {
     fetchEvents,
     getEventById,
@@ -44,5 +52,8 @@ export const EventService = {
     cancelParticipationToEvent,
     participateToEvent,
     getParticipationStatus,
-    getRegistrationQuestions
+    getRegistrationQuestions,
+    getAllEventCommentsById,
+    addEventComment,
+
 }

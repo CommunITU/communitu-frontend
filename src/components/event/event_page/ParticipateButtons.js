@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "shards-react";
-import {connect} from "react-redux";
 import {EventService} from "../../../services/EventService";
 import {RegQuestionsForm} from "./RegQuestionsForm";
 
@@ -130,11 +129,5 @@ const ParticipateButtons = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.auth.user
-    }
-}
 
-
-export default connect(mapStateToProps, null)(ParticipateButtons);
+export default ParticipateButtons;

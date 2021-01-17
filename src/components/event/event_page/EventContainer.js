@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {Card, Col, Row} from "shards-react";
 import ParticipateButtons from "./ParticipateButtons";
 import ParticipantsPanel from "./ParticipantsPanel";
+import Divider from "@material-ui/core/Divider";
+import CommentArea from "./CommentArea";
+import {connect} from "react-redux";
 
 
 class EventContainer extends Component {
 
 
     eventImage = (url) => {
-        console.log(url)
         const style = {
             width: '100%',
             height: '100%',
@@ -67,11 +69,15 @@ class EventContainer extends Component {
                                 <h3 style={{fontSize: "2em"}}> Content</h3>
                                 <div className="mt-3" dangerouslySetInnerHTML={{__html: event.description}}/>
 
+
+                                <Divider className="my-2" variant="fullWidth"/>
+
+                                <CommentArea userId={this.props.user} eventId ={event.id} />
                             </Col>
 
                             <Col lg={4} className="border-left">
                                 <Row className="justify-content-center p-3">
-                                    <ParticipateButtons eventId = {event.id} />
+                                    <ParticipateButtons user={this.props.user} eventId={event.id}/>
                                 </Row>
 
 
@@ -86,7 +92,7 @@ class EventContainer extends Component {
 
 
                                 <Row className="justify-content-center">
-                                <ParticipantsPanel eventId = {event.id}/>
+                                    <ParticipantsPanel user={this.props.user} eventId={event.id}/>
                                 </Row>
 
                             </Col>
@@ -98,4 +104,10 @@ class EventContainer extends Component {
     }
 }
 
-export default EventContainer;
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps, null)(EventContainer);
