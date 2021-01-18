@@ -13,7 +13,7 @@ import {EventService} from "../../../services/EventService";
 
 const CommentArea = (props) => {
 
-    const {eventId} = props
+    const {user, eventId} = props
     const [comments, setComments] = useState([]);
     const [commentsLoading, setCommentsLoading] = useState(true)
 
@@ -48,7 +48,10 @@ const CommentArea = (props) => {
         EventService.addEventComment(myComment, eventId)
             .then(resp => {
                 setMyCommentSending(() => false)
-                setComments(() => [{content: myComment}, ...comments])
+                setComments(() => [{
+                    content: myComment, sender_name: user.name, sender_surname: user.surname,
+                    sender_avatar: user.profile_photo_url
+                }, ...comments])
 
             })
             .catch(err => {
@@ -67,33 +70,40 @@ const CommentArea = (props) => {
 
         return (
             <List>
-                {comments.map((comment) => {
+                {comments.map((comment, ind) => {
                     return (
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="profile"
-                                        src={comment.sender_avatar}/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={<h5 style={{fontSize: '14px'}}>{comment.sender_name} {comment.sender_surname}</h5>}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            color="textPrimary"
-                                        >
-                                            {comment.content}
-                                        </Typography>
+                        <div>
+                            <ListItem alignItems="flex-start" className="mb-2">
+                                <ListItemAvatar>
+                                    <Avatar alt="profile"
+                                            src={comment.sender_avatar}/>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={<h5
+                                        style={{fontSize: '14px'}}>{comment.sender_name} {comment.sender_surname}</h5>}
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                color="textPrimary"
+                                            >
+                                                {comment.content}
+                                            </Typography>
 
-                                    </React.Fragment>
-                                }
-                            />
-                            <Divider variant="inset" component="li"/>
-                        </ListItem>
+                                        </React.Fragment>
+                                    }
+                                />
+
+                            </ListItem>
+                            {comments.length != ind + 1 && <Divider className="my-2 mx-3" variant="fullWidth"/>}
+                        </div>
                     )
                 })}
+
+
             </List>
+
         )
     }
 
@@ -106,11 +116,11 @@ const CommentArea = (props) => {
                 </div>
 
                 : <div lg={12} className="p-0" style={{marginTop: '15px', marginBottom: '15px'}}>
-                    <h3 style={{fontSize: "1.5em"}}> Comments</h3>
+                    <h3 style={{fontSize: "1.5em"}}> Comments {comments.length > 0 ? "(" + comments.length + ")" : ""}</h3>
 
                     <Col lg={12}>
                         <Row>
-                            <FormTextarea onChange={onTextChange} name="comment" size="md"
+                            <FormTextarea className="mt-2" onChange={onTextChange} name="comment" size="md"
                                           placeholder="Enter your opinion about the event. "/>
                         </Row>
 
