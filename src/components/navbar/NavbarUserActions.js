@@ -11,6 +11,7 @@ class NavbarUserActions extends Component {
     }
 
     render() {
+
         const {user} = this.props
         return (
             <CDropdown
@@ -21,7 +22,7 @@ class NavbarUserActions extends Component {
                 <CDropdownToggle className="c-header-nav-link text-white" caret={true}>
                     <img
                         className="user-avatar rounded-circle mr-1"
-                        src={require("../../assets/images/profile_pic.jpg").default}
+                        src={user.profile_photo_url}
                         alt="User Avatar"
                     />{" "}
                     <span className="d-none d-md-inline-block text-gray">{user.name}</span>

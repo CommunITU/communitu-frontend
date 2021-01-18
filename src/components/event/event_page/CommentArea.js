@@ -72,10 +72,10 @@ const CommentArea = (props) => {
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <Avatar alt="profile"
-                                        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/>
+                                        src={comment.sender_avatar}/>
                             </ListItemAvatar>
                             <ListItemText
-                                primary={<h5 style={{fontSize: '14px'}}>Umut Emre Bayramoğlu</h5>}
+                                primary={<h5 style={{fontSize: '14px'}}>{comment.sender_name} {comment.sender_surname}</h5>}
                                 secondary={
                                     <React.Fragment>
                                         <Typography
