@@ -64,31 +64,34 @@ class EventContainer extends Component {
 
                         </Row>
 
-                        <Row className="m-0 border-top">
-                            <Col lg={8} className="p-3">
+                        <Row className="m-0">
+                            <Col lg={8} className="p-3 border-top">
                                 <h3 style={{fontSize: "2em"}}> Content</h3>
-                                <div className="mt-3" dangerouslySetInnerHTML={{__html: event.description}}/>
+                                <div style={{marginTop:"15px", marginBottom:"25px"}} dangerouslySetInnerHTML={{__html: event.description}}/>
 
 
                                 <Divider className="my-2" variant="fullWidth"/>
 
-                                <CommentArea userId={this.props.user} eventId ={event.id} />
+                                <CommentArea user={this.props.user} eventId ={event.id} />
                             </Col>
 
-                            <Col lg={4} className="border-left">
-                                <Row className="justify-content-center p-3">
-                                    <ParticipateButtons user={this.props.user} eventId={event.id}/>
-                                </Row>
+                            <Col lg={4} className="border-left border-top p-0" >
+                                <div style={{backgroundColor:"#f7f8f8"}}>
+                                    <Row className="justify-content-center p-3">
+                                        <ParticipateButtons user={this.props.user} eventId={event.id}/>
+                                    </Row>
 
 
-                                <Row className="justify-content-center">
-                                    <Col class="mx-auto" lg="12" md="12" className="mt-3">
-                                        <h5 className="text-center text-black-50">Location</h5>
-                                    </Col>
-                                    <Col lg="12" md="12" className="">
-                                        <h4 className="text-center">{event.location}</h4>
-                                    </Col>
-                                </Row>
+                                    <Row className="justify-content-center">
+                                        <Col class="mx-auto" lg="12" md="12" className="mt-3">
+                                            <h5 className="text-center text-black-50">Location</h5>
+                                        </Col>
+                                        <Col lg="12" md="12" className="">
+                                            <h4 className="text-center">{event.location}</h4>
+                                        </Col>
+                                    </Row>
+
+                                </div>
 
 
                                 <Row className="justify-content-center">
