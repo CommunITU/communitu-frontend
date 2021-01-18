@@ -29,6 +29,11 @@ const participateToEvent = (eventId, userResponses) => {
     return axios.post(BASE_URL + EVENTS + `/${eventId}/participants`, {user_responses: userResponses}, headersWithToken())
 }
 
+const getEventParticipants = (eventId, returnParams) => {
+    let returnParamsStatement = returnParams.join(",")
+    return axios.get(BASE_URL + EVENTS + `/${eventId}/participants?return_params=${returnParamsStatement}`, baseHeaders())
+}
+
 const cancelParticipationToEvent = (eventId) => {
     return axios.delete(BASE_URL + EVENTS + `/${eventId}/participants`, headersWithToken())
 }
@@ -55,5 +60,6 @@ export const EventService = {
     getRegistrationQuestions,
     getAllEventCommentsById,
     addEventComment,
+    getEventParticipants,
 
 }

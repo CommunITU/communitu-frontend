@@ -10,6 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {EventService} from "../../../services/EventService";
+import LoadingIconSmall from "../../alert/LoadingIconSmall";
 
 const CommentArea = (props) => {
 
@@ -96,7 +97,7 @@ const CommentArea = (props) => {
                                 />
 
                             </ListItem>
-                            {comments.length != ind + 1 && <Divider className="my-2 mx-3" variant="fullWidth"/>}
+                            {comments.length !== ind + 1 && <Divider className="my-2 mx-3" variant="fullWidth"/>}
                         </div>
                     )
                 })}
@@ -110,10 +111,7 @@ const CommentArea = (props) => {
     return (
         <React.Fragment>
             {commentsLoading
-                ? <div className="text-center">
-                    <img alt="loading" style={{width: "20px", height: "20px"}}
-                         src={require("../../../assets/images/loading.gif").default}></img>
-                </div>
+                ? <LoadingIconSmall/>
 
                 : <div lg={12} className="p-0" style={{marginTop: '15px', marginBottom: '15px'}}>
                     <h3 style={{fontSize: "1.5em"}}> Comments {comments.length > 0 ? "(" + comments.length + ")" : ""}</h3>
@@ -126,11 +124,7 @@ const CommentArea = (props) => {
 
                         <Row className="justify-content-end align-items-center">
                             {myCommentSending
-                                ? <div className="text-center">
-                                    <img alt="loading" style={{width: "20px", height: "20px"}}
-                                         src={require("../../../assets/images/loading.gif").default}></img>
-                                </div>
-
+                                ? <LoadingIconSmall/>
                                 : <Button onClick={onSendComment} className="mt-2" size="sm" theme="info">Send
                                     <CIcon content={freeSet.cilArrowRight}></CIcon>
                                 </Button>}

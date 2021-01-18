@@ -17,14 +17,14 @@ class NavbarUserActions extends Component {
             <CDropdown
                 inNav
                 className="c-header-nav-item mx-2"
-                style={{zIndex:"99999"}}
+                style={{zIndex: "99999"}}
             >
                 <CDropdownToggle className="c-header-nav-link text-white" caret={true}>
                     <img
                         className="user-avatar rounded-circle mr-1"
-                        src={user.profile_photo_url}
-                        alt="User Avatar"
-                    />{" "}
+                        alt="user_avatar"
+                        style={{width: "25px", height: "25px"}}
+                        src={user.profile_photo_url}/>{" "}
                     <span className="d-none d-md-inline-block text-gray">{user.name}</span>
                 </CDropdownToggle>
 

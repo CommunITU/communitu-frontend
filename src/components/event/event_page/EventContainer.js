@@ -67,17 +67,18 @@ class EventContainer extends Component {
                         <Row className="m-0">
                             <Col lg={8} className="p-3 border-top">
                                 <h3 style={{fontSize: "2em"}}> Content</h3>
-                                <div style={{marginTop:"15px", marginBottom:"25px"}} dangerouslySetInnerHTML={{__html: event.description}}/>
+                                <div style={{marginTop: "15px", marginBottom: "25px"}}
+                                     dangerouslySetInnerHTML={{__html: event.description}}/>
 
 
                                 <Divider className="my-2" variant="fullWidth"/>
 
-                                <CommentArea user={this.props.user} eventId ={event.id} />
+                                <CommentArea user={this.props.user} eventId={event.id}/>
                             </Col>
 
-                            <Col lg={4} className="border-left border-top p-0" >
-                                <div style={{backgroundColor:"#f7f8f8"}}>
-                                    <Row className="justify-content-center p-3">
+                            <Col lg={4} className="border-left border-top p-0">
+                                <div style={{backgroundColor: "#f7f8f8"}} className="p-2">
+                                    <Row className="justify-content-center m-0">
                                         <ParticipateButtons user={this.props.user} eventId={event.id}/>
                                     </Row>
 
@@ -86,6 +87,8 @@ class EventContainer extends Component {
                                         <Col class="mx-auto" lg="12" md="12" className="mt-3">
                                             <h5 className="text-center text-black-50">Location</h5>
                                         </Col>
+
+
                                         <Col lg="12" md="12" className="">
                                             <h4 className="text-center">{event.location}</h4>
                                         </Col>
@@ -94,8 +97,10 @@ class EventContainer extends Component {
                                 </div>
 
 
-                                <Row className="justify-content-center">
-                                    <ParticipantsPanel user={this.props.user} eventId={event.id}/>
+                                <Row className="justify-content-center p-0 m-0" style={{backgroundColor: "#ffffff"}}>
+                                    <Col lg={12}>
+                                        <ParticipantsPanel user={this.props.user} eventId={event.id}/>
+                                    </Col>
                                 </Row>
 
                             </Col>

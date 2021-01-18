@@ -53,7 +53,7 @@ const ParticipateButtons = (props) => {
                 setRegQuestions(() => registration_questions)
                 if (registration_questions.length > 0) {
                     regQuestionsFormRef.current.handleClickOpen()
-                }else{
+                } else {
                     doParticipation()
                 }
 
@@ -78,7 +78,7 @@ const ParticipateButtons = (props) => {
     const doParticipation = (userResponses) => {
         const {eventId} = props;
         setParticipationLoading(() => true)
-        EventService.participateToEvent(eventId,userResponses)
+        EventService.participateToEvent(eventId, userResponses)
             .then(resp => {
                 setParticipationLoading(() => false)
                 setParticipated(() => true)
