@@ -13,6 +13,10 @@ const createNewClub = (clubData) => {
     return axios.post(BASE_URL + CLUBS, clubData, headersWithToken())
 }
 
+const deleteClubById = (clubId) => {
+    return axios.delete(BASE_URL + CLUBS + "/" + clubId)
+}
+
 const getClubsNameExecutedByUser = (userId) => {
     return axios.get(BASE_URL + USERS + "/" + userId + CLUBS + "?role=executive&fields=id,name")
 }
@@ -23,4 +27,4 @@ const getMyClubs = (userId) => {
 }
 
 
-export const ClubService = {createNewClub, getClubsNameExecutedByUser, getMyClubs}
+export const ClubService = {createNewClub, getClubsNameExecutedByUser, getMyClubs,deleteClubById}

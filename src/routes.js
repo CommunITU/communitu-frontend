@@ -103,7 +103,7 @@ const routes = [
     },
     {
         name        :   "My Clubs Page",
-        path        :   "/users/:userId/my_clubs",
+        path        :   "/my_clubs",
         layout      :   BaseLayout,
         component   :   MyClubsView,
         exact       :   true,

@@ -38,7 +38,7 @@ class NavbarUserActions extends Component {
                     </CDropdownItem>
                     <CDropdownItem><CIcon content={freeSet.cilUser} className="mr-2 text-success"/> Profile
                     </CDropdownItem>
-                    <CDropdownItem onClick={() => this.props.history.push(`/users/${user.id}/my_clubs`)}>
+                    <CDropdownItem onClick={() => this.props.history.push(`/my_clubs`)}>
                         <CIcon content={freeSet.cilList} className="mr-2 text-danger"/> My clubs
                     </CDropdownItem>
                     <CDropdownItem><CIcon content={freeSet.cilListRich} className="mr-2 text-info"/> My attendances

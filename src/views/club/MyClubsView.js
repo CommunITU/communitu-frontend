@@ -23,6 +23,7 @@ import {connect} from "react-redux";
 import {withRouter} from 'react-router';
 import {ClubService} from "../../services/ClubService";
 import Checkbox from "@material-ui/core/Checkbox";
+import ConfirmModal from "../../components/alert/ConfirmModal";
 
 function createData(name, startDate, endDate, status, clubs) {
     return {name, startDate, endDate, status, clubs};
@@ -79,7 +80,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-    const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
+    const {classes, order, orderBy, onRequestSort} = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -88,12 +89,6 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
@@ -172,11 +167,11 @@ const EnhancedTableToolbar = (props) => {
             )}
 
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon/>
-                    </IconButton>
-                </Tooltip>
+                   <Tooltip title="Delete">
+                       <IconButton aria-label="delete" onClick={props.onDeleteClick}>
+                           <DeleteIcon/>
+                       </IconButton>
+                   </Tooltip>
             ) : (
                 <Tooltip title="Filter list">
                     <IconButton aria-label="filter list">
@@ -226,6 +221,7 @@ export function MyClubsView(props) {
     const [clubs, setClubs] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(7);
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
 
     useEffect(() => {
         let userId = null;
@@ -250,15 +246,6 @@ export function MyClubsView(props) {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
-    };
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = clubs.map((n) => n.title);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
     };
 
     const handleClick = (event, name) => {
@@ -294,88 +281,122 @@ export function MyClubsView(props) {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+
+    const onDeleteClick = () => {
+        setShowDeleteDialog(() => true)
+    }
+
+    const onDeleteConfirmed = () => {
+        setShowDeleteDialog(() => false)
+        selected.map((clubId) => {
+            ClubService.deleteClubById(clubId)
+                .then(resp => {
+                    if (resp.status === 200) {
+                        props.history.push("/")
+                    }
+                })
+                .catch(err => {
+                    if (err.response && err.response.data) {
+                        console.log(err.response.data.message)
+                    }
+                })
+
+            return true;
+        })
+    }
+
     return (
 
-        <Container className="main-content-container pb-4 content-fade-in my-4 ">
-            <div className={classes.root}>
-                <Paper className={classes.paper}>
-                    <EnhancedTableToolbar numSelected={selected.length}/>
-                    <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={'small'}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={clubs.length}
-                            />
-                            <TableBody>
+        <React.Fragment>
+            <ConfirmModal
+                contextTitle="Delete"
+                contextText="Club will be deleted, do you confirm that?"
+                show={showDeleteDialog}
+                onClose={() => setShowDeleteDialog(false)}
+                onConfirm={onDeleteConfirmed}
+                rightButtonText="Delete"/>
 
-                                {stableSort(clubs, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
-                                        const isItemSelected = isSelected(row.name);
-                                        const labelId = `enhanced-table-checkbox-${index}`;
+            <Container className="main-content-container pb-4 content-fade-in my-4 ">
+                <div className={classes.root}>
+                    <Paper className={classes.paper}>
+                        <EnhancedTableToolbar numSelected={selected.length} onDeleteClick={onDeleteClick}/>
+                        <TableContainer>
+                            <Table
+                                className={classes.table}
+                                aria-labelledby="tableTitle"
+                                size={'small'}
+                                aria-label="enhanced table"
+                            >
+                                <EnhancedTableHead
+                                    classes={classes}
+                                    numSelected={selected.length}
+                                    order={order}
+                                    orderBy={orderBy}
+                                    onRequestSort={handleRequestSort}
+                                    rowCount={clubs.length}
+                                />
+                                <TableBody>
 
-                                        return (
-                                            <TableRow
-                                                hover
-                                                role="checkbox"
-                                                aria-checked={isItemSelected}
-                                                tabIndex={-1}
-                                                key={row.name}
-                                                selected={isItemSelected}
-                                                onClick={(event) => handleClick(event, row.name)}
-                                                style={{cursor: 'pointer'}}
-                                            >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        checked={isItemSelected}
-                                                        inputProps={{ 'aria-labelledby': labelId }}
-                                                    />
-                                                </TableCell>
-                                                <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell align="right">{row.created_at}</TableCell>
-                                                <TableCell align="right">{row.participant_num}</TableCell>
+                                    {stableSort(clubs, getComparator(order, orderBy))
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((row, index) => {
+                                            const isItemSelected = isSelected(row.id);
+                                            const labelId = `enhanced-table-checkbox-${index}`;
 
-                                                <TableCell align="right">
-                                                    {row.event_num}
-                                                </TableCell>
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    aria-checked={isItemSelected}
+                                                    tabIndex={-1}
+                                                    key={row.id}
+                                                    selected={isItemSelected}
+                                                    onClick={(event) => handleClick(event, row.id)}
+                                                    style={{cursor: 'pointer', height: `50px`}}
+                                                >
+                                                    <TableCell padding="checkbox">
+                                                        <Checkbox
+                                                            checked={isItemSelected}
+                                                            inputProps={{'aria-labelledby': labelId}}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                                                        {row.name}
+                                                    </TableCell>
+                                                    <TableCell align="right">{row.created_at}</TableCell>
+                                                    <TableCell align="right">{row.participant_num}</TableCell>
 
-                                            </TableRow>
-                                        );
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{height: (53) * emptyRows}}>
-                                        <TableCell colSpan={6}/>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                                    <TableCell align="right">
+                                                        {row.event_num}
+                                                    </TableCell>
 
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={clubs.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </div>
-        </Container>
-    );
+                                                </TableRow>
+                                            );
+                                        })}
+                                    {emptyRows > 0 && (
+                                        <TableRow style={{height: (53) * emptyRows}}>
+                                            <TableCell colSpan={6}/>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                        <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={clubs.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onChangePage={handleChangePage}
+                            onChangeRowsPerPage={handleChangeRowsPerPage}
+                        />
+                    </Paper>
+                </div>
+            </Container>
+        </React.Fragment>
+    )
+        ;
 }
 
 const mapStatetoProps = (state) => {

@@ -524,7 +524,7 @@ class CreateEventForm extends Component {
                                     onClick={this.onSubmitForm}
                                     size="lg"
                                     className="btn btn-info mt-4">
-                                    Create Club!
+                                    Create Event!
                                 </Button>
                             </div>}
                         </Form>
