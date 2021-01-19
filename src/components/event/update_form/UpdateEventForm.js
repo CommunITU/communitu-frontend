@@ -55,7 +55,7 @@ class UpdateForm extends Component {
     }
 
     componentDidMount() {
-        this.createRegistrationQuestionsForm();
+        // this.createRegistrationQuestionsForm();
     }
 
     // createRegistrationQuestionsForm() {
