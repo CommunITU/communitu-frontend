@@ -440,7 +440,7 @@ class CreateEventForm extends Component {
         const created_by = club_selection
 
         if (!image_url)
-            image_url = "no_event_image.png"
+            image_url = "https://firebasestorage.googleapis.com/v0/b/communitu.appspot.com/o/images%2Fapp_images%2Fnoimageavailable.png?alt=media&token=3c1bb771-c2d8-4b97-851a-092dd0356945"
 
         const eventData = {
             name, description, start_date, end_date, location, quota, image_url,

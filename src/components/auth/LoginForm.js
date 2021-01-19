@@ -14,14 +14,21 @@ import {
 } from "shards-react";
 import {Lock, Person} from "@material-ui/icons";
 import {login} from "../../redux/auth/action";
+import ErrorAlert from "../alert/ErrorAlert";
 
 class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-
+        this.errorAlert = React.createRef()
         this.state = {
             isCompleted: false,
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.loginErrorMessage) {
+            this.errorAlert.current.showAlert()
         }
     }
 
@@ -29,7 +36,6 @@ class LoginForm extends Component {
         e.preventDefault();
         const {email, pass} = this.state;
         this.props.login({email, pass}, this.props.history);
-
     }
 
     onChange = (e) => {
@@ -40,10 +46,15 @@ class LoginForm extends Component {
         this.setState({checked: !this.state.checked})
     }
 
+
     render() {
         const {email, pass} = this.state;
+        const {loginErrorMessage} = this.props
         return (
             <div className="col-sm-10 col-md-9 col-xl-5 col-lg-7 mx-auto">
+                <ErrorAlert ref={this.errorAlert} history={this.props.history}
+                            message={loginErrorMessage}/>
+
                 <div className="card py-lg-2 py-md-2 ">
                     <div className="card-body">
                         <h3 className="text-center">Login</h3>
@@ -96,8 +107,10 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.auth)
     return {
-        auth: state.auth
+        auth: state.auth,
+        loginErrorMessage: state.auth.error
     }
 }
 

@@ -53,7 +53,7 @@ class EventContainer extends Component {
                                  EVENT OWNER OPTIONS
                                  */}
                                 <Row className="float-right">
-                                    { event.created_by === user.id &&<EventOwnerOptions event={event}/>}
+                                    { user && event.created_by === user.id &&<EventOwnerOptions event={event}/>}
                                 </Row>
 
                                 <div className="my-4 mx-1">
