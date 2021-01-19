@@ -50,8 +50,8 @@ class UpdateEventView extends PureComponent {
                <Container fluid className="p-0 header-v2">
                    <Row className="justify-content-center align-items-center py-4">
                        <div>
-                           <h4 className="header-title mt-4 text-center">Create your event !</h4>
-                           <h3 className="text-white-50 text-center">and get together</h3>
+                           <h4 className="header-title mt-4 text-center">Update event</h4>
+                           <h3 className="text-white-50 text-center">{this.state.event.name}</h3>
                        </div>
                    </Row>
 

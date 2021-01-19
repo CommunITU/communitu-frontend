@@ -203,7 +203,7 @@ class UpdateForm extends Component {
         return (
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
-                    <h3 className={panelClasses + " mr-auto text-center"}><strong>Profile and Header Photos</strong>
+                    <h3 className={panelClasses + " mr-auto text-center"}><strong>Header Photo</strong>
                     </h3>
                     <h4 className={panelClasses + " ml-auto"}>{this.state.currentTab}/{this.FORM_PANEL_NUM}</h4>
                 </div>
