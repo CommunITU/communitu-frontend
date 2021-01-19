@@ -33,7 +33,12 @@ export const authReducer = (state = initialState, action) => {
             }
 
         case LOGOUT:
-            return initialState;
+            return {
+                pending: false,
+                user: null,
+                error: null,
+                isLoggedIn: false
+            }
 
         default:
             return state;

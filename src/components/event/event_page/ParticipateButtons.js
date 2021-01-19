@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "shards-react";
 import {EventService} from "../../../services/EventService";
 import {RegQuestionsForm} from "./RegQuestionsForm";
+import ConfirmModal from "../../alert/ConfirmModal";
+import {withRouter} from "react-router";
 
 
 const ParticipateButtons = (props) => {
@@ -11,7 +13,7 @@ const ParticipateButtons = (props) => {
     const [regQuestions, setRegQuestions] = useState([]);
     const regQuestionsFormRef = useRef()
 
-
+    const [showLoginRequiredModal, setShowLoginRequiredModal] = useState(false)
 
     useEffect(() => {
         const fetchParticipationStatus = () => {
@@ -42,6 +44,15 @@ const ParticipateButtons = (props) => {
     }, [props.user, props.eventId])
 
     const onParticipateEvent = () => {
+
+        /**
+         * If user not logged in, show login required modal.
+         */
+        if (props.user === null) {
+            setShowLoginRequiredModal(() => true)
+            return;
+        }
+
 
         const {eventId} = props;
         setParticipationLoading(() => true);
@@ -111,6 +122,16 @@ const ParticipateButtons = (props) => {
             })
     }
 
+    const closeLoginRequiredModal = () => {
+        setShowLoginRequiredModal(() => false)
+    }
+
+    const confirmLoginRequiredModal = () => {
+        setShowLoginRequiredModal(() => false)
+        props.history.push("/login")
+    }
+
+
     return (
         <div>
             {participationLoading
@@ -127,9 +148,18 @@ const ParticipateButtons = (props) => {
 
             <RegQuestionsForm ref={regQuestionsFormRef} questions={regQuestions}
                               formCompletedCallback={onParticipationFormCompleted}/>
+
+            <ConfirmModal
+                show={showLoginRequiredModal}
+                contextText="You need to login!"
+                contextTitle="Login"
+                onClose={closeLoginRequiredModal}
+                onConfirm={confirmLoginRequiredModal}
+                rightButtonText="Login"
+            ></ConfirmModal>
         </div>
     )
 }
 
 
-export default ParticipateButtons;
+export default withRouter(ParticipateButtons);

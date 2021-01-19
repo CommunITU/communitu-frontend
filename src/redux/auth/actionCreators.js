@@ -21,7 +21,7 @@ export const loginPending = () => {
     }
 }
 
-export const logout = () => {
+export const logoutAction = () => {
     return {
         type: LOGOUT,
     }

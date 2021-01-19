@@ -4,12 +4,17 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {withRouter} from "react-router";
+import ConfirmModal from "../../alert/ConfirmModal";
+import {EventService} from "../../../services/EventService";
 
 
 const ITEM_HEIGHT = 48;
 
 function EventOwnerOptionsMenu(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
+
+
     const open = Boolean(anchorEl);
     const event = props.event
 
@@ -30,12 +35,37 @@ function EventOwnerOptionsMenu(props) {
 
     const onDeleteEvent = () => {
         setAnchorEl(null);
-        props.history.push(`/events/${event.id}/delete`)
+        setShowDeleteDialog(() => true)
     };
 
+    const closeDeleteDialog = () => {
+        setShowDeleteDialog(() => false);
+    }
+
+    const onDeleteConfirmed = () => {
+        setShowDeleteDialog(() => false)
+        EventService.deleteEventById(event.id)
+            .then(resp => {
+                setShowDeleteDialog(() => false)
+                props.history.push("/")
+            })
+            .catch(err => {
+                if(err.response && err.response.data){
+                    console.log(err.response.data.message)
+                }
+            })
+    }
 
     return (
         <div>
+            <ConfirmModal show={showDeleteDialog}
+                          onClose={closeDeleteDialog}
+                          onConfirm={onDeleteConfirmed}
+                          contextTitle="Delete Event"
+                          contextText="Event will be deleted, do you confirm?">
+
+            </ConfirmModal>
+
             <IconButton
                 aria-label="more"
                 aria-controls="long-menu"

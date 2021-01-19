@@ -11,6 +11,8 @@ import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {EventService} from "../../../services/EventService";
 import LoadingIconSmall from "../../alert/LoadingIconSmall";
+import ConfirmModal from "../../alert/ConfirmModal";
+import {withRouter} from "react-router";
 
 const CommentArea = (props) => {
 
@@ -20,6 +22,8 @@ const CommentArea = (props) => {
 
     const [myComment, setMyComment] = useState(null);
     const [myCommentSending, setMyCommentSending] = useState(null);
+
+    const [showLoginRequiredModal, setShowLoginRequiredModal] = useState(false)
 
     useEffect(() => {
         const fetchComments = () => {
@@ -45,6 +49,15 @@ const CommentArea = (props) => {
 
 
     const onSendComment = (e) => {
+
+        /**
+         * If user not logged in, show login required modal.
+         */
+        if (user === null) {
+            setShowLoginRequiredModal(() => true)
+            return;
+        }
+
         setMyCommentSending(() => true)
         EventService.addEventComment(myComment, eventId)
             .then(resp => {
@@ -108,36 +121,58 @@ const CommentArea = (props) => {
         )
     }
 
+
+    const closeLoginRequiredModal = () => {
+        setShowLoginRequiredModal(()=> false)
+    }
+
+    const confirmLoginRequiredModal = () => {
+        setShowLoginRequiredModal(()=> false)
+        props.history.push("/login")
+    }
+
+
     return (
         <React.Fragment>
             {commentsLoading
                 ? <LoadingIconSmall/>
 
-                : <div lg={12} className="p-0" style={{marginTop: '15px', marginBottom: '15px'}}>
-                    <h3 style={{fontSize: "1.5em"}}> Comments {comments.length > 0 ? "(" + comments.length + ")" : ""}</h3>
+                : <div>
+                    <ConfirmModal
+                        show={showLoginRequiredModal}
+                        contextText="You need to login!"
+                        contextTitle="Login"
+                        onClose={closeLoginRequiredModal}
+                        onConfirm={confirmLoginRequiredModal}
+                        rightButtonText="Login"
+                    ></ConfirmModal>
 
-                    <Col lg={12}>
-                        <Row>
-                            <FormTextarea className="mt-2" onChange={onTextChange} name="comment" size="md"
-                                          placeholder="Enter your opinion about the event. "/>
-                        </Row>
+                    <div lg={12} className="p-0" style={{marginTop: '15px', marginBottom: '15px'}}>
+                        <h3 style={{fontSize: "1.5em"}}> Comments {comments.length > 0 ? "(" + comments.length + ")" : ""}</h3>
 
-                        <Row className="justify-content-end align-items-center">
-                            {myCommentSending
-                                ? <LoadingIconSmall/>
-                                : <Button onClick={onSendComment} className="mt-2" size="sm" theme="info">Send
-                                    <CIcon content={freeSet.cilArrowRight}></CIcon>
-                                </Button>}
-                        </Row>
-                    </Col>
+                        <Col lg={12}>
+                            <Row>
+                                <FormTextarea className="mt-2" onChange={onTextChange} name="comment" size="md"
+                                              placeholder="Enter your opinion about the event. "/>
+                            </Row>
 
-                    <Col lg={12} className="p-0">
-                        {createComments()}
-                    </Col>
+                            <Row className="justify-content-end align-items-center">
+                                {myCommentSending
+                                    ? <LoadingIconSmall/>
+                                    : <Button onClick={onSendComment} className="mt-2" size="sm" theme="info">Send
+                                        <CIcon content={freeSet.cilArrowRight}></CIcon>
+                                    </Button>}
+                            </Row>
+                        </Col>
+
+                        <Col lg={12} className="p-0">
+                            {createComments()}
+                        </Col>
+                    </div>
                 </div>}
         </React.Fragment>
     );
 }
 
 
-export default CommentArea;
+export default withRouter(CommentArea);

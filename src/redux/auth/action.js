@@ -1,5 +1,5 @@
 import {AuthService} from "../../services/AuthService";
-import {loginFailed, loginPending, loginSuccess} from "./actionCreators";
+import {loginFailed, loginPending, loginSuccess,logoutAction} from "./actionCreators";
 
 
 export const login = (user_info) => dispatch => {
@@ -57,5 +57,6 @@ export const logout = () => dispatch => {
     if (!AuthService.hasJwtToken())
         return;
 
-    dispatch(loginPending())
+    AuthService.logout()
+    dispatch(logoutAction())
 }
