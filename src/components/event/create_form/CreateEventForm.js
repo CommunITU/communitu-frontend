@@ -240,6 +240,8 @@ class CreateEventForm extends Component {
     formPanelPage3 = () => {
         const formInputLabel = formInputLabelClasses()
         const panelClasses = this.state.formAnimation
+
+        const {image_url} = this.state
         return (
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
@@ -248,6 +250,11 @@ class CreateEventForm extends Component {
                     <h4 className={panelClasses + " ml-auto"}>3/{this.FORM_PANEL_NUM}</h4>
                 </div>
                 <hr/>
+
+                {/** UPLOADED PHOTO PREVIEW */}
+                {image_url && <div className="text-center">
+                    <img alt="event" src={this.state.image_url} style={{width: '50%', height: '50%'}}/>
+                </div>}
 
                 {/** HEADER PHOTO  */}
                 <div className="mt-2">

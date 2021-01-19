@@ -143,6 +143,7 @@ class CreateClubForm extends Component {
     formPanelPage2 = () => {
         const formInputLabel = this.formInputLabelClasses()
         const panelClasses = this.state.formAnimation
+        const {profile_photo_url, header_photo_url} = this.state
         return (
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
@@ -152,6 +153,11 @@ class CreateClubForm extends Component {
                 </div>
                 <hr/>
 
+
+                {/** UPLOADED PROFILE PHOTO PREVIEW */}
+                {profile_photo_url && <div className="text-center my-2">
+                    <img alt="event" src={this.state.profile_photo_url} style={{width: '75%', height: '75%'}}/>
+                </div>}
                 {/** PROFILE PHOTO  */}
                 <div>
                     <strong className={formInputLabel}>Select Profile Photo</strong>
@@ -179,6 +185,10 @@ class CreateClubForm extends Component {
                 </div>
 
 
+                {/** UPLOADED HEADER PHOTO PREVIEW */}
+                {header_photo_url && <div className="text-center my-2">
+                    <img alt="event" src={this.state.header_photo_url} style={{width: '75%', height: '75%'}}/>
+                </div>}
                 {/** HEADER PHOTO  */}
                 <div className="mt-2">
                     <strong className={formInputLabel}>Select Header Photo</strong>
