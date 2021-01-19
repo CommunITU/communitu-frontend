@@ -32,6 +32,7 @@ class EventContainer extends Component {
             justifyContent: "center",
         }
 
+        const {user} = this.props
         return (
             <div style={containerStyle}>
                 <Col lg={7} md={10}>
@@ -52,7 +53,7 @@ class EventContainer extends Component {
                                  EVENT OWNER OPTIONS
                                  */}
                                 <Row className="float-right">
-                                    <EventOwnerOptions event={event}/>
+                                    { event.created_by === user.id &&<EventOwnerOptions event={event}/>}
                                 </Row>
 
                                 <div className="my-4 mx-1">
