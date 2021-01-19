@@ -17,6 +17,14 @@ const getEventById = (eventId) => {
     return axios.get(BASE_URL + EVENTS + `/${eventId}`, baseHeaders())
 }
 
+const updateEventById = (eventData) => {
+    return axios.put(BASE_URL + EVENTS + `/${eventData.id}`,{event: eventData}, headersWithToken())
+}
+
+const deleteEventById = (eventId) => {
+    return axios.delete(BASE_URL + EVENTS + `/${eventId}`, headersWithToken())
+}
+
 const createNewEvent = (event_data) => {
     return axios.post(BASE_URL + EVENTS, {event_data}, headersWithToken())
 }
@@ -53,6 +61,8 @@ const addEventComment = (comment, eventId) => {
 export const EventService = {
     fetchEvents,
     getEventById,
+    updateEventById,
+    deleteEventById,
     createNewEvent,
     cancelParticipationToEvent,
     participateToEvent,

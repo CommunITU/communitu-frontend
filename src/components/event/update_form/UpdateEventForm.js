@@ -7,11 +7,9 @@ import {
     Col,
     Form,
     FormInput,
-    FormSelect,
     Row
 } from "shards-react";
 import {withRouter} from "react-router";
-import {ClubService} from "../../../services/ClubService";
 import {EventService} from "../../../services/EventService";
 import {connect} from "react-redux";
 import ReactQuill from "react-quill";
@@ -21,11 +19,11 @@ import {freeSet} from "@coreui/icons";
 import {formInputLabelClasses} from "../../../util/FormUtils";
 import SuccessModal from "../../alert/SuccessModal";
 import {UploadService} from "../../../services/UploadService";
-import {addQuestionToForm} from "../../../redux/event/actionCreators";
+import {addQuestionOption, addQuestionToForm} from "../../../redux/event/actionCreators";
 
-class CreateEventForm extends Component {
+class UpdateForm extends Component {
 
-    FORM_PANEL_NUM = 4
+    FORM_PANEL_NUM = 2
 
     constructor(props) {
         super(props);
@@ -36,53 +34,56 @@ class CreateEventForm extends Component {
             formErrors: [],
             successMessage: null,
             formAnimation: "slide-from-left",
-            name: null,
-            description: null,
-            image_url: null,
-            start_date: null,
-            end_date: null,
-            location: null,
-            quota: null,
-            ask_registration_questions: null,
-            registration_questions_dom: [],
 
-            clubs_loading: false,
-            clubs_fetched: false,
+
+            name: props.event.name,
+            description: props.event.description,
+            image_url: props.event.image_url,
+            start_date: props.event.start_date,
+            end_date: props.event.end_date,
+            location: props.event.location,
+            created_by: props.event.created_by,
+            quota: props.event.quota,
+
+            registration_questions_dom: [],
             club_selection: null,
             event_image_file: null,
             myClubs: [],
         }
+
+
     }
 
     componentDidMount() {
-        this.fetchMyClubs()
+        this.createRegistrationQuestionsForm();
     }
 
+    // createRegistrationQuestionsForm() {
+    //     let questions = this.props.event.registration_questions
+    //     if (questions) {
+    //         this.props.event.registration_questions.map((question) => {
+    //             this.props.addQuestionToForm(question.id, {preCreatedQuestion: question});
+    //
+    //             if (question.type === "choice") {
+    //                 question.options.map((option) => {
+    //                     let optionDom = <QuestionOption optionId={option.id}/>
+    //                     this.props.addQuestionOption(question.id, option.id, optionDom, {preCreatedOption: option})
+    //                 })
+    //             }
+    //
+    //             return true;
+    //         })
+    //
+    //     }
+    // }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.loggedUser !== prevProps.loggedUser) {
-            this.fetchMyClubs()
-        }
 
         if (this.state.successMessage) {
             this.successDialog.current.handleClickOpen()
         }
     }
 
-    fetchMyClubs = () => {
-        const {loggedUser} = this.props
-        if (loggedUser) {
-            this.setState({...this.state, clubs_loading: true})
-            ClubService.getClubsNameExecutedByUser(loggedUser.id)
-                .then(resp => {
-                    this.setState({...this.state, myClubs: resp.data.clubs})
-                    this.setState({...this.state, clubs_fetched: true, clubs_loading: false})
-                    this.setState({...this.state, club_selection: resp.data.clubs[0].id})
-                })
-                .catch(err => {
-                    this.setState({...this.state, clubs_fetched: true, clubs_loading: false})
-                })
-        }
-    }
 
     setBackendErrorsToState = () => {
         const {backendErrors} = this.props
@@ -115,10 +116,6 @@ class CreateEventForm extends Component {
         this.setState({[field]: date});
     }
 
-    onFormSelectionChange = (e) => {
-        let clubID = parseInt(e.target.value)
-        this.setState({"club_selection": clubID});
-    }
 
     onCheckboxChange = (e, opt) => {
         const newState = {};
@@ -130,48 +127,11 @@ class CreateEventForm extends Component {
 
     addNewQuestion = () => {
         let questionId = Object.values(this.props.registrationQuestionsDom).length;
-        this.props.addQuestionToForm(questionId)
+        this.props.addQuestionFormAction(questionId)
     }
 
-    createClubSelectOptions = () => {
-        const {myClubs, clubs_fetched} = this.state
-        const options = []
-
-        clubs_fetched
-            ? myClubs.map((club, ind) => {
-                let selected = (club.id === this.state.club_selection)
-                return (options.push(<option selected={selected} value={club.id}>{club.name}</option>))
-            })
-            : options.push(<option selected>Loading clubs...</option>)
-
-        return options
-    }
 
     formPanelPage1 = () => {
-        const panelClasses = this.state.formAnimation
-
-        return (
-            <div className={panelClasses}>
-                <div className="d-flex align-items-center">
-                    <h3 className={panelClasses + " mr-auto text-center"}><strong>Firstly, select your club</strong>
-                    </h3>
-                    <h4 className={panelClasses + " ml-auto"}>1/{this.FORM_PANEL_NUM}</h4>
-                </div>
-                <hr/>
-
-                {/** Club selection  */}
-                <div className="panelClasses">
-                    <FormSelect onChange={this.onFormSelectionChange} name="club_selection">
-                        {
-                            this.createClubSelectOptions()
-                        }
-                    </FormSelect>
-                </div>
-            </div>
-        )
-    }
-
-    formPanelPage2 = () => {
         const formInputLabel = formInputLabelClasses()
         const panelClasses = this.state.formAnimation
         return (
@@ -179,7 +139,7 @@ class CreateEventForm extends Component {
             <div className={panelClasses}>
                 <div className="d-flex align-items-center">
                     <h3 className={panelClasses + " mr-auto text-center"}><strong>General Information</strong></h3>
-                    <h4 className={panelClasses + " ml-auto"}>2/{this.FORM_PANEL_NUM}</h4>
+                    <h4 className={panelClasses + " ml-auto"}>{this.state.currentTab}/{this.FORM_PANEL_NUM}</h4>
                 </div>
 
                 <hr/>
@@ -237,7 +197,7 @@ class CreateEventForm extends Component {
         )
     }
 
-    formPanelPage3 = () => {
+    formPanelPage2 = () => {
         const formInputLabel = formInputLabelClasses()
         const panelClasses = this.state.formAnimation
         return (
@@ -245,9 +205,16 @@ class CreateEventForm extends Component {
                 <div className="d-flex align-items-center">
                     <h3 className={panelClasses + " mr-auto text-center"}><strong>Profile and Header Photos</strong>
                     </h3>
-                    <h4 className={panelClasses + " ml-auto"}>3/{this.FORM_PANEL_NUM}</h4>
+                    <h4 className={panelClasses + " ml-auto"}>{this.state.currentTab}/{this.FORM_PANEL_NUM}</h4>
                 </div>
                 <hr/>
+
+
+                {/** CURRENT PHOTO PREVIEW */}
+                <div className="text-center">
+                    <img alt="event" src={this.state.image_url} style={{width: '50%', height: '50%'}}/>
+                </div>
+
 
                 {/** HEADER PHOTO  */}
                 <div className="mt-2">
@@ -280,7 +247,7 @@ class CreateEventForm extends Component {
         )
     }
 
-    formPanelPage4 = () => {
+    formPanelPage3 = () => {
         const panelClasses = this.state.formAnimation
 
         return (
@@ -288,32 +255,16 @@ class CreateEventForm extends Component {
                 <div className="d-flex align-items-center">
                     <h3 className={panelClasses + " mr-auto text-center"}><strong>Registration Questions Form</strong>
                     </h3>
-                    <h4 className={panelClasses + " ml-auto"}>4/{this.FORM_PANEL_NUM}</h4>
+                    <h4 className={panelClasses + " ml-auto"}>{this.state.currentTab}/{this.FORM_PANEL_NUM}</h4>
                 </div>
 
                 <hr/>
-
-                {/** ADDITIONAL REGISTRATION QUESTION FORM*/}
-
-                {/*/!*<FormCheckbox*!/*/}
-                {/*/!*    checked={this.state.ask_registration_questions}*!/*/}
-                {/*/!*    onChange={e => this.onCheckboxChange(e, "ask_registration_questions")}*!/*/}
-                {/*/!*>*!/*/}
-                {/*/!*    I want to ask additional questions on the event registration screen.*!/*/}
-                {/*/!*</FormCheckbox>*!/*/}
-                {/*<FormTextarea onChange={this.onChange}*/}
-                {/*              name="registrationFormQuestions" size="lg"*/}
-                {/*              placeholder="Enter the questions that will be asked on event registration page."/>*/}
 
 
                 <Col onClick={this.addNewQuestion} className="registration-add-question my-3">
                     <CIcon size="xl" color="danger" content={freeSet.cilPlus}/> Add New
                     Question
                 </Col>
-
-                {/*<CBadge onClick={this.fetchMyClubs} style={{height: 25}} textStyle={{*/}
-                {/*    color: 'white', fontSize: 18, lineHeight: 7,*/}
-                {/*}} size="2xl" shape="pill" color="secondary">Add New Question</CBadge>*/}
 
                 {Object.values(this.props.registrationQuestionsDom).map((question) => {
                     return question
@@ -353,15 +304,12 @@ class CreateEventForm extends Component {
 
     validateForm = () => {
 
-        const {club_selection, name, description, start_date, end_date, location, quota} = this.state
-        const {registrationQuestions} = this.props
+        const {name, description, start_date, end_date, location, quota} = this.state
+        // const {registrationQuestions} = this.props
         let validation = true
 
         const formErrors = []
-        if (!club_selection) {
-            formErrors.push("Please select the club.")
-            validation = false
-        }
+
         if (!name) {
             formErrors.push("Event name is required.")
             validation = false
@@ -391,34 +339,33 @@ class CreateEventForm extends Component {
             validation = false
         }
 
-        let questions = Object.values(registrationQuestions)
-        if (questions.length > 0) {
-            questions.map((question, qInd) => {
-                const {title, explanation, question_options, question_type} = question
-                if (!title) {
-                    formErrors.push(`Registration question ${qInd + 1} title is required!`)
-                    validation = false
-                }
-                if (!explanation) {
-                    formErrors.push(`Registration question ${qInd + 1} explanation is required!`)
-                    validation = false
-                }
-
-                let options = Object.values(question_options)
-                if (question_type === "choice" && options.length > 0) {
-                    options.map((option, oInd) => {
-                        const {option_text} = option
-                        if (!option_text) {
-                            formErrors.push(`Registration question ${oInd + 1} option ${oInd + 1} is required!`)
-                            validation = false
-                        }
-                        return true;
-                    })
-
-                }
-                return true;
-            })
-        }
+        // let questions = Object.values(registrationQuestions)
+        // if (questions.length > 0) {
+        //     questions.map((question, qInd) => {
+        //         const {title, explanation} = question
+        //         if (!title) {
+        //             formErrors.push(`Registration question ${qInd + 1} title is required!`)
+        //             validation = false
+        //         }
+        //         if (!explanation) {
+        //             formErrors.push(`Registration question ${qInd + 1} explanation is required!`)
+        //             validation = false
+        //         }
+        //
+        //         // let options = Object.values(question_options)
+        //         // if (question_type === "choice" && options.length > 0) {
+        //         //     options.map((option, oInd) => {
+        //         //         const {option_text} = option
+        //         //         if (!option_text) {
+        //         //             formErrors.push(`Registration question ${oInd + 1} option ${oInd + 1} is required!`)
+        //         //             validation = false
+        //         //         }
+        //         //         return true;
+        //         //     })
+        //         // }
+        //         return true;
+        //     })
+        // }
         this.setState({formErrors: formErrors})
         return validation
     }
@@ -431,25 +378,24 @@ class CreateEventForm extends Component {
 
         // Get form field data
         let {
-            club_selection, name, description, start_date, end_date, location, quota, image_url
+            name, description, start_date, end_date, location, quota, image_url, created_by
         } = this.state
 
 
         // The fields that will be send to backend
-        const registrationQuestions = this.props.registrationQuestions
-        const created_by = club_selection
+        // const registrationQuestions = this.props.registrationQuestions
 
         if (!image_url)
             image_url = "no_event_image.png"
 
         const eventData = {
             name, description, start_date, end_date, location, quota, image_url,
-            created_by
+            created_by, id: this.props.event.id
         }
-        eventData['registration_questions'] = registrationQuestions
 
-        // Send event data to backend server
-        EventService.createNewEvent(eventData)
+        console.log(eventData)
+        // Send updated event data to backend server
+        EventService.updateEventById(eventData)
             .then(resp => {
                 if (resp.data) {
                     const successMessage = resp.data.message
@@ -470,11 +416,12 @@ class CreateEventForm extends Component {
 
     render() {
 
+        const {event} = this.props
         const {currentTab, formErrors} = this.state
         const formPanelPage1 = this.formPanelPage1()
         const formPanelPage2 = this.formPanelPage2()
-        const formPanelPage3 = this.formPanelPage3()
-        const formPanelPage4 = this.formPanelPage4()
+        // const formPanelPage3 = this.formPanelPage3()
+
         return (
 
             <div>
@@ -495,9 +442,7 @@ class CreateEventForm extends Component {
 
                             {currentTab === 2 && formPanelPage2}
 
-                            {currentTab === 3 && formPanelPage3}
-
-                            {currentTab === 4 && formPanelPage4}
+                            {/*{currentTab === 3 && formPanelPage3}*/}
 
                             {/** BUTTONS */}
                             {currentTab > 1 && <div className="float-left">
@@ -517,7 +462,7 @@ class CreateEventForm extends Component {
                                     onClick={this.onSubmitForm}
                                     size="lg"
                                     className="btn btn-info mt-4">
-                                    Create Club!
+                                    Update!
                                 </Button>
                             </div>}
                         </Form>
@@ -525,7 +470,8 @@ class CreateEventForm extends Component {
                 </Card>
 
                 {/** SUCCESS ALERT DIALOG */}
-                <SuccessModal modalTitle="Event created!" modalMessage="You are ready to share event!"
+                <SuccessModal modalTitle="Event updated!" modalMessage=""
+                              redirectUrl = {"/events/"+event.id}
                               ref={this.successDialog} history={this.props.history}/>
             </div>
 
@@ -544,4 +490,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, {addQuestionToForm})(CreateEventForm));
+export default withRouter(connect(mapStateToProps, {addQuestionToForm, addQuestionOption})(UpdateForm));

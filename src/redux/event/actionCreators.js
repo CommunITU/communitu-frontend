@@ -14,11 +14,18 @@ export const updateQuestionsForm = (questionID, questionFields) => {
     }
 }
 
-export const addQuestionToForm = (questionID) => {
+export const addQuestionToForm = (questionID, {preCreatedQuestion} = {}) => {
+
+    let questionFields = null
+    if(typeof preCreatedQuestion !==  'undefined')
+        questionFields = preCreatedQuestion
+    else
+        questionFields = {title: null, explanation: null, question_type: "text", question_options: {}}
+
     return {
         type: ADD_QUESTION_TO_FORM,
         questionID: questionID,
-        questionFields: {title: null, explanation: null, question_type: "text", question_options: {}},
+        questionFields: questionFields ,
     }
 }
 
@@ -30,12 +37,14 @@ export const deleteQuestionFromForm = (questionID) => {
     }
 }
 
-export const addQuestionOption = (questionID, optionID,questionOptionDom) => {
+export const addQuestionOption = (questionID, optionID,questionOptionDom,{preCreatedOption} = {} ) => {
+    let option = typeof preCreatedOption !== 'undefined' ? preCreatedOption : {option_text: null}
+
     return {
         type: ADD_QUESTION_OPTION,
         questionID: questionID,
         optionID: optionID,
-        questionOption: {option_text: null},
+        questionOption: option,
         newQuestionOptionDom: questionOptionDom
     }
 }

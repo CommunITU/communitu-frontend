@@ -11,6 +11,8 @@ const ParticipateButtons = (props) => {
     const [regQuestions, setRegQuestions] = useState([]);
     const regQuestionsFormRef = useRef()
 
+
+
     useEffect(() => {
         const fetchParticipationStatus = () => {
             const user = props.user

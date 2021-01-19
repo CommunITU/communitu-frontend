@@ -8,7 +8,7 @@ export class EventCard extends Component {
     onEventClick = (e) => {
 
         const eventId = this.props.id
-        this.props.history.push({pathname:"/club1/events/" + eventId,
+        this.props.history.push({pathname:"/events/" + eventId,
             eventInfo:{eventId}});
     }
 

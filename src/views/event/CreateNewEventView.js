@@ -35,11 +35,4 @@ class CreateNewEventView extends PureComponent {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     console.log(state)
-//     return {
-//         isLoggedIn: state.auth.isLoggedIn
-//     }
-// }
-
 export default withRouter(CreateNewEventView)

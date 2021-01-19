@@ -5,6 +5,7 @@ import ParticipantsPanel from "./ParticipantsPanel";
 import Divider from "@material-ui/core/Divider";
 import CommentArea from "./CommentArea";
 import {connect} from "react-redux";
+import EventOwnerOptions from "./EventOwnerOptions";
 
 
 class EventContainer extends Component {
@@ -24,7 +25,7 @@ class EventContainer extends Component {
 
         const containerStyle = {
             marginTop: "100px",
-            zIndex: "9999",
+            zIndex: "1",
             width: "100%",
             position: "relative",
             display: "flex",
@@ -35,32 +36,44 @@ class EventContainer extends Component {
             <div style={containerStyle}>
                 <Col lg={7} md={10}>
                     <Card>
+
+                        {/**
+                         EVENT HEADER
+                         */}
                         <Row className="m-0" style={{backgroundColor: "#F6F6F6"}}>
 
                             <Col className="card-img m-0 p-0" style={{maxHeight: '350px'}} lg={8}>
                                 {this.eventImage(event.image_url)}
                             </Col>
 
-                            <Col lg={4} sm={12} className="my-auto p-4">
-                                <Row>
-                                    <Col style={{fontSize: "2.2em"}} lg={12} sm={12}>
-                                        <b>{event.name}</b>
-                                    </Col>
+                            <Col lg={4} sm={12}>
+
+                                {/**
+                                 EVENT OWNER OPTIONS
+                                 */}
+                                <Row className="float-right">
+                                    <EventOwnerOptions event={event}/>
                                 </Row>
 
-                                <Row className="mr-auto mt-3">
-                                    <Col style={{fontSize: "1.2em"}} lg={12} sm={12}>
-                                        on <b>{event.start_date}</b>
-                                    </Col>
-                                </Row>
+                                <div className="my-4 mx-1">
+                                    <Row className="my-auto ">
+                                        <Col style={{fontSize: "2.2em"}} lg={12} sm={12}>
+                                            <b>{event.name}</b>
+                                        </Col>
+                                    </Row>
+                                    <Row className="mr-auto mt-4">
+                                        <Col style={{fontSize: "1.2em"}} lg={12} sm={12}>
+                                            on <b>{event.start_date}</b>
+                                        </Col>
+                                    </Row>
 
-                                <Row className="mr-auto mt-3">
-                                    <Col style={{fontSize: "1.2em"}} lg={12} sm={12}>
-                                        by <b>Club Name 1</b>
-                                    </Col>
-                                </Row>
+                                    <Row className="mr-auto mt-3">
+                                        <Col style={{fontSize: "1.2em"}} lg={12} sm={12}>
+                                            by <b>Club Name 1</b>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </Col>
-
 
                         </Row>
 

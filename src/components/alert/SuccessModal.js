@@ -25,7 +25,9 @@ class SuccessModal extends Component {
 
     handleNavigation = () => {
         this.setState({showDialog: false})
-        this.props.history.push("/")
+
+        let redirectUrl = this.props.redirectUrl ?  this.props.redirectUrl : "/"
+        this.props.history.push(redirectUrl)
     }
 
     render() {

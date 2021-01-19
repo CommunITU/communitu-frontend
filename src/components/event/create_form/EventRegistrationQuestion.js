@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import CIcon from "@coreui/icons-react";
 import {freeSet} from "@coreui/icons";
 import {addQuestionOption, deleteQuestionFromForm, updateQuestionsForm} from "../../../redux/event/actionCreators";
+import QuestionOption from "./QuestionOption";
 
 class EventRegistrationQuestion extends Component {
 
@@ -15,6 +16,12 @@ class EventRegistrationQuestion extends Component {
             "question": this.props.registrationQuestions[id],
             "questionOptionsDom": this.props.questionOptionsDom,
         }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // if(prevProps.registrationQuestions != this.props.registrationQuestions){
+        //     this.setState({question: qu})
+        // }
     }
 
     deleteQuestion = () => {
@@ -48,19 +55,27 @@ class EventRegistrationQuestion extends Component {
 
 
     createOptionDom = (optionId) => {
+        console.log(this.props.registrationQuestions[this.props.id])
+        console.log(this.state.question)
         return (
-            <div className="d-flex flex-row my-1 align-items-center">
-                <CIcon size="md" color="danger" content={freeSet.cilArrowRight}/>
+            //this.props.registrationQuestions[this.props.id].question_options[optionId].option_text
+            <QuestionOption
+                optionId={optionId}
+                onOptionTextChange={this.onOptionTextChange}/>
 
-                <FormInput id={optionId}
-                           value={this.state.question.question_options[optionId]}
-                           className="mx-3 border-top-0 border-left-0 border-right-0"
-                           onChange={this.onOptionTextChange}
-                           placeHolder="Enter the option"/>
-
-                <CIcon alt="Delete Option" className="my-auto" style={{cursor: "pointer"}} size="md" color="danger"
-                       content={freeSet.cilRemove}/>
-            </div>)
+            // <div className="d-flex flex-row my-1 align-items-center">
+            //     <CIcon size="md" color="danger" content={freeSet.cilArrowRight}/>
+            //
+            //     <FormInput id={optionId}
+            //                value={this.state.question.question_options[optionId]}
+            //                className="mx-3 border-top-0 border-left-0 border-right-0"
+            //                onChange={this.onOptionTextChange}
+            //                placeHolder="Enter the option"/>
+            //
+            //     <CIcon alt="Delete Option" className="my-auto" style={{cursor: "pointer"}} size="md" color="danger"
+            //            content={freeSet.cilRemove}/>
+            // </
+        )
     }
 
     addNewOption = () => {
@@ -71,33 +86,38 @@ class EventRegistrationQuestion extends Component {
     }
 
     changeQuestionType = (type) => {
-        if (type === "choice" && Object.keys(this.state.question.question_options).length === 0) {
+        let id = this.props.id
+        if (type === "choice" && Object.keys(this.props.registrationQuestions[id].question_options).length === 0) {
             this.addNewOption()
             this.addNewOption()
         }
 
         this.setState({question: {...this.state.question, question_type: type}}, () => {
-            this.props.updateQuestionsForm(this.props.id,this.state.question)
+            this.props.updateQuestionsForm(this.props.id, this.state.question)
         })
     }
 
     choiceAnswerPanel = () => {
+        let id = this.props.id
         const {questionOptionsDom} = this.props
+        console.log(this.props.registrationQuestions[id], Object.values(questionOptionsDom))
         const {question_type} = this.state.question
+        console.log(question_type)
         return (
-            <>
-                {question_type === "choice" && Object.values(questionOptionsDom[this.props.id]).map((option, ind) => {
+            <div>
+                {question_type === "choice" && Object.values(questionOptionsDom).length > 0 && Object.values(questionOptionsDom[this.props.id]).map((option, ind) => {
                     return option
                 })}
 
 
                 {question_type === "choice" &&
                 <Button onClick={this.addNewOption} className="btn-ghost-dark border my-3">Add new option</Button>}
-            </>
+            </div>
         )
     }
 
     hoverBg = (type) => {
+
         const hoverBg = "bg-info text-white"
         if (this.state.question.question_type === type)
             return hoverBg
@@ -115,7 +135,8 @@ class EventRegistrationQuestion extends Component {
 
                 <div className="">
 
-                    <FormInput className="border-left-0 border-right-0 border-top-0 border-bottom" name="title" type="text"
+                    <FormInput className="border-left-0 border-right-0 border-top-0 border-bottom" name="title"
+                               type="text"
                                value={question && question.title}
                                onChange={this.onTextChange} size="lg"
                                placeholder="Enter the question title"/>
@@ -123,7 +144,8 @@ class EventRegistrationQuestion extends Component {
 
                 <div className="mt-3">
 
-                    <FormInput className="border-left-0 border-right-0 border-top-0 border-bottom" name="explanation" type="text"
+                    <FormInput className="border-left-0 border-right-0 border-top-0 border-bottom" name="explanation"
+                               type="text"
                                value={question && question.explanation}
                                onChange={this.onTextChange} size="md"
                                placeholder="Enter the question explanation"/>
@@ -159,7 +181,7 @@ class EventRegistrationQuestion extends Component {
 const mapStateToProps = (state) => {
     return {
         registrationQuestions: state.questionForm.questions,
-        questionOptionsDom: state.questionForm.questionsOptionsDom
+        questionOptionsDom: state.questionForm.questionsOptionsDom,
     }
 }
 

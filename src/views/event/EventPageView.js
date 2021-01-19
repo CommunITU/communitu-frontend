@@ -3,6 +3,7 @@ import {withRouter} from "react-router";
 import {EventService} from "../../services/EventService";
 import {Container} from "shards-react";
 import EventContainer from "../../components/event/event_page/EventContainer";
+import LoadingIconSmall from "../../components/alert/LoadingIconSmall";
 
 
 class EventPageView extends Component {
@@ -47,7 +48,7 @@ class EventPageView extends Component {
                             <EventContainer event = {event}  />
                     </>
                     : <div className="text-center" >
-                        <img alt="loading" style={{width:"50px",height:"50px", marginTop:"50px"}} src={require("../../assets/images/loading.gif").default}></img>
+                        <LoadingIconSmall style={{width:"50px",height:"50px", marginTop:"50px"}}></LoadingIconSmall>
                     </div>}
 
             </Container>

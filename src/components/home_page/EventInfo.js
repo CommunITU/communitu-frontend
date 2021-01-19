@@ -1,10 +1,10 @@
 import React from 'react'
 import {Row} from "reactstrap";
 import Moment from 'react-moment';
-import {HowToReg, LocationCity, SupervisedUserCircle, TodaySharp} from "@material-ui/icons";
+import {LocationCity, SupervisedUserCircle, TodaySharp} from "@material-ui/icons";
 
 export default function EventInfo(props) {
-    const {owner, eventLocation, quota, date} = props.info;
+    const {owner, eventLocation, date} = props.info;
 
     return (
         <div class="mt-2">
@@ -18,7 +18,7 @@ export default function EventInfo(props) {
                 <div class="event-info-label"><LocationCity className="ml-2" />Location: <b>{eventLocation}</b>
                 </div>
 
-                <div class="event-info-label"><HowToReg className="ml-2"/>Quota: <b>{quota}</b></div>
+                {/*<div class="event-info-label"><HowToReg className="ml-2"/>Quota: <b>{quota}</b></div>*/}
 
             </Row>
 

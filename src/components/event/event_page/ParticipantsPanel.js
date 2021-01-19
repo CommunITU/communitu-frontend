@@ -3,9 +3,7 @@ import {Col, Container} from "shards-react";
 import {EventService} from "../../../services/EventService";
 import {Divider} from "@material-ui/core";
 import {Row} from "react-bootstrap";
-import {ContactlessRounded} from "@material-ui/icons";
 import LoadingIconSmall from "../../alert/LoadingIconSmall";
-
 
 const ParticipantsPanel = (props) => {
 
@@ -33,7 +31,7 @@ const ParticipantsPanel = (props) => {
 
         fetchParticipants();
 
-    }, [])
+    }, [eventId])
 
     return (
         <>
@@ -46,6 +44,8 @@ const ParticipantsPanel = (props) => {
 
 
                 <Row className="justify-content-center my-2">
+
+                    {participants.length === 0 && "There is not any participant yet."}
                     {participants.map((user) => {
                         return (
                             <Col lg={3} sm={3} md={3} xs={3} className="m-0 p-1" style={{cursor: "pointer"}}>

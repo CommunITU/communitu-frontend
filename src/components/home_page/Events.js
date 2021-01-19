@@ -50,7 +50,6 @@ class Events extends Component {
                     {events.map((event) => {
                         return (<EventCard id={event.id}
                                            name={event.name}
-                                           eventLink="/link"
                                            img={event.image_url}
                                            owner="Umut Emre Bayramoğlu"
                                            eventLocation={event.location}
