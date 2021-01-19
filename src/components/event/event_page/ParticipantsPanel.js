@@ -14,10 +14,11 @@ const ParticipantsPanel = (props) => {
     useEffect(() => {
         const fetchParticipants = () => {
             setLoadingParticipants(() => true)
-            EventService.getEventParticipants(eventId, ['id', 'name', 'surname', 'profile_photo_url'])
+            EventService.getEventParticipants(eventId, ['id', 'name', 'surname', 'profile_photo_url','authority'])
                 .then(resp => {
                     setLoadingParticipants(() => false)
                     if (resp.status === 200) {
+                        console.log(resp.data.participants)
                         setParticipants(() => resp.data.participants)
                     }
 

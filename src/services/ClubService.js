@@ -13,8 +13,14 @@ const createNewClub = (clubData) => {
     return axios.post(BASE_URL + CLUBS, clubData, headersWithToken())
 }
 
-const getClubsNameExecutedByUser = (userId) =>{
-    return axios.get(BASE_URL + USERS + "/"+ userId + CLUBS + "?role=executive&fields=id,name")
+const getClubsNameExecutedByUser = (userId) => {
+    return axios.get(BASE_URL + USERS + "/" + userId + CLUBS + "?role=executive&fields=id,name")
 }
 
-export const ClubService = {createNewClub, getClubsNameExecutedByUser}
+
+const getMyClubs = (userId) => {
+    return axios.get(BASE_URL + USERS + "/" + userId + CLUBS + "?role=executive&fields=id,name,created_at&extra_fields=participant_num,event_num")
+}
+
+
+export const ClubService = {createNewClub, getClubsNameExecutedByUser, getMyClubs}
