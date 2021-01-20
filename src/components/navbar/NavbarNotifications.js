@@ -5,7 +5,7 @@ import {freeSet} from '@coreui/icons'
 
 class NavbarNotifications extends Component {
     render() {
-        const itemsCount = 4
+        const itemsCount = 1
         return (
             <CDropdown
                 inNav
@@ -30,7 +30,7 @@ class NavbarNotifications extends Component {
                             <div className="pt-3 mr-3 float-left">
                                 <div className="c-avatar">
                                     <CImg
-                                        src={'avatars/7.jpg'}
+                                        src="https://i.pinimg.com/474x/f4/a5/38/f4a53836deeb8db01c2b9644e170e82d.jpg"
                                         className="c-avatar-img"
                                         alt="admin@bootstrapmaster.com"
                                     />
@@ -42,83 +42,15 @@ class NavbarNotifications extends Component {
                                 <small className="text-muted float-right mt-1">Just now</small>
                             </div>
                             <div className="text-truncate font-weight-bold">
-                                <span className="fa fa-exclamation text-danger"/> Important message
+                                <span className="fa fa-exclamation text-danger"/>
                             </div>
                             <div className="small text-muted text-truncate">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt...
+                                Will be implemented soon ..............
                             </div>
                         </div>
                     </CDropdownItem>
 
-                    <CDropdownItem href="#">
-                        <div className="message">
-                            <div className="pt-3 mr-3 float-left">
-                                <div className="c-avatar">
-                                    <CImg
-                                        src={'avatars/6.jpg'}
-                                        className="c-avatar-img"
-                                        alt="admin@bootstrapmaster.com"
-                                    />
-                                    <span className="c-avatar-status bg-warning"/>
-                                </div>
-                            </div>
-                            <div>
-                                <small className="text-muted">Jane Dovve</small>
-                                <small className="text-muted float-right mt-1">5 minutes ago</small>
-                            </div>
-                            <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit, sed do eiusmod tempor incididunt...
-                            </div>
-                        </div>
-                    </CDropdownItem>
 
-                    <CDropdownItem href="#">
-                        <div className="message">
-                            <div className="pt-3 mr-3 float-left">
-                                <div className="c-avatar">
-                                    <CImg
-                                        src={'avatars/5.jpg'}
-                                        className="c-avatar-img"
-                                        alt="admin@bootstrapmaster.com"
-                                    />
-                                    <span className="c-avatar-status bg-danger"/>
-                                </div>
-                            </div>
-                            <div>
-                                <small className="text-muted">Janet Doe</small>
-                                <small className="text-muted float-right mt-1">1:52 PM</small>
-                            </div>
-                            <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit, sed do eiusmod tempor incididunt...
-                            </div>
-                        </div>
-                    </CDropdownItem>
-
-                    <CDropdownItem href="#">
-                        <div className="message">
-                            <div className="pt-3 mr-3 float-left">
-                                <div className="c-avatar">
-                                    <CImg
-                                        src={'avatars/4.jpg'}
-                                        className="c-avatar-img"
-                                        alt="admin@bootstrapmaster.com"
-                                    />
-                                    <span className="c-avatar-status bg-info"/>
-                                </div>
-                            </div>
-                            <div>
-                                <small className="text-muted">Joe Doe</small>
-                                <small className="text-muted float-right mt-1">4:03 AM</small>
-                            </div>
-                            <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                            <div className="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit, sed do eiusmod tempor incididunt...
-                            </div>
-                        </div>
-                    </CDropdownItem>
                     <CDropdownItem href="#" className="text-center border-top"><strong>View all
                         messages</strong></CDropdownItem>
                 </CDropdownMenu>

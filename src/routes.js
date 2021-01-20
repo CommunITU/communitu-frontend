@@ -9,6 +9,7 @@ import RegisterView from "./views/login/RegisterView";
 import EventPageView from "./views/event/EventPageView";
 import UpdateEventView from "./views/event/UpdateEventView";
 import MyClubsView from "./views/club/MyClubsView";
+import ProfileView from "./views/user/ProfileView";
 
 /**
  *  Route list for the application. Returns all routes as an array.
@@ -110,7 +111,15 @@ const routes = [
         autoLogin   :   true,
         needAuth    :   true,
     },
-
+    {
+        name        :   "My Profile",
+        path        :   "/users/:userId",
+        layout      :   BaseLayout,
+        component   :   ProfileView,
+        exact       :   true,
+        autoLogin   :   true,
+        needAuth    :   true,
+    },
 
 ]
 

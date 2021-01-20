@@ -6,7 +6,7 @@ import {EventService} from "../../services/EventService";
 
 class Events extends Component {
 
-    static EVENT_LOAD_SIZE = 3
+    static EVENT_LOAD_SIZE = 6
 
     constructor(props) {
         super(props);

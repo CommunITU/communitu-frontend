@@ -27,9 +27,9 @@ class _Navbar extends Component {
                             <NavItem className="px-3 py-2 active" onClick={() => this.handleNavAction("/")}>
                                 <NavLink class="">Dashboard</NavLink>
                             </NavItem>
-                            <NavItem className="px-3 py-2" onClick={() => this.handleNavAction("/about")}>
-                                <NavLink>About</NavLink>
-                            </NavItem>
+                            {/*<NavItem className="px-3 py-2" onClick={() => this.handleNavAction("/about")}>*/}
+                            {/*    <NavLink>About</NavLink>*/}
+                            {/*</NavItem>*/}
                         </Nav>
                     </Navbar.Collapse>
 

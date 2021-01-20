@@ -36,13 +36,14 @@ class NavbarUserActions extends Component {
                     >
                         <strong>Personal</strong>
                     </CDropdownItem>
-                    <CDropdownItem><CIcon content={freeSet.cilUser} className="mr-2 text-success"/> Profile
+                    <CDropdownItem onClick={() => this.props.history.push(`/users/${user.id}`)}><CIcon content={freeSet.cilUser} className="mr-2 text-success"
+                                          /> Profile
                     </CDropdownItem>
                     <CDropdownItem onClick={() => this.props.history.push(`/my_clubs`)}>
                         <CIcon content={freeSet.cilList} className="mr-2 text-danger"/> My clubs
                     </CDropdownItem>
-                    <CDropdownItem><CIcon content={freeSet.cilListRich} className="mr-2 text-info"/> My attendances
-                    </CDropdownItem>
+                    {/*<CDropdownItem><CIcon content={freeSet.cilListRich} className="mr-2 text-info"/> My attendances*/}
+                    {/*</CDropdownItem>*/}
                     <CDropdownItem
                         header
                         tag="div"
@@ -50,8 +51,8 @@ class NavbarUserActions extends Component {
                     >
                         <strong>Options</strong>
                     </CDropdownItem>
-                    <CDropdownItem><CIcon content={freeSet.cilSettings} className="mr-2 text-dark"/> Account Settings
-                    </CDropdownItem>
+                    {/*<CDropdownItem><CIcon content={freeSet.cilSettings} className="mr-2 text-dark"/> Account Settings*/}
+                    {/*</CDropdownItem>*/}
                     <CDropdownItem onClick={() => this.handleNavAction("/logout")}>
                         <CIcon content={freeSet.cilAccountLogout} className="mr-2 text-danger"/> Logout </CDropdownItem>
                 </CDropdownMenu>
